@@ -1,0 +1,6 @@
+{
+  "GCLOUD_PROJECT": "thread-204819",
+  "DATA_BACKEND": "datastore",
+  "CLOUD_BUCKET": "gs://thread_song_bucket"
+
+}

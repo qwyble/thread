@@ -1,0 +1,47 @@
+import React from 'react';
+import {Table, Checkbox, Button, Icon} from 'semantic-ui-react';
+import SongsList from './songsList.js'
+
+
+class SongSorter extends React.Component{
+  state ={
+    _loading: false,
+  }
+
+  render(){
+    return(
+      <Table celled striped compact unstackable inverted selectable>
+        <Table.Header fullWidth>
+          <Table.Row>
+            <Table.HeaderCell />
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Registration Date</Table.HeaderCell>
+            <Table.HeaderCell>E-mail address</Table.HeaderCell>
+            <Table.HeaderCell>Premium Plan</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          <SongsList />
+        </Table.Body>
+
+        <Table.Footer fullWidth>
+          <Table.Row>
+            <Table.HeaderCell />
+            <Table.HeaderCell colSpan='4'>
+              <Button floated='right' icon labelPosition='left' primary size='small'>
+                <Icon name='user' /> Go Public
+              </Button>
+              <Button size='small'>Bookmark</Button>
+              <Button disabled size='small'>Add to Playlist</Button>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
+      </Table>
+
+    )
+  }
+}
+
+
+export default SongSorter;
