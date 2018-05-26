@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Menu, Icon, Grid } from 'semantic-ui-react';
 import UploadHandlers from '../uploadHandler/uploadHandlers.js';
+import {Link} from 'react-router-dom';
 
 
 /* Top bar renders components for uploading songs,
@@ -15,9 +16,17 @@ class SidebarTopOverlay extends Component {
         <Sidebar.Pushable color='blue' as={Segment} className='topBar'>
           <Sidebar as={Menu} animation='overlay' direction='top' visible={true} inverted style={{position: 'fixed'}}>
             <Menu.Item name='home'>
-              <img src={this.props.logo} className="App-logo" alt="logo" />
+              <Link to='/'>
+                <img src={this.props.logo} className="App-logo" alt="logo" />
+                Home
+              </Link>
+            </Menu.Item>
+            
+            <Menu.Item name='friends'>
+              <Icon name='user circle outline' />
               Profile
             </Menu.Item>
+
             <Menu.Item link name='upload' >
               <UploadHandlers onUpload={this.props.onUpload}/>
             </Menu.Item>
@@ -43,8 +52,10 @@ class SidebarTopOverlay extends Component {
             </Menu.Item>
 
             <Menu.Item name='forums'>
-              <Icon name='browser' />
-              Forums
+              <Link to='/forum'>
+                <Icon name='browser' />
+                Forums
+              </Link>
             </Menu.Item>
 
             <Menu.Item name='messages'>
