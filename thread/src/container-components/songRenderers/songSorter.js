@@ -14,10 +14,10 @@ class SongSorter extends React.Component{
         <Table.Header fullWidth>
           <Table.Row>
             <Table.HeaderCell />
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Registration Date</Table.HeaderCell>
-            <Table.HeaderCell>E-mail address</Table.HeaderCell>
-            <Table.HeaderCell>Premium Plan</Table.HeaderCell>
+            <Table.HeaderCell>Title</Table.HeaderCell>
+            <Table.HeaderCell>Artist</Table.HeaderCell>
+            <Table.HeaderCell>Length</Table.HeaderCell>
+            <Table.HeaderCell>Rating</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 

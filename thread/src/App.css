@@ -94,10 +94,11 @@
 .pusher {
       width: 100% !important;
       overflow: auto;
+      height: 100vh !important;
 
 }
 .ui.visible.thin.left.sidebar ~ .pusher {
-      width: 85% !important;
+      width: 87% !important;
       transform: scale(85%, 100%) !important;
       overflow: auto !important;
 }
