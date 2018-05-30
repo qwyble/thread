@@ -4,15 +4,10 @@ var port = process.env.PORT || 8080;
 var cors = require('cors');
 const multer = require('multer');
 const uuidv4 = require('uuid/v4');
-
-
+var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-
-var cloud_bucket = require('./uploads/upload.js');
-
-
-require('./config/passport')(passport); //pass passport for configuration
+var env = require('dotenv').load();
 
 
 // set up express application
@@ -22,28 +17,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-//create the multer instance that will be used to upload/save the file
-const upload = multer({
-  storage: multer.MemoryStorage,
-  fileFilter: function(req, file, cb) {
-    console.log(file.mimetype);
-    if(file.mimetype !== 'audio/wav' && file.mimetype !== 'audio/mpeg'){
-      return cb(new Error('only wavs and mp3s are allowed'))
-    }
-    cb(null, true)
-  }
-});
+//set up passport
+app.use(session({ secret: 'notaverysecretsecretbutworksanyway', resave: true, saveUninitialized: true})); //session secret
 
-app.post('/upload', upload.single('songFile'), (req, res) => {
-  res.send();
-  cloud_bucket.upload(req.file);
-  res.end();
-
-});
-
-//routes
-require('./app/routes.js')(app, passport); //load our routes and pass in our app and fully configured passport
 
 //launch
 app.listen(port);
 console.log('it happens on port ' + port);
+
+
+//routes
+var authRoute = require('./app/routes/auth.js')(app);

@@ -63,3 +63,6 @@ typings/
 # api
 thread-projectowner.json
 thread-b972ac4c7a7c.json
+
+#config
+config.json

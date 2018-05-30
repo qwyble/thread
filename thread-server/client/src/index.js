@@ -8,14 +8,15 @@ import LoginContainer from './container-components/loginContainer'
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
 
+
 ReactDOM.render((
   <BrowserRouter>
     <Switch>
+      <Route path='/auth'>
+        <LoginContainer />
+      </Route>
       <Route path='/'>
         <App />
-      </Route>
-      <Route path='/login'>
-        <LoginContainer />
       </Route>
     </Switch>
   </BrowserRouter>
