@@ -21,7 +21,7 @@ class SidebarTopOverlay extends Component {
                 Home
               </Link>
             </Menu.Item>
-            
+
             <Menu.Item name='friends'>
               <Icon name='user circle outline' />
               Profile
