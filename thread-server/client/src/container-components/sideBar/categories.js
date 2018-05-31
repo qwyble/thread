@@ -2,7 +2,7 @@ import React from 'react';
 import AddPlaylist from '../../presentational-components/sidebarUtilities/addPlaylist.js';
 import PlaylistTab from '../../presentational-components/sidebarUtilities/playlistTab.js';
 import ListOptions from './listOptions.js';
-import {Button, Icon, List, Menu} from 'semantic-ui-react';
+import {Button, Icon, Menu} from 'semantic-ui-react';
 
 /* renders the playlists in a single category,
   holds the playlists in state. (change this?)
@@ -57,9 +57,9 @@ class Category extends React.Component{
 
 
   handleDeleteList = (e) => {
-    var id = parseInt(e.target.id);
+    var id = parseInt(e.target.id, 10);
     this.setState((prevState) => ({
-      playlists: prevState.playlists.filter((v, i) => i != id)
+      playlists: prevState.playlists.filter((v, i) => i !== id)
     }));
   }
 
@@ -113,7 +113,6 @@ class Category extends React.Component{
           {this.state.displayLists ?
             <div>
             <AddPlaylist
-              onInputChange={this.handleInputChange}
               categoryName={this.props.catName}
               openForm={this.state.openForm}
               toggleSubmit={this.state.toggleSubmit}

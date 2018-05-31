@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Checkbox, Button, Icon} from 'semantic-ui-react';
+import {Table, Button, Icon} from 'semantic-ui-react';
 import SongsList from './songsList.js'
 
 
@@ -22,7 +22,7 @@ class SongSorter extends React.Component{
         </Table.Header>
 
         <Table.Body>
-          <SongsList />
+      
         </Table.Body>
 
         <Table.Footer fullWidth>

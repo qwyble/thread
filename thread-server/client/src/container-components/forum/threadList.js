@@ -1,6 +1,6 @@
 import React from 'react';
-import { Table, Icon, Button,Label,Menu} from 'semantic-ui-react';
-import SongsList from '../songRenderers/songSorter';
+import { Table, Icon,Label,Menu} from 'semantic-ui-react';
+
 
 class ThreadList extends React.Component{
   render(){

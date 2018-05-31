@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dropdown,TransitionablePortal, Segment, Header, Input, Form, Button} from 'semantic-ui-react';
+import {TransitionablePortal, Segment, Input, Form, Button} from 'semantic-ui-react';
 
 
 /* renders options to delete, share, and rename the category or playlist */

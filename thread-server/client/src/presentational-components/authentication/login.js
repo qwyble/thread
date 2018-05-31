@@ -10,8 +10,8 @@ class Login extends React.Component{
           <Segment >
             <Form size='tiny' id="signup" name="signup" onSubmit={this.props.onSubmit}>
               <Form.Field>
-                <label>Username</label>
-                <Input name="username" type="text" value={this.props.username} onChange={this.props.onInputChange}/>
+                <label>Email</label>
+                <Input name="email" type="text" value={this.props.email} onChange={this.props.onInputChange}/>
               </Form.Field>
               <Form.Field>
                 <label>Password</label>
@@ -19,6 +19,7 @@ class Login extends React.Component{
               </Form.Field>
               <Button type="submit">Login </Button>
             </Form>
+            {this.props.error ? <div>{this.props.error}</div> : <div></div>}
           </Segment>
         </Grid>
         </Container>

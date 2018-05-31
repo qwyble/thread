@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 //set up passport
-app.use(session({ secret: 'notaverysecretsecretbutworksanyway', resave: true, saveUninitialized: true})); //session secret
+app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secret
 
 
 //launch

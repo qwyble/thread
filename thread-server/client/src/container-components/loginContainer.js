@@ -2,7 +2,7 @@ import React from 'react';
 import Signup from '../presentational-components/authentication/signup.js';
 import Login from '../presentational-components/authentication/login.js';
 import axios from 'axios';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 
 
@@ -12,11 +12,12 @@ class LoginContainer extends React.Component{
     email: '',
     password: '',
     userName: '',
+    error: '',
+    isLoggedIn: false,
   }
 
   handleInputChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
-    console.log(this.state);
   }
 
   handleSignupSubmit = () => {
@@ -26,28 +27,32 @@ class LoginContainer extends React.Component{
       data: this.state
     }).then((result) => {
       //access results....
-      console.log(result);
+      console.log('asdfasdfasdfasdf');
+      this.setState({isLoggedIn: true});
+    }).catch((error) => {
+      this.setState({error: error.response.data})
     });
   }
 
   handleLoginSubmit = () => {
-    var form_data = new FormData();
-    for (var key in this.state){
-      form_data.append(key, this.state[key]);
-    }
-    console.log(form_data);
     axios({
       method: 'post',
       url: 'http://localhost:8080/auth/login',
-      data: form_data
+      data: this.state
     }).then((result) => {
       //access results....
-      console.log(result);
+      this.setState({isLoggedIn: true});
+    }).catch((error) => {
+      this.setState({error: error.response.data})
     });
   }
 
 
   render(){
+    console.log(this.state.isLoggedIn);
+    if(this.state.isLoggedIn){
+      return <Redirect to='/' />
+    }
     return(
       <div>
         <Switch>
@@ -58,14 +63,16 @@ class LoginContainer extends React.Component{
               password={this.state.password}
               username={this.state.username}
               onSubmit={this.handleSignupSubmit}
+              error={this.state.error}
             />
           </Route>
           <Route exact path='/auth/login'>
             <Login
               onInputChange={this.handleInputChange}
               password={this.state.password}
-              username={this.state.username}
+              email={this.state.email}
               onSubmit={this.handleLoginSubmit}
+              error={this.state.error}
             />
           </Route>
         </Switch>

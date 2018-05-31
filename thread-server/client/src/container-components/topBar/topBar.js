@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Sidebar, Segment, Menu, Icon, Grid } from 'semantic-ui-react';
+import { Sidebar, Segment, Menu, Icon} from 'semantic-ui-react';
 import UploadHandlers from '../uploadHandler/uploadHandlers.js';
 import {Link} from 'react-router-dom';
 

@@ -23,6 +23,7 @@ class Signup extends React.Component{
               </Form.Field>
               <Button type="submit">Sign Up </Button>
             </Form>
+            {this.props.error ? <div>{this.props.error}</div> : <div></div>}
           </Segment>
         </Grid>
         </Container>
