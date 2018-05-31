@@ -16,6 +16,10 @@ class LoginContainer extends React.Component{
     isLoggedIn: false,
   }
 
+  reset = () => {
+    this.setState({email: '', password: '', userName: '', error: ''});
+  }
+
   handleInputChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
   }
@@ -26,8 +30,7 @@ class LoginContainer extends React.Component{
       url: 'http://localhost:8080/auth/signup',
       data: this.state
     }).then((result) => {
-      //access results....
-      console.log('asdfasdfasdfasdf');
+      this.reset();
       this.setState({isLoggedIn: true});
     }).catch((error) => {
       this.setState({error: error.response.data})
@@ -40,7 +43,7 @@ class LoginContainer extends React.Component{
       url: 'http://localhost:8080/auth/login',
       data: this.state
     }).then((result) => {
-      //access results....
+      this.reset();
       this.setState({isLoggedIn: true});
     }).catch((error) => {
       this.setState({error: error.response.data})
