@@ -68,6 +68,12 @@ class SidebarTopOverlay extends Component {
               Chat
             </Menu.Item>
 
+            <Menu.Item name='chat'>
+              <Link to ='/logout'>
+                Logout
+              </Link>
+            </Menu.Item>
+
           </Sidebar>
         </Sidebar.Pushable>
       </div>

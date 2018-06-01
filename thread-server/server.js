@@ -15,7 +15,11 @@ app.use(morgan('dev')); //log every request to the console
 app.use(bodyParser()); //get information from html forms
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors());
+app.use(cors({
+    origin: /.*/,
+    methods:['GET','POST'],
+    credentials: true // enable set cookie
+}));
 
 //set up passport
 app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secret
@@ -25,6 +29,6 @@ app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secr
 app.listen(port);
 console.log('it happens on port ' + port);
 
-
 //routes
 var authRoute = require('./app/routes/auth.js')(app);
+var uploadRoute = require('./uploads/uploadController.js');

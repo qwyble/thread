@@ -45,7 +45,6 @@ login: function(email, password){
           return "email not found...";
         }else if(user){
           var passVal = bcrypt.compareSync(password, user.dataValues.password);
-          console.log(passVal);
         }
         if(!passVal){
           return "incorrect password";

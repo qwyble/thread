@@ -1,4 +1,4 @@
-var cors = require('cors');
+
 var validator = require('validator')
 var auth = require('../controllers/authController');
 
@@ -10,7 +10,11 @@ module.exports = function(app){
         req.body.userName,
         req.body.email,
         req.body.password
-      ).then((user) => {res.status(200).send(user)});
+      ).then((user) => {
+        req.session.user = user;
+        req.session.save();
+        res.status(200).send(user)
+      });
       }
       catch(err){
         res.status(400).send(err);
@@ -26,12 +30,28 @@ module.exports = function(app){
           if(!user.password){
             res.status(400).send(user);
           }else{
-            res.status(200).send(user)
+            req.session.user = user;
+            req.session.save();
+            res.status(200).send(user);
           }
         });
       }
       catch(err){
         res.status(400).send(err);
       }
+  });
+
+  app.post('/logout', function(req, res){
+    req.session.destroy();
+    res.status(200).send('logged out');
+  })
+
+  app.get('/auth', function(req, res){
+    console.log(req.session.user);
+    if (req.session.user){
+      res.status(200).send(req.session.user);
+    }else{
+      res.status(200).send('not logged in');
+    }
   });
 }

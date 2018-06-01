@@ -1,6 +1,7 @@
 import React from 'react';
-import Signup from '../presentational-components/authentication/signup.js';
-import Login from '../presentational-components/authentication/login.js';
+import Signup from '../../presentational-components/authentication/signup.js';
+import Login from '../../presentational-components/authentication/login.js';
+import Logout from './logout';
 import axios from 'axios';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
@@ -13,7 +14,6 @@ class LoginContainer extends React.Component{
     password: '',
     userName: '',
     error: '',
-    isLoggedIn: false,
   }
 
   reset = () => {
@@ -28,12 +28,17 @@ class LoginContainer extends React.Component{
     axios({
       method: 'post',
       url: 'http://localhost:8080/auth/signup',
-      data: this.state
+      data: this.state,
+      withCredentials: true
     }).then((result) => {
+      //signup was successful
       this.reset();
-      this.setState({isLoggedIn: true});
+      this.props.onLogin(result.data, true);
     }).catch((error) => {
-      this.setState({error: error.response.data})
+      //signup failed
+      if(error){
+        this.setState({error: error.response.data})
+      }
     });
   }
 
@@ -41,25 +46,29 @@ class LoginContainer extends React.Component{
     axios({
       method: 'post',
       url: 'http://localhost:8080/auth/login',
-      data: this.state
+      data: this.state,
+      withCredentials: true
     }).then((result) => {
+      //login was successful
       this.reset();
-      this.setState({isLoggedIn: true});
+      this.props.onLogin(result.data, true);
     }).catch((error) => {
-      this.setState({error: error.response.data})
+      //login failed
+      if(error){
+        this.setState({error: error.response.data})
+      }
     });
   }
 
 
   render(){
-    console.log(this.state.isLoggedIn);
-    if(this.state.isLoggedIn){
+    if(this.props.isLoggedIn){
       return <Redirect to='/' />
     }
     return(
       <div>
         <Switch>
-          <Route exact path='/auth/signup'>
+          <Route path='/auth/signup'>
             <Signup
               onInputChange={this.handleInputChange}
               email={this.state.email}
@@ -69,7 +78,7 @@ class LoginContainer extends React.Component{
               error={this.state.error}
             />
           </Route>
-          <Route exact path='/auth/login'>
+          <Route path='/auth/login'>
             <Login
               onInputChange={this.handleInputChange}
               password={this.state.password}
