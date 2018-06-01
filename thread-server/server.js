@@ -31,4 +31,4 @@ console.log('it happens on port ' + port);
 
 //routes
 var authRoute = require('./app/routes/auth.js')(app);
-var uploadRoute = require('./uploads/uploadController.js');
+var uploadRoute = require('./app/routes/upload.js')(app);
