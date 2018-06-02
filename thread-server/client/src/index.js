@@ -27,7 +27,6 @@ class Index extends React.Component{
       url: 'http://localhost:8080/auth',
       withCredentials: true
     }).then((result) => {
-      console.log(result.data);
       if(result.data.idUsers){
         this.setState({user: result.data, isLoggedIn: true, isLoading: false})
       }else{

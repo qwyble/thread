@@ -5,41 +5,35 @@ var auth = require('../controllers/authController');
 module.exports = function(app){
 
   app.post('/auth/signup', function(req, res){
-      try{
-        auth.signup(
-        req.body.userName,
-        req.body.email,
-        req.body.password
-      ).then((user) => {
-        req.session.user = user;
+    auth.signup(
+      req.body.userName,
+      req.body.email,
+      req.body.password
+    ).then((data) => {
+      if(!data.idUsers){
+        res.status(400).send(data)
+      }else{
+        req.session.user = data;
         req.session.save();
-        res.status(200).send(user)
-      });
+        res.status(200).send(data)
       }
-      catch(err){
-        res.status(400).send(err);
-      }
+    });
   });
 
   app.post('/auth/login', function(req, res){
-      try{
-        auth.login(
-          req.body.email,
-          req.body.password
-        ).then((user) => {
-          if(!user.password){
-            res.status(400).send(user);
-          }else{
-            req.session.user = user;
-            req.session.save();
-            res.status(200).send(user);
-          }
-        });
+    auth.login(
+      req.body.email,
+      req.body.password
+    ).then((data) => {
+      if(!data.idUsers){
+        res.status(400).send(data);
+      }else{
+        req.session.user = data;
+        res.status(200).send(data);
       }
-      catch(err){
-        res.status(400).send(err);
-      }
+    });
   });
+  
 
   app.post('/logout', function(req, res){
     req.session.destroy();

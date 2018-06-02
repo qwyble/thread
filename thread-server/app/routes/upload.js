@@ -17,7 +17,7 @@ module.exports = function(app){
 
   app.post('/upload', upload.single('songFile'), (req, res) => {
     res.send('uploading....');
-    cloud_bucket.upload(req.file, res, console.log);
+    cloud_bucket.upload(req, res, console.log);
     res.end();
 
   });

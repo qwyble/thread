@@ -11,11 +11,11 @@ module.exports ={
 
 signup: function(userName, email, password){
   if(password.length < 4){
-    throw "longer password, pretty-please.";
+    return new Promise(function(resolve){resolve("longer password, pretty-please.")});
   }else if(!validator.isEmail(email)){
-    throw "not a valid email.";
+    return new Promise(function(resolve){resolve("not a valid email")});
   }else if(!userName){
-    throw "please enter a username.";
+    return new Promise(function(resolve){resolve("please enter a username")});
   }else{
     var hash = bcrypt.hashSync(password);
     return(
@@ -32,10 +32,10 @@ signup: function(userName, email, password){
 
 login: function(email, password){
   if(!password){
-    throw "password is required";
+    return new Promise(function(resolve){resolve("Password is required")});
   }
   if(!email){
-    throw "email is required";
+    return new Promise(function(resolve){resolve("Email is required")});
   }else{
     return(
       User.findOne({

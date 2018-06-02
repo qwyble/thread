@@ -3,6 +3,9 @@ var Promise = require('bluebird');
 var GoogleCloudStorage = Promise.promisifyAll(require('@google-cloud/storage'));
 const uuidv4 = require('uuid/v4');
 
+const {sequelize, Sequelize} = require('../db/dbConnect.js');
+const Song = require('../models/song.js')(sequelize, Sequelize);
+
 
 var storage = GoogleCloudStorage({
   projectId: 'thread-204819',
@@ -20,30 +23,43 @@ function getPublicUrl (file_name) {
 
 
 module.exports = {
-  upload: function (file, res, next) {
+  upload: function (req, res, next) {
+      fileToBucket(req, res, next);
+  }
+}
+//send file to cloud bucket
+fileToBucket = (req, res, next) => {
+    const file = req.file;
+    const url = '';
     const gcsname = uuidv4() + file.originalname;
     file2 = myBucket.file(gcsname);
-    //const file = myBucket.file(gcsname)
-    const stream = file2.createWriteStream({
-      metadata: {
-        contentType: file.mimetype
-      }
-    });
-
+    const stream = file2.createWriteStream({metadata: {contentType: file.mimetype}});
     stream.on('error', (err) => {
       file.cloudStorageError = err;
       next(err);
     });
-
     stream.on('finish', () => {
       file.cloudStorageObject = gcsname;
       file2.makePublic().then(() => {
         file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+        url = file.cloudStoragePublicUrl;
+        return url;
+      }).then((url) => {
+        console.log('upload complete');
+        metaToDb(req, url, res);
       });
-      console.log('upload complete');
     });
-
     stream.end(file.buffer);
-  },
+}
 
+//send metadata to mysql
+metaToDb = (req, url, res) => {
+  Song.create({
+    title: req.body.title,
+    description: req.body.description,
+    genres: req.body.genres,
+    owner: req.session.user.idUsers,
+    dateUploaded: new Date(),
+    URL: url
+  }).then((test) => {console.log(test.dataValues)})
 }

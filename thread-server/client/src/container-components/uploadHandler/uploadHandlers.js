@@ -58,12 +58,16 @@ class UploadHandlers extends React.Component{
     var songFile = this.state.songUploadFields.songFile;
 
     data.append('songFile', songFile);
-    data.append('filename', this.state.songUploadFields.title);
+    data.append('title', this.state.songUploadFields.title);
+    data.append('description', this.state.songUploadFields.description);
+    data.append('genres', this.state.songUploadFields.genres);
+    data.append('URL', this.state.songUploadFields.songURL);
 
     axios({
       method: 'post',
       url: 'http://localhost:8080/upload',
       data: data,
+      withCredentials: true
     }).then((result) => {
       //access results....
       console.log(result);
