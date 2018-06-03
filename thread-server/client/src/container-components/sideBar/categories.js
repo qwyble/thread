@@ -3,6 +3,7 @@ import AddPlaylist from '../../presentational-components/sidebarUtilities/addPla
 import PlaylistTab from '../../presentational-components/sidebarUtilities/playlistTab.js';
 import ListOptions from './listOptions.js';
 import {Button, Icon, Menu} from 'semantic-ui-react';
+import axios from 'axios';
 
 /* renders the playlists in a single category,
   holds the playlists in state. (change this?)
@@ -35,6 +36,17 @@ class Category extends React.Component{
   handleAddList = () => {
     if(this.state.playlistToAdd.length > 1){
       this.setState({openForm: false, playlists: this.state.playlists.concat(this.state.playlistToAdd)});
+
+      var data = {};
+      data['category'] = this.props.catName;
+      data['playlist'] = this.state.playlistToAdd;
+
+      axios({
+        method: 'post',
+        url: 'http://localhost:8080/addPlaylist',
+        data: data,
+        withCredentials: true
+      }).then((result) => {console.log(result)});
     }
   }
 

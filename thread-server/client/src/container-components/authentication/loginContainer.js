@@ -63,7 +63,7 @@ class LoginContainer extends React.Component{
 
   render(){
     if(this.props.isLoggedIn){
-      return <Redirect to='/' />
+      return <Redirect to='/stream' />
     }
     return(
       <div>

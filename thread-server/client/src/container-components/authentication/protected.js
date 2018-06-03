@@ -11,7 +11,7 @@ class Protected extends React.Component{
   render(){
     if(!this.props.isLoggedIn){
       return(
-        <Redirect to='auth/login'/>
+        <Redirect to='/auth/login'/>
       )
     }else{
       return(
@@ -22,7 +22,7 @@ class Protected extends React.Component{
               <Logout {...props} onLogout={this.props.onLogout}/>
             }
           />
-          <Route path="/" component={App} />
+          <Route path="/stream" component={App} />
         </Switch>
       )
     }

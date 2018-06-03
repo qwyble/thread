@@ -10,7 +10,7 @@ import App from './App.js';
 import axios from 'axios';
 import {Loader} from 'semantic-ui-react';
 import Logout from './container-components/authentication/logout.js';
-
+import AppProvider from './context.js';
 
 class Index extends React.Component{
   state={
@@ -60,31 +60,33 @@ class Index extends React.Component{
       )
     }
     return(
-      <BrowserRouter>
-        <div>
-          <Switch>
-            <Route
-              path='/auth'
-              render={(props) =>
-                <LoginContainer {...props}
-                  isLoggedIn={this.state.isLoggedIn}
-                  onLogin={this.handleLogin}
+      <AppProvider user={this.state.user}>
+        <BrowserRouter>
+            <div>
+              <Switch>
+                <Route
+                  path='/auth'
+                  render={(props) =>
+                    <LoginContainer {...props}
+                      isLoggedIn={this.state.isLoggedIn}
+                      onLogin={this.handleLogin}
+                    />
+                  }
                 />
-              }
-            />
 
-            <Route
-              path='/'
-              render={(props) =>
-                <Protected {...props}
-                  isLoggedIn={this.state.isLoggedIn}
-                  onLogout={this.handleLogout}
+                <Route
+                  path='/'
+                  render={(props) =>
+                    <Protected {...props}
+                      isLoggedIn={this.state.isLoggedIn}
+                      onLogout={this.handleLogout}
+                    />
+                  }
                 />
-              }
-            />
-          </Switch>
-        </div>
-      </BrowserRouter>
+              </Switch>
+            </div>
+        </BrowserRouter>
+      </AppProvider>
     )
   }
 }

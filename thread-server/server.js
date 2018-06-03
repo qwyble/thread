@@ -32,3 +32,5 @@ console.log('it happens on port ' + port);
 //routes
 var authRoute = require('./app/routes/auth.js')(app);
 var uploadRoute = require('./app/routes/upload.js')(app);
+var songRenderRoute = require('./app/routes/songs.js')(app);
+var playListRoute = require('./app/routes/playlists.js')(app);

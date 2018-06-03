@@ -1,5 +1,6 @@
 import React from 'react';
-import SongSorter from './songSorter.js'
+import SongSorter from './songSorter.js';
+import axios from 'axios';
 
 
 //PlaylistController is responsible for passing
@@ -7,29 +8,23 @@ import SongSorter from './songSorter.js'
 //the selected playlist.
 class PlaylistController extends React.Component{
   state={
-    selectedPlayList: [],
+    selectedPlayList: '',
     songsToRender: [],
   }
 
-  selectRenderedSongs = () => {
-    var allSongs = this.props.songs;
-    var songsToRender = [];
-    for (var i = 0; i < allSongs.length; i++) {
-      if(allSongs[i].playlists.includes(this.state.selectedPlaylist)){
-        songsToRender.push(allSongs[i]);
-      }
-    }
-    this.setState({songsToRender});
+  getSongs = () => {
+    axios.get(`http://localhost:8080/stream/${this.state.selectedPlaylist}`,{
+      withCredentials: true
+    })
+    .then((result) => {
+      this.setState(this.state.songsToRender: result)
+    });
   }
-
-  handleSelectPlaylist = (e) => {
-    this.setState({selectedPlaylist: [e.target.value]});
-    this.selectRenderedSongs();
-  }
-
 
 
   render(){
+    console.log(this.state.selectedPlayList);
+    this.getSongs();
     return(
       <div><SongSorter /></div>
     )

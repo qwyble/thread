@@ -30,7 +30,7 @@ module.exports = {
 //send file to cloud bucket
 fileToBucket = (req, res, next) => {
     const file = req.file;
-    const url = '';
+    var url = '';
     const gcsname = uuidv4() + file.originalname;
     file2 = myBucket.file(gcsname);
     const stream = file2.createWriteStream({metadata: {contentType: file.mimetype}});
