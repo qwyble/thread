@@ -105,19 +105,11 @@ class Category extends React.Component{
           <div>
             <Menu.Item className='sideBarItem'>
               <ListOptions
-                id={this.props.id}
-                catName={this.props.catName}
+                id={this.props.id} catName={this.props.catName}
                 onCategoryDelete={this.props.onCategoryDelete}
                 onCategoryEditSubmit={this.props.onCategoryEditSubmit}
               />
-              <Button
-                className='button2'
-                floated='right'
-                icon
-                inverted
-                color='blue'
-                size='mini'
-                labelPosition='right'
+              <Button className='button2' floated='right' icon inverted color='blue' size='mini' labelPosition='right'
                 onClick={this.handleDisplayLists}>
                 <Icon name={this.state.displayLists ?'down arrow' : 'right arrow'} />
                 {this.props.catName}
@@ -129,15 +121,10 @@ class Category extends React.Component{
             <div>
               <Menu.Menu>
                 {this.state.playlists.map((playlist,key) =>
-                  <Menu.Item
-                  key={key}
-                  className='listSidebar'>
-                  <PlaylistTab
-                    onSelectPlaylist={this.props.onSelectPlaylist}
-                    playlist={playlist}
-                    key={key}
-                    id={key}
-                    onDeleteList={this.handleDeleteList} />
+                  <Menu.Item key={key} playlist={playlist} className='listSidebar'>
+
+                      <PlaylistTab playlist={playlist} key={key} id={key} onDeleteList={this.handleDeleteList} onSelectPlaylist={this.props.onSelectPlaylist}/>
+
                   </Menu.Item>)}
               </Menu.Menu>
             </div>
@@ -146,13 +133,9 @@ class Category extends React.Component{
         </div>
           {this.state.displayLists ?
             <div>
-            <AddPlaylist
-              categoryName={this.props.catName}
-              openForm={this.state.openForm}
-              toggleSubmit={this.state.toggleSubmit}
-              onFormSubmit={this.handleAddList}
-              onOpenForm={this.handleOpenForm}
-              onInputChange={this.handleInputChange}
+            <AddPlaylist categoryName={this.props.catName} openForm={this.state.openForm}
+              toggleSubmit={this.state.toggleSubmit} onFormSubmit={this.handleAddList}
+              onOpenForm={this.handleOpenForm} onInputChange={this.handleInputChange}
             />
             </div>
         : <div></div>}

@@ -34,5 +34,14 @@ module.exports = {
         where idUsers = ${owner};`
       )
     )
+  },
+
+  overWrite: function(categories, owner){
+    console.log(categories)
+    return(
+      sequelize.query(
+        `UPDATE users SET playLists = ('${categories}') WHERE idUsers = ${owner}`
+      )
+    )
   }
 }

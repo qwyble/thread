@@ -22,5 +22,10 @@ module.exports = function(app){
     .then((data) => {res.status(200).send(data.playLists);});
   })
 
+  app.post('/editCat', function(req, res){
+    console.log(req.body);
+    playlist.overWrite(JSON.stringify(req.body), req.session.user.idUsers);
+  })
+
 
 }

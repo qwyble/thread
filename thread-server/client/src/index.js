@@ -73,7 +73,6 @@ class Index extends React.Component{
                     />
                   }
                 />
-
                 <Route
                   path='/'
                   render={(props) =>
