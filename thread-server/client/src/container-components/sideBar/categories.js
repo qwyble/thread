@@ -22,6 +22,17 @@ class Category extends React.Component{
     }
   }
 
+  componentDidMount(){
+    var playlists = this.props.playLists;
+    if(typeof playlists === 'string'){
+      var pl = [];
+      pl[0] = playlists;
+      this.setState({playlists: pl});
+    }else{
+      this.setState({playlists})
+    }
+  }
+
 
   handleInputChange = (e) => {
     if(e.target.value.length > 1){
@@ -35,7 +46,6 @@ class Category extends React.Component{
 
   handleAddList = () => {
     if(this.state.playlistToAdd.length > 1){
-      this.setState({openForm: false, playlists: this.state.playlists.concat(this.state.playlistToAdd)});
 
       var data = {};
       data['category'] = this.props.catName;
@@ -47,6 +57,7 @@ class Category extends React.Component{
         data: data,
         withCredentials: true
       }).then((result) => {console.log(result)});
+      this.setState({openForm: false, playlists: this.state.playlists.concat(this.state.playlistToAdd)});
     }
   }
 
@@ -73,6 +84,17 @@ class Category extends React.Component{
     this.setState((prevState) => ({
       playlists: prevState.playlists.filter((v, i) => i !== id)
     }));
+
+    var data = {};
+    data['category'] = this.props.catName;
+    data['playlist'] = id;
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/deletePlaylist',
+      data: data,
+      withCredentials: true
+    }).then((result) => {console.log(result)});
   }
 
 

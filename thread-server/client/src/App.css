@@ -1,4 +1,10 @@
 
+.sideBarLoader{
+  padding-top: 20% !important;
+
+  padding-bottom: 20% !important;
+}
+
 .ui.labeled.icon.button.button2{
 
   width: 100%;

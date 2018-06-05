@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Sidebar, Segment, Button, Menu, Icon } from 'semantic-ui-react';
+import { Sidebar, Segment, Button, Menu, Icon, Loader } from 'semantic-ui-react';
 import MenuItem from '../../presentational-components/sidebarUtilities/menuItem.js';
 import AddCategory from '../../presentational-components/sidebarUtilities/addCategory.js';
 import PlaylistController from '../songRenderers/playlistController.js'
-
+import axios from 'axios';
 
 //SidebarLeftOverlay is the primary component
 //for controlling playlists and categories.
@@ -17,14 +17,26 @@ class SidebarLeftOverlay extends Component {
     this.state = {
       visible: true,
       categoryToAdd: '',
-      categories: [
-        {'moods': []},
-        {'genres': []},
-        {'artists': []},
-      ],
+      categories: [],
+      loading: true
      }
   }
 
+  componentDidMount(){
+    var categories: {};
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/getPlaylists',
+      withCredentials: true
+    }).then((categories) => {
+      var obj = categories.data;
+      var result = Object.keys(obj).map((key) => {
+        return {[key]: obj[key]}
+      });
+      this.setState({categories: result, loading: false});
+    });
+
+  }
 
   toggleVisibility = () => {this.setState({ visible: !this.state.visible })}
 
@@ -74,19 +86,26 @@ class SidebarLeftOverlay extends Component {
             as={Menu}
             visible={this.state.visible}
           >
-            {this.state.categories.map((category, key) =>
-              {
-                return(
-                  <MenuItem
-                    name={Object.keys(category)[0]}
-                    key={key}
-                    id={key}
-                    onSelectPlaylist={this.handleSelectPlaylist}
-                    onCategoryDelete={this.handleCategoryDelete}
-                    onCategoryEditSubmit={this.handleCategoryEditSubmit}
-                  />
-                )
-              })
+            {this.state.loading ?
+              <Menu.Item className="sideBarLoader">
+                <Loader active />
+              </Menu.Item> :
+              <div>
+              {this.state.categories.map((category, key) =>
+                {
+                  return(
+                    <MenuItem
+                      name={Object.keys(category)[0]}
+                      playLists={category[Object.keys(category)[0]]}
+                      key={key}
+                      id={key}
+                      onSelectPlaylist={this.handleSelectPlaylist}
+                      onCategoryDelete={this.handleCategoryDelete}
+                      onCategoryEditSubmit={this.handleCategoryEditSubmit}
+                    />
+                  )
+                })
+              } </div>
             }
             <AddCategory
               categoryToAdd={this.state.categoryToAdd}

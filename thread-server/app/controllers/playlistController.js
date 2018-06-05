@@ -7,7 +7,31 @@ module.exports = {
     console.log(category, playlist, owner);
     return (
       sequelize.query(
-        `update users set playLists = JSON_MERGE_PRESERVE(playLists, \'{\"${category}\":\"${playlist}\"}\') where idUsers = ${owner};`
+        `update users set playLists =
+        JSON_MERGE_PRESERVE(COALESCE(playLists, '{}'), '{"${category}":"${playlist}"}')
+        where idUsers = ${owner};`
+      )
+    )
+  },
+
+  get: function(owner){
+    return(
+      User.findOne({
+        attributes: ['playLists'],
+        where:{
+          idUsers: owner
+        },
+        raw: true
+      })
+    )
+  },
+
+  delete: function(category, playlist, owner){
+    return(
+      sequelize.query(
+        `update users set playLists =
+        JSON_REMOVE(playLists, '$."${category}"[${playlist}]')
+        where idUsers = ${owner};`
       )
     )
   }

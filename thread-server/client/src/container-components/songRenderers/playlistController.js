@@ -23,8 +23,6 @@ class PlaylistController extends React.Component{
 
 
   render(){
-    console.log(this.state.selectedPlayList);
-    this.getSongs();
     return(
       <div><SongSorter /></div>
     )

@@ -6,7 +6,7 @@ module.exports = function(app){
       req.params.playlist,
       req.session.user.idUsers
     ).then((data) => {
-      console.log(data);
+      console.log();
     });
   });
 }

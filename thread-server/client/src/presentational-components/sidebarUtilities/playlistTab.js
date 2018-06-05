@@ -6,9 +6,9 @@ class PlaylistTab extends React.Component{
   render(){
     return(
       <div>
-        <Button value={this.props.playlist} onClick={this.props.onSelectPlaylist}>
+        
         {this.props.playlist}
-        </Button>
+
         <Button size='mini' floated='right' className='trashcan' inverted icon
           id={this.props.id}
           onClick={this.props.onDeleteList}>

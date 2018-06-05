@@ -10,6 +10,7 @@ class MenuItem extends React.Component{
       <Menu.Item className='sideItems'>
         <Category
           catName={this.props.name}
+          playLists={this.props.playLists}
           id={this.props.id}
           onSelectPlaylist={this.props.onSelectPlaylist}
           onCategoryEditSubmit={this.props.onCategoryEditSubmit}
