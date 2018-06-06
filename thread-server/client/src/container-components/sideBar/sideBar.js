@@ -29,26 +29,57 @@ class SidebarLeftOverlay extends Component {
       url: 'http://localhost:8080/getPlaylists',
       withCredentials: true
     }).then((categories) => {
-      var obj = categories.data;
-      var result = Object.keys(obj).map((key) => {
-        return {[key]: obj[key]}
-      });
-      this.setState({categories: result, loading: false});
+      let cats = categories.data;
+      let cats2 = {}
+      console.log(cats);
+      //hacky way of reducing keys of objects and values into lists
+      for(var i = 0; i<cats.length; i++){cats2[cats[i].catname] = [];}
+      for(var i = 0; i<cats.length; i++){cats2[cats[i].catname].push(cats[i].plname);}
+      cats = [];
+      for(var i = 0; i<Object.keys(cats2).length; i++){
+        var key = Object.keys(cats2)[i];
+        if(!cats2[key].includes(null)){
+          cats[i] = {[key]: cats2[key]};
+        }else{
+          cats[i] = {[key]: []}
+        }
+      }
+      this.setState({categories: cats, loading: false});
     });
 
   }
 
-  toggleVisibility = () => {this.setState({ visible: !this.state.visible })}
+  toggleVisibility = () => {
+    this.setState({ visible: !this.state.visible })
+  }
 
   handleAddCategory = (cat) => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/addCategory',
+      data: {
+        category: cat
+      },
+      withCredentials: true
+    })
     var categoryToAdd = {};
     categoryToAdd[cat] = [];
     this.setState({...this.state, categories: this.state.categories.concat(categoryToAdd)});
   }
 
 
-  handleCategoryDelete = (id) => {
-    this.setState({categories: this.state.categories.filter((c, i) => i !== id)});
+  handleCategoryDelete = (catName, id) => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/deleteCategory',
+      data: {
+        catName: catName
+      },
+      withCredentials: true
+    })
+    this.setState({
+      categories: this.state.categories.filter(function(c, i){return i != id})
+    });
   }
 
   handleSelectPlaylist = (e) => {
@@ -63,14 +94,13 @@ class SidebarLeftOverlay extends Component {
     newCat[newName] = category[name];
     categories[id] = newCat;
     this.setState({categories})
-    let cats = {};
-    for (var i = 0; i < categories.length; ++i){
-      cats = {...cats, ...categories[i]};
-    }
     axios({
       method: 'post',
-      url: 'http://localhost:8080/editCat',
-      data: cats,
+      url: 'http://localhost:8080/renameCat',
+      data: {
+        catName: name,
+        name: newName
+      },
       withCredentials: true
     })
 

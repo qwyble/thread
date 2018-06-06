@@ -48,7 +48,7 @@ class Category extends React.Component{
     if(this.state.playlistToAdd.length > 1){
 
       var data = {};
-      data['category'] = this.props.catName;
+      data['catName'] = this.props.catName;
       data['playlist'] = this.state.playlistToAdd;
 
       axios({
@@ -86,8 +86,8 @@ class Category extends React.Component{
     }));
 
     var data = {};
-    data['category'] = this.props.catName;
-    data['playlist'] = id;
+    data['catName'] = this.props.catName;
+    data['plName'] = e.target.name;
 
     axios({
       method: 'post',

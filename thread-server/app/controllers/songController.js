@@ -3,7 +3,7 @@ const Song = require('../models/song.js')(sequelize, Sequelize);
 
 
 module.exports = {
-  get: function(playlist, owner){
+  getStream: function(owner){
   return (Song.findAll({
             where: {
               owner: owner

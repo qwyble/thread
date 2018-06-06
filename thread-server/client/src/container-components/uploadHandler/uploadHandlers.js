@@ -72,7 +72,6 @@ class UploadHandlers extends React.Component{
       //access results....
       console.log(result);
     });
-    this.props.onUpload(this.state.songUploadFields);
     this.reset();
   }
 

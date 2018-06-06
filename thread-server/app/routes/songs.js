@@ -9,4 +9,12 @@ module.exports = function(app){
       console.log();
     });
   });
+
+  app.get('/stream', function(req, res){
+    songs.getStream(
+      req.session.user.idUsers
+    ).then((data) => {
+      console.log();
+    });
+  });
 }

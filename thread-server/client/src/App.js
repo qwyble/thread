@@ -13,15 +13,6 @@ and for the list of songs to be rendered.
 it also renders the two main components: topBar and sideBar. */
 
 class App extends Component {
-  state = {
-      songs: [],
-  }
-
-
-  handleUpload = (songData) => {
-    var songs = [...this.state.songs, songData];
-    this.setState({songs});
-  }
 
 
   render() {
@@ -33,10 +24,10 @@ class App extends Component {
             logo={logo}/>
             <Switch>
               <Route path='/forum'>
-                <ForumSidebarLeftOverlay songs={this.state.songs}/>
+                <ForumSidebarLeftOverlay />
               </Route>
               <Route path='/'>
-                <SidebarLeftOverlay songs={this.state.songs}/>
+                <SidebarLeftOverlay />
               </Route>
             </Switch>
         </div>

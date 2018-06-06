@@ -22,7 +22,7 @@ class Protected extends React.Component{
               <Logout {...props} onLogout={this.props.onLogout}/>
             }
           />
-          <Route path="/stream" component={App} />
+          <Route path="/" component={App} />
         </Switch>
       )
     }

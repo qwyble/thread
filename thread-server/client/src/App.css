@@ -46,9 +46,8 @@
 .ui.modal.uploadModal{
   vertical-align: middle;
   position: relative;
-  top: 75%;
-  transform: translateY(-50%);
   margin: auto;
+  margin-top: 0vh !important;
 }
 
 .button{
@@ -76,8 +75,8 @@
 }
 
 .primaryContainer {
-  max-height: 80vh;
-  min-height: 80vh;
+  max-height: 85vh;
+  min-height: 85vh;
 }
 
 .listSidebar {
@@ -100,7 +99,7 @@
 .pusher {
       width: 100% !important;
       overflow: auto;
-      height: 100vh !important;
+      height: 100% !important;
 
 }
 .ui.visible.thin.left.sidebar ~ .pusher {

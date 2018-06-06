@@ -14,7 +14,7 @@ class ForumContainer extends React.Component{
   }
   render(){
     return(
-      <Grid style={{height: '100%'}} divided stretched columns={2}>
+      <Grid style={{width: "100%", height: '100%'}} divided stretched columns={2}>
         <Grid.Row>
           <Grid.Column width={13}>
             <ThreadList />

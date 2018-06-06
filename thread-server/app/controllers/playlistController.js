@@ -3,45 +3,73 @@ const User = require('../models/user.js')(sequelize, Sequelize);
 
 
 module.exports = {
-  add: function(category, playlist, owner){
-    console.log(category, playlist, owner);
+
+  addCategory: function(category, owner){
     return (
       sequelize.query(
-        `update users set playLists =
-        JSON_MERGE_PRESERVE(COALESCE(playLists, '{}'), '{"${category}":"${playlist}"}')
-        where idUsers = ${owner};`
+        `INSERT INTO categories (name, owner, isPublic)
+        VALUES ("${category}", ${owner}, 0);`
       )
     )
   },
 
-  get: function(owner){
+  deleteCategory: function(catName, owner){
     return(
-      User.findOne({
-        attributes: ['playLists'],
-        where:{
-          idUsers: owner
-        },
-        raw: true
+      sequelize.query(
+        `DELETE FROM categories
+        WHERE categories.name = "${catName}" AND categories.owner=${owner};`
+      )
+    )
+  },
+
+  renameCategory: function(catName, name, owner){
+    return(
+      sequelize.query(
+        `UPDATE categories
+        SET name = "${name}"
+        WHERE name = "${catName}" AND owner=${owner};`
+      )
+    )
+  },
+
+  addPlaylist: function(catName, playlist, owner){
+    console.log(catName, playlist);
+    return (
+      sequelize.query(
+        `INSERT INTO playlists (name, category)
+        VALUES ("${playlist}",
+          (SELECT idcategories FROM categories
+          WHERE name = "${catName}" AND owner = ${owner}
+          LIMIT 1));`
+      )
+    )
+  },
+
+
+  deletePlaylist: function(plName, catName, owner){
+    return(
+      sequelize.query(
+        `DELETE FROM playlists
+        WHERE name = "${plName}" AND category =
+          (SELECT idcategories FROM categories
+          WHERE name = "${catName}" AND owner = ${owner}
+          LIMIT 1);`
+      )
+    )
+  },
+
+
+  getCats: function(owner){
+    return(
+      sequelize.query(
+        `SELECT categories.name AS catname, categories.idcategories as id, playlists.name AS plname FROM categories
+        LEFT JOIN playlists
+        ON categories.idcategories = playlists.category
+        WHERE categories.owner = ${owner};`, {
+        type: sequelize.QueryTypes.SELECT
       })
     )
-  },
-
-  delete: function(category, playlist, owner){
-    return(
-      sequelize.query(
-        `update users set playLists =
-        JSON_REMOVE(playLists, '$."${category}"[${playlist}]')
-        where idUsers = ${owner};`
-      )
-    )
-  },
-
-  overWrite: function(categories, owner){
-    console.log(categories)
-    return(
-      sequelize.query(
-        `UPDATE users SET playLists = ('${categories}') WHERE idUsers = ${owner}`
-      )
-    )
   }
+
+
 }

@@ -28,7 +28,7 @@ class SidebarTopOverlay extends Component {
             </Menu.Item>
 
             <Menu.Item link name='upload' >
-              <UploadHandlers onUpload={this.props.onUpload}/>
+              <UploadHandlers />
             </Menu.Item>
 
             <Menu.Item name='friends'>
