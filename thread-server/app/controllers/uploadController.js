@@ -23,12 +23,12 @@ function getPublicUrl (file_name) {
 
 
 module.exports = {
-  upload: function (req, res, next) {
-      fileToBucket(req, res, next);
+  upload: function (req, res, next, fin) {
+      fileToBucket(req, res, next, fin);
   }
 }
 //send file to cloud bucket
-fileToBucket = (req, res, next) => {
+fileToBucket = (req, res, next, fin) => {
     const file = req.file;
     var url = '';
     const gcsname = uuidv4() + file.originalname;
@@ -47,6 +47,7 @@ fileToBucket = (req, res, next) => {
       }).then((url) => {
         console.log('upload complete');
         metaToDb(req, url, res);
+        fin()
       });
     });
     stream.end(file.buffer);
@@ -61,5 +62,5 @@ metaToDb = (req, url, res) => {
     owner: req.session.user.idUsers,
     dateUploaded: new Date(),
     URL: url
-  }).then((test) => {console.log(test.dataValues)})
+  })
 }

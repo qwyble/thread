@@ -14,7 +14,7 @@ module.exports = function(app){
     songs.getStream(
       req.session.user.idUsers
     ).then((data) => {
-      console.log();
+      res.status(200).send(data);
     });
   });
 }

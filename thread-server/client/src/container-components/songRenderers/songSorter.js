@@ -1,30 +1,39 @@
 import React from 'react';
-import {Table, Button, Icon} from 'semantic-ui-react';
-import SongsList from './songsList.js'
+import {Table, Button, Icon, Checkbox, Rating, Loader} from 'semantic-ui-react';
+import SongRow from './songRow.js'
 
 
 class SongSorter extends React.Component{
   state ={
     _loading: false,
+    songs: []
   }
+
+  static getDerivedStateFromProps(props, state){
+    return {songs: props.songs, _loading: props._loading};
+  }
+
 
   render(){
     return(
-      <Table celled striped compact unstackable inverted selectable>
+      <div>
+      <Table size='small' celled striped compact unstackable inverted selectable>
         <Table.Header fullWidth>
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell>Title</Table.HeaderCell>
-            <Table.HeaderCell>Artist</Table.HeaderCell>
-            <Table.HeaderCell>Length</Table.HeaderCell>
+            <Table.HeaderCell>Uploader</Table.HeaderCell>
             <Table.HeaderCell>Rating</Table.HeaderCell>
+            <Table.HeaderCell>Genre</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-
         <Table.Body>
-      
+          {this.state.songs.map((song, key) => {
+            return(
+              <SongRow key={key} song={song}/>
+            )
+          })}
         </Table.Body>
-
         <Table.Footer fullWidth>
           <Table.Row>
             <Table.HeaderCell />
@@ -38,6 +47,8 @@ class SongSorter extends React.Component{
           </Table.Row>
         </Table.Footer>
       </Table>
+      {this.state._loading ? <Loader active size='massive'/> :<div></div>}
+    </div>
 
     )
   }

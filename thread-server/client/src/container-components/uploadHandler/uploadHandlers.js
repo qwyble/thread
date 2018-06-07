@@ -12,6 +12,7 @@ const initialState = {
   },
   songURL: '',
   uploadButtonToggle: true,
+  isLoading: false
 }
 
 class UploadHandlers extends React.Component{
@@ -62,7 +63,8 @@ class UploadHandlers extends React.Component{
     data.append('description', this.state.songUploadFields.description);
     data.append('genres', this.state.songUploadFields.genres);
     data.append('URL', this.state.songUploadFields.songURL);
-
+    this.setState({isLoading: true});
+    console.log(this.state.isLoading);
     axios({
       method: 'post',
       url: 'http://localhost:8080/upload',
@@ -70,9 +72,9 @@ class UploadHandlers extends React.Component{
       withCredentials: true
     }).then((result) => {
       //access results....
-      console.log(result);
+      this.reset();
     });
-    this.reset();
+
   }
 
 
@@ -82,6 +84,7 @@ class UploadHandlers extends React.Component{
         onUpload={this.handleUpload}
         onInputChange={this.handleInputChange}
         data={this.state}
+        _loading={this.state.isLoading}
       />
     )
   }

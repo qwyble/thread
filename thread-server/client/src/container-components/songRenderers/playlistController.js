@@ -9,7 +9,8 @@ import axios from 'axios';
 class PlaylistController extends React.Component{
   state={
     selectedPlaylist: '',
-    songsToRender: [],
+    songs: [],
+    _loading: false,
   }
 
   static getDerivedStateFromProps(props, state){
@@ -17,6 +18,7 @@ class PlaylistController extends React.Component{
   }
 
   componentDidMount(){
+    this.setState({_loading: true});
     var url = '';
     if(!this.state.selectedPlaylist){
       url = 'http://localhost:8080/stream';
@@ -27,7 +29,8 @@ class PlaylistController extends React.Component{
       withCredentials: true
     })
     .then((result) => {
-      this.setState(this.state.songsToRender: result)
+      this.setState({songs: result.data})
+      this.setState({_loading: false});
     });
   }
 
@@ -37,7 +40,7 @@ class PlaylistController extends React.Component{
 
   render(){
     return(
-      <div><SongSorter /></div>
+      <div><SongSorter _loading={this.state._loading} songs={this.state.songs}/></div>
     )
   }
 }

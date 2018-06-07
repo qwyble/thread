@@ -47,8 +47,10 @@ class SidebarTopOverlay extends Component {
             </Menu.Item>
 
             <Menu.Item name='stream'>
-              <Icon name='sound' />
-              Stream
+              <Link to='/stream'>
+                <Icon name='sound' />
+                Stream
+              </Link>
             </Menu.Item>
 
             <Menu.Item name='forums'>

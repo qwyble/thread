@@ -31,7 +31,6 @@ class SidebarLeftOverlay extends Component {
     }).then((categories) => {
       let cats = categories.data;
       let cats2 = {}
-      console.log(cats);
       //hacky way of reducing keys of objects and values into lists
       for(var i = 0; i<cats.length; i++){cats2[cats[i].catname] = [];}
       for(var i = 0; i<cats.length; i++){cats2[cats[i].catname].push(cats[i].plname);}
