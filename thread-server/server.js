@@ -34,3 +34,5 @@ var authRoute = require('./app/routes/auth.js')(app);
 var uploadRoute = require('./app/routes/upload.js')(app);
 var songRenderRoute = require('./app/routes/songs.js')(app);
 var playListRoute = require('./app/routes/playlists.js')(app);
+var searchRoute = require('./app/routes/search.js')(app);
+var songPlaylistRoute = require('./app/routes/songPlaylist.js')(app);

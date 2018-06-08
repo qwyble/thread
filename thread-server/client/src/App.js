@@ -5,6 +5,7 @@ import SidebarLeftOverlay from './container-components/sideBar/sideBar.js';
 import ForumSidebarLeftOverlay from './container-components/forum/forumSideBar.js'
 import SidebarTopOverlay from './container-components/topBar/topBar.js';
 import { Switch, Route } from 'react-router-dom';
+import Explorer from './container-components/search/explorer.js';
 
 
 
@@ -25,6 +26,9 @@ class App extends Component {
             <Switch>
               <Route path='/forum'>
                 <ForumSidebarLeftOverlay />
+              </Route>
+              <Route path='/explore' >
+                <Explorer />
               </Route>
               <Route path='/'>
                 <SidebarLeftOverlay />

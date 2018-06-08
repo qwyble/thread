@@ -22,13 +22,21 @@ class SidebarTopOverlay extends Component {
               </Link>
             </Menu.Item>
 
-            <Menu.Item name='friends'>
+            <Menu.Item name='profile'>
               <Icon name='user circle outline' />
               Profile
             </Menu.Item>
 
+
             <Menu.Item link name='upload' >
               <UploadHandlers />
+            </Menu.Item>
+
+            <Menu.Item name='explor'>
+              <Link to='/explore'>
+                <Icon name='search' />
+                Explore
+              </Link>
             </Menu.Item>
 
             <Menu.Item name='friends'>
