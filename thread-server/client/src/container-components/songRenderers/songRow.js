@@ -31,7 +31,7 @@ class SongRow extends React.Component{
     return(
       <Table.Row>
         <Table.Cell collapsing>
-          <Checkbox />
+          <Checkbox id={this.props.song.idSongs} onChange={this.props.onSongSelect} />
         </Table.Cell>
         <Table.Cell>
           {this.props.song.title}

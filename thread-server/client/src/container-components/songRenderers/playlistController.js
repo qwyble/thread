@@ -40,7 +40,13 @@ class PlaylistController extends React.Component{
 
   render(){
     return(
-      <div><SongSorter _loading={this.state._loading} songs={this.state.songs}/></div>
+      <div>
+        <SongSorter
+          _loading={this.state._loading}
+          songs={this.state.songs}
+          categories={this.props.categories}
+        />
+      </div>
     )
   }
 }

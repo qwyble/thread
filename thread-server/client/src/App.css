@@ -5,6 +5,22 @@
   padding-bottom: 20% !important;
 }
 
+.stickyTop{
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 0 !important;
+  background: rgba(0, 0, 0, .3) !important;
+}
+.stickyBottom{
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  background: rgba(0, 0, 0, .3) !important;
+}
+
+.t1{
+  margin: 0 !important;
+}
 .ui.labeled.icon.button.button2{
 
   width: 100%;
@@ -44,9 +60,9 @@
 }
 
 .ui.modal.uploadModal{
-  vertical-align: middle;
+  vertical-align: middle !important;
   position: relative;
-  margin: auto;
+  margin: auto !important;
   margin-top: 0vh !important;
 }
 
@@ -75,8 +91,9 @@
 }
 
 .primaryContainer {
-  max-height: 85vh;
+  max-height: 84.7vh;
   min-height: 85vh;
+  margin: 0 !important;
 }
 
 .listSidebar {
@@ -85,6 +102,7 @@
 }
 .ui.inverted.blue.button.sidebarButton{
   position: fixed;
+  z-index: 123421;
 }
 
 .ui.thin.left.sidebar, .ui.thin.right.sidebar {

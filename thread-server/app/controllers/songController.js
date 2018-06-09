@@ -14,7 +14,8 @@ module.exports = {
         LEFT JOIN songratings
           ON songs.idSongs = songratings.song
           AND users.idUsers = songratings.user
-      WHERE songs.owner = $1;`,{
+      WHERE songs.owner = $1
+      LIMIT 20;`,{
         bind: [owner],
         type: sequelize.QueryTypes.SELECT
       }
@@ -23,7 +24,6 @@ module.exports = {
   },
 
   rateSong: function(songId, rating, userId){
-    console.log(songId, rating, userId)
     return(
       sequelize.query(
         `REPLACE INTO songratings (rating, song, user)

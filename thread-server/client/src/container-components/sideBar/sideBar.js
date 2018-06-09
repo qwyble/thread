@@ -136,7 +136,7 @@ class SidebarLeftOverlay extends Component {
               <Icon name={this.state.visible ? 'left arrow' : 'right arrow'}/>
             </Button>
             <div>
-              <PlaylistController selectedPlaylist={this.state.selectedPlaylist}/>
+              <PlaylistController selectedPlaylist={this.state.selectedPlaylist} categories={this.state.categories}/>
             </div>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
