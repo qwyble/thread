@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Icon, Loader } from 'semantic-ui-react';
 import MenuItem from '../../presentational-components/sidebarUtilities/menuItem.js';
 import AddCategory from '../../presentational-components/sidebarUtilities/addCategory.js';
-import PlaylistController from '../songRenderers/playlistController.js'
+import AudioRenderer from '../../presentational-components/audio/audioRenderer.js'
+import PlaylistController from '../songRenderers/playlistController.js';
 import axios from 'axios';
 
 //SidebarLeftOverlay is the primary component
@@ -18,9 +19,12 @@ class SidebarLeftOverlay extends Component {
       categories: [],
       selectedPlaylist: '',
       visible: true,
-      loading: true
-     }
+      loading: true,
+      nowPlaying: {},
+      ended: false
+    }
   }
+
   componentDidMount(){
     axios({
       method: 'get',
@@ -39,6 +43,14 @@ class SidebarLeftOverlay extends Component {
       this.setState({categories: cats, loading: false});
     });
 
+  }
+
+  handlePlaying = (song) => {
+    this.setState({nowPlaying: song, ended: false}, () => {console.log(song)});
+  }
+
+  handleEnd = () => {
+    this.setState({ended: true});
   }
 
 
@@ -80,18 +92,20 @@ class SidebarLeftOverlay extends Component {
   }
 
 
-  handleCategoryEditSubmit = (id, name, newName) => {
-    var newCat = {};
+  handleCategoryEditSubmit = (catName, catid, newName) => {
     var categories = [...this.state.categories];
-    var category = categories[id];
-    newCat[newName] = category[name];
-    categories[id] = newCat;
+    for(var i = 0; i < categories.length; i++){
+      if(categories[i].catid === catid){
+        categories[i].catname = newName;
+      }
+    }
+
     this.setState({categories})
     axios({
       method: 'post',
       url: 'http://localhost:8080/renameCat',
       data: {
-        catName: name,
+        catid: catid,
         name: newName
       },
       withCredentials: true
@@ -102,6 +116,7 @@ class SidebarLeftOverlay extends Component {
 
   render() {
     return (
+      <div>
       <div className='primaryContainer'>
         <Sidebar.Pushable as={Segment} className='primaryContainer'>
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu} visible={this.state.visible} >
@@ -114,7 +129,8 @@ class SidebarLeftOverlay extends Component {
                     return(
                       <MenuItem name={category.catname}
                         playLists={category.pls}
-                        key={key} id={key} onSelectPlaylist={this.handleSelectPlaylist}
+                        key={key} id={category.catid}
+                        onSelectPlaylist={this.handleSelectPlaylist}
                         onCategoryDelete={this.handleCategoryDelete}
                         onCategoryEditSubmit={this.handleCategoryEditSubmit}
                       />
@@ -126,14 +142,22 @@ class SidebarLeftOverlay extends Component {
             <AddCategory onAddCategory={this.handleAddCategory} />
           </Sidebar>
           <Sidebar.Pusher className='primaryContainer'>
-            <Button inverted icon className='sidebarButton' attached='right' color='blue' onClick={this.toggleVisibility}>
+            <Button inverted icon className='sidebarButton'
+              attached='right' color='blue' onClick={this.toggleVisibility}>
               <Icon name={this.state.visible ? 'left arrow' : 'right arrow'}/>
             </Button>
             <div>
-              <PlaylistController selectedPlaylist={this.state.selectedPlaylist} categories={this.state.categories}/>
+              <PlaylistController onPlaying={this.handlePlaying}
+                nowPlaying={this.state.nowPlaying}
+                selectedPlaylist={this.state.selectedPlaylist}
+                categories={this.state.categories} ended={this.state.ended}/>
             </div>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
+      </div>
+      {Object.keys(this.state.nowPlaying).length > 0 ?
+        <AudioRenderer onEnd={this.handleEnd} song={this.state.nowPlaying}/>
+      : <div></div>}
       </div>
     )
   }

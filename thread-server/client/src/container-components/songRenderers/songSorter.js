@@ -10,11 +10,18 @@ class SongSorter extends React.Component{
     songs: [],
     songsToPlaylist: [],
     _disabled: true,
-    playlistToAddTo: ''
+    playlistToAddTo: '',
+    nowPlaying: ''
   }
 
   static getDerivedStateFromProps(props, state){
     return {songs: props.songs, _loading: props._loading};
+  }
+
+  handlePlaying = (id) =>{
+    this.setState({nowPlaying: id});
+    var song = this.state.songs.filter((song, i) => song.idSongs === id)[0];
+    this.props.onPlaying(song)
   }
 
   handleSongSelect = (e) => {
@@ -62,6 +69,7 @@ class SongSorter extends React.Component{
           <Table.Header fullWidth className='stickyTop'>
             <Table.Row>
               <Table.HeaderCell />
+              <Table.HeaderCell />
               <Table.HeaderCell>Title</Table.HeaderCell>
               <Table.HeaderCell>Uploader</Table.HeaderCell>
               <Table.HeaderCell>Rating</Table.HeaderCell>
@@ -72,7 +80,9 @@ class SongSorter extends React.Component{
         <Table.Body>
           {this.state.songs.map((song, key) => {
             return(
-              <SongRow key={key} song={song} onSongSelect={this.handleSongSelect}/>
+              <SongRow key={key} song={song}
+                playing={song.idSongs === this.state.nowPlaying}
+                onPlaying={this.handlePlaying} onSongSelect={this.handleSongSelect}/>
             )
           })}
         </Table.Body>

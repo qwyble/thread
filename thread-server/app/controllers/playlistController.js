@@ -13,47 +13,41 @@ module.exports = {
     )
   },
 
-  deleteCategory: function(catName, owner){
+  deleteCategory: function(catid, owner){
     return(
       sequelize.query(
         `DELETE FROM categories
-        WHERE categories.name = "${catName}" AND categories.owner=${owner};`
+        WHERE categories.idcategoriy = "${catid}" AND categories.owner=${owner};`
       )
     )
   },
 
-  renameCategory: function(catName, name, owner){
+  renameCategory: function(catid, name, owner){
     return(
       sequelize.query(
         `UPDATE categories
         SET name = "${name}"
-        WHERE name = "${catName}" AND owner=${owner};`
+        WHERE idcategories = "${catid}" AND owner=${owner};`
       )
     )
   },
 
-  addPlaylist: function(catName, playlist, owner){
-    console.log(catName, playlist);
+  addPlaylist: function(catid, playlist, owner){
+    console.log(catid, playlist);
     return (
       sequelize.query(
         `INSERT INTO playlists (name, category)
-        VALUES ("${playlist}",
-          (SELECT idcategories FROM categories
-          WHERE name = "${catName}" AND owner = ${owner}
-          LIMIT 1));`
+        VALUES ("${playlist}", ${catid});`
       )
     )
   },
 
 
-  deletePlaylist: function(plName, catName, owner){
+  deletePlaylist: function(plid, catid, owner){
     return(
       sequelize.query(
         `DELETE FROM playlists
-        WHERE name = "${plName}" AND category =
-          (SELECT idcategories FROM categories
-          WHERE name = "${catName}" AND owner = ${owner}
-          LIMIT 1);`
+        WHERE idplaylists = "${plid}" AND category = ${catid};`
       )
     )
   },

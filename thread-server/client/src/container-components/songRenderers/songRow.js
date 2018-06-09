@@ -4,16 +4,29 @@ import axios from 'axios';
 
 
 class SongRow extends React.Component{
-  state={
-    rating: 0
-  }
-  static getDerivedStateFromProps(props, state){
-    return{
-      rating: props.song.rating
+  constructor(props){
+    super(props);
+    this.state={
+      rating: 0,
+      _playToggle: false
     }
+    this.handlePlayToggle = this.handlePlayToggle.bind(this);
+    this.handleRatingChange = this.handleRatingChange.bind(this);
   }
 
-  handleRatingChange = (e, d) =>{
+  static getDerivedStateFromProps(props, state){
+    return{
+      rating: props.song.rating,
+      _playToggle: props.playing
+    }
+  }
+  
+
+  handlePlayToggle() {
+    this.props.onPlaying(this.props.song.idSongs);
+  }
+
+  handleRatingChange(e, d) {
     this.setState({rating: d.rating}, () => {
       axios({
         method: 'post',
@@ -31,7 +44,14 @@ class SongRow extends React.Component{
     return(
       <Table.Row>
         <Table.Cell collapsing>
-          <Checkbox id={this.props.song.idSongs} onChange={this.props.onSongSelect} />
+          <Checkbox size = 'mini' id={this.props.song.idSongs} onChange={this.props.onSongSelect} />
+          <span className='checkboxSpan' ></span>
+        </Table.Cell>
+        <Table.Cell collapsing onClick={this.handlePlayToggle}>
+          {this.state._playToggle ?
+            <Icon name="pause circle outline"/> :
+            <Icon name="play circle outline"/>
+          }
         </Table.Cell>
         <Table.Cell>
           {this.props.song.title}

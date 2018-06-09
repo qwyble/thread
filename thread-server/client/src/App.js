@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className="">
+        <div>
           <SidebarTopOverlay
             onUpload={this.handleUpload}
             logo={logo}/>

@@ -11,14 +11,14 @@ module.exports = function(app){
 
   app.post('/deleteCategory', function(req, res){
     playlist.deleteCategory(
-      req.body.catName,
+      req.body.catid,
       req.session.user.idUsers
     )
   })
 
   app.post('/addPlaylist', function(req, res){
     playlist.addPlaylist(
-      req.body.catName,
+      req.body.catid,
       req.body.playlist,
       req.session.user.idUsers
     ).then((result) => {console.log(result)})
@@ -27,8 +27,8 @@ module.exports = function(app){
 
   app.post('/deletePlaylist', function(req, res){
     playlist.deletePlaylist(
-      req.body.plName,
-      req.body.catName,
+      req.body.plid,
+      req.body.catid,
       req.session.user.idUsers
     )
   }),
@@ -41,7 +41,7 @@ module.exports = function(app){
   app.post('/renameCat', function(req, res){
     console.log(req.body);
     playlist.renameCategory(
-      req.body.catName,
+      req.body.catid,
       req.body.name,
       req.session.user.idUsers
     );

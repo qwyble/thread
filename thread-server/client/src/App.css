@@ -1,3 +1,19 @@
+.checkboxSpan{
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.ui.inverted.table{
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+
+.audioContainer{
+  margin: auto;
+  text-align: center;
+
+}
 
 .sideBarLoader{
   padding-top: 20% !important;
