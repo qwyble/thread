@@ -94,12 +94,12 @@ class SongSorter extends React.Component{
                   {this.props.categories.map((cat, key) => {
                     return(
                       <Menu.Item key={key}>
-                        {Object.keys(cat)}
+                        {cat.catname}
                         <Menu.Menu>
-                          {Object.values(cat)[0].map((v, k) => {
+                          {cat.pls.map((pl, k) => {
                             return(
-                              <Menu.Item link key={k} value={v} onClick={this.handleAddToPlaylist}>
-                                {v}
+                              <Menu.Item link key={k} value={pl.plid} onClick={this.handleAddToPlaylist}>
+                                {pl.plname}
                               </Menu.Item>
                             )
                           })}

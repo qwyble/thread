@@ -21,32 +21,26 @@ class SidebarLeftOverlay extends Component {
       loading: true
      }
   }
-
   componentDidMount(){
-    var categories: {};
     axios({
       method: 'get',
       url: 'http://localhost:8080/getPlaylists',
       withCredentials: true
     }).then((categories) => {
-      let cats = categories.data;
-      let cats2 = {}
-      //hacky way of reducing keys of objects and values into lists
-      for(var i = 0; i<cats.length; i++){cats2[cats[i].catname] = [];}
-      for(var i = 0; i<cats.length; i++){cats2[cats[i].catname].push(cats[i].plname);}
-      cats = [];
-      for(var i = 0; i<Object.keys(cats2).length; i++){
-        var key = Object.keys(cats2)[i];
-        if(!cats2[key].includes(null)){
-          cats[i] = {[key]: cats2[key]};
-        }else{
-          cats[i] = {[key]: []}
-        }
-      }
+      var catpls = categories.data;
+      var cats = Object.values(
+        catpls.reduce( (cats, {catname, catid, plname, plid}) => {
+          if (! (catid in cats) )
+              cats[catid] = {catname, catid, pls: []};
+          cats[catid].pls.push({plname, plid});
+          return cats;
+        }, {})
+      )
       this.setState({categories: cats, loading: false});
     });
 
   }
+
 
   toggleVisibility = () => {
     this.setState({ visible: !this.state.visible })
@@ -118,8 +112,8 @@ class SidebarLeftOverlay extends Component {
                 {this.state.categories.map((category, key) =>
                   {
                     return(
-                      <MenuItem name={Object.keys(category)[0]}
-                        playLists={category[Object.keys(category)[0]]}
+                      <MenuItem name={category.catname}
+                        playLists={category.pls}
                         key={key} id={key} onSelectPlaylist={this.handleSelectPlaylist}
                         onCategoryDelete={this.handleCategoryDelete}
                         onCategoryEditSubmit={this.handleCategoryEditSubmit}

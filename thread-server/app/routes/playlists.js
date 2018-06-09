@@ -35,7 +35,7 @@ module.exports = function(app){
 
   app.get('/getPlaylists', function(req, res){
     playlist.getCats(req.session.user.idUsers)
-    .then((data) => {res.status(200).send(data);});
+    .then((data) => {console.log(data), res.status(200).send(data);});
   })
 
   app.post('/renameCat', function(req, res){

@@ -24,13 +24,7 @@ class Category extends React.Component{
 
   componentDidMount(){
     var playlists = this.props.playLists;
-    if(typeof playlists === 'string'){
-      var pl = [];
-      pl[0] = playlists;
-      this.setState({playlists: pl});
-    }else{
-      this.setState({playlists})
-    }
+    this.setState({playlists: playlists})
   }
 
 
@@ -82,7 +76,7 @@ class Category extends React.Component{
   handleDeleteList = (e) => {
     var id = parseInt(e.target.id, 10);
     this.setState((prevState) => ({
-      playlists: prevState.playlists.filter((v, i) => i !== id)
+      playlists: prevState.playlists.filter((v, i) => v.plid !== id)
     }));
 
     var data = {};
@@ -120,10 +114,14 @@ class Category extends React.Component{
           {this.state.displayLists ?
             <div>
               <Menu.Menu>
-                {this.state.playlists.map((playlist,key) =>
-                  <Menu.Item key={key} playlist={playlist} className='listSidebar'>
+                {this.state.playlists.map((playlist, key) =>
+                  <Menu.Item key={key} className='listSidebar'>
 
-                      <PlaylistTab playlist={playlist} key={key} id={key} onDeleteList={this.handleDeleteList} onSelectPlaylist={this.props.onSelectPlaylist}/>
+                      <PlaylistTab
+                        playlist={playlist.plname} key={key}
+                        id={playlist.plid} onDeleteList={this.handleDeleteList}
+                        onSelectPlaylist={this.props.onSelectPlaylist}
+                      />
 
                   </Menu.Item>)}
               </Menu.Menu>
@@ -133,7 +131,8 @@ class Category extends React.Component{
         </div>
           {this.state.displayLists ?
             <div>
-            <AddPlaylist categoryName={this.props.catName} openForm={this.state.openForm}
+            <AddPlaylist
+              categoryName={this.props.catName} openForm={this.state.openForm}
               toggleSubmit={this.state.toggleSubmit} onFormSubmit={this.handleAddList}
               onOpenForm={this.handleOpenForm} onInputChange={this.handleInputChange}
             />

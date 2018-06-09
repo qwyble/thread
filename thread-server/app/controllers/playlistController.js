@@ -62,7 +62,7 @@ module.exports = {
   getCats: function(owner){
     return(
       sequelize.query(
-        `SELECT categories.name AS catname, categories.idcategories as id, playlists.name AS plname FROM categories
+        `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid FROM categories
         LEFT JOIN playlists
         ON categories.idcategories = playlists.category
         WHERE categories.owner = ${owner};`, {
