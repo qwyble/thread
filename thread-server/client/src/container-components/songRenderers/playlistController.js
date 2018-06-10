@@ -14,16 +14,6 @@ class PlaylistController extends React.Component{
     nowPlaying: {}
   }
 
-  handlePlaying = (song) => {
-    this.props.onPlaying(song);
-  }
-
-  handleEnd = () => {
-    var id = this.state.nowPlaying.idSongs + 1;
-    var nextSong = this.state.songs.filter((song, i) => song.idSongs === id)[0];
-    this.handlePlaying(nextSong);
-  }
-
   static getDerivedStateFromProps(props, state){
     return {selectedPlaylist: props.selectedPlaylist, ended: props.ended, nowPlaying: props.nowPlaying};
   }
@@ -52,7 +42,15 @@ class PlaylistController extends React.Component{
     });
   }
 
+  handlePlaying = (song) => {
+    this.props.onPlaying(song);
+  }
 
+  handleEnd = () => {
+    var id = this.state.nowPlaying.idSongs + 1;
+    var nextSong = this.state.songs.filter((song, i) => song.idSongs === id)[0];
+    this.handlePlaying(nextSong);
+  }
 
 
 
@@ -64,6 +62,9 @@ class PlaylistController extends React.Component{
           songs={this.state.songs}
           categories={this.props.categories}
           onPlaying={this.handlePlaying}
+          onPausing={this.props.onPausing}
+          paused={this.props.paused}
+          nowPlaying={this.props.nowPlaying}
         />
       </div>
     )

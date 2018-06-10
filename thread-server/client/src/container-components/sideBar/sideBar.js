@@ -21,8 +21,10 @@ class SidebarLeftOverlay extends Component {
       visible: true,
       loading: true,
       nowPlaying: {},
-      ended: false
+      ended: false,
+      paused: false
     }
+
   }
 
   componentDidMount(){
@@ -46,7 +48,12 @@ class SidebarLeftOverlay extends Component {
   }
 
   handlePlaying = (song) => {
-    this.setState({nowPlaying: song, ended: false}, () => {console.log(song)});
+    this.setState({nowPlaying: song, ended: false, paused: false});
+  }
+
+
+  handlePausing = () => {
+    this.setState({paused: true})
   }
 
   handleEnd = () => {
@@ -148,16 +155,21 @@ class SidebarLeftOverlay extends Component {
             </Button>
             <div>
               <PlaylistController onPlaying={this.handlePlaying}
+                onPausing={this.handlePausing}
                 nowPlaying={this.state.nowPlaying}
                 selectedPlaylist={this.state.selectedPlaylist}
-                categories={this.state.categories} ended={this.state.ended}/>
+                categories={this.state.categories} ended={this.state.ended}
+                paused={this.state.paused}
+              />
             </div>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
       {Object.keys(this.state.nowPlaying).length > 0 ?
-        <AudioRenderer onEnd={this.handleEnd} song={this.state.nowPlaying}/>
-      : <div></div>}
+        <AudioRenderer onEnd={this.handleEnd} song={this.state.nowPlaying}
+          paused={this.state.paused} onAudioButton={this.handlePausing}
+        />
+      : <div className='audioContainer' style={{minHeight: '8.2vh'}}></div>}
       </div>
     )
   }

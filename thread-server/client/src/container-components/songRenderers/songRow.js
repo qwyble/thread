@@ -17,13 +17,18 @@ class SongRow extends React.Component{
   static getDerivedStateFromProps(props, state){
     return{
       rating: props.song.rating,
-      _playToggle: props.playing
+      _playToggle: props.playing && !props.paused
     }
   }
-  
+
 
   handlePlayToggle() {
-    this.props.onPlaying(this.props.song.idSongs);
+    if(!this.state._playToggle){
+      this.props.onPlaying(this.props.song.idSongs);
+    }else{
+      this.props.onPausing()
+    }
+
   }
 
   handleRatingChange(e, d) {

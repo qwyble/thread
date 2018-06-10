@@ -23,17 +23,17 @@ class App extends Component {
           <SidebarTopOverlay
             onUpload={this.handleUpload}
             logo={logo}/>
-            <Switch>
-              <Route path='/forum'>
-                <ForumSidebarLeftOverlay />
-              </Route>
-              <Route path='/explore' >
-                <Explorer />
-              </Route>
-              <Route path='/'>
-                <SidebarLeftOverlay />
-              </Route>
-            </Switch>
+          <Switch>
+            <Route path='/forum'>
+              <ForumSidebarLeftOverlay />
+            </Route>
+            <Route path='/explore' >
+              <Explorer />
+            </Route>
+            <Route path='/'>
+              <SidebarLeftOverlay />
+            </Route>
+          </Switch>
         </div>
       </div>
     );

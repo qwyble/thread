@@ -3,7 +3,8 @@ import {Modal, Portal,Table, Sticky, Button, Icon, Header, Menu, Checkbox, Ratin
 import SongRow from './songRow.js';
 import axios from 'axios';
 
-
+//renders the lst of songs, controls adding and deleting songs to/from playlists
+//
 class SongSorter extends React.Component{
   state ={
     _loading: false,
@@ -15,11 +16,10 @@ class SongSorter extends React.Component{
   }
 
   static getDerivedStateFromProps(props, state){
-    return {songs: props.songs, _loading: props._loading};
+    return {songs: props.songs, _loading: props._loading, nowPlaying: props.nowPlaying};
   }
 
   handlePlaying = (id) =>{
-    this.setState({nowPlaying: id});
     var song = this.state.songs.filter((song, i) => song.idSongs === id)[0];
     this.props.onPlaying(song)
   }
@@ -37,7 +37,6 @@ class SongSorter extends React.Component{
   }
 
   handlePlaylistButtonToggle = () => {
-    console.log(this.state.songsToPlaylist);
     if(this.state.songsToPlaylist.length < 1){
       this.setState({_disabled: true});
     }else{
@@ -45,9 +44,9 @@ class SongSorter extends React.Component{
     }
   }
 
-  handleAddToPlaylist = (e) => {
-    console.log(e.target.text);
-    this.setState({playlistToAddTo: e.target.text}, () => {
+  handleAddToPlaylist = (e, data) => {
+
+    this.setState({playlistToAddTo: data.value}, () => {
       axios({
         method: 'post',
         url: 'http://localhost:8080/addSongsToPlaylist',
@@ -56,6 +55,8 @@ class SongSorter extends React.Component{
           playlist: this.state.playlistToAddTo
         },
         withCredentials: true
+      }).then((result) => {
+        console.log(result.data.message);
       })
 
     })
@@ -81,8 +82,11 @@ class SongSorter extends React.Component{
           {this.state.songs.map((song, key) => {
             return(
               <SongRow key={key} song={song}
-                playing={song.idSongs === this.state.nowPlaying}
-                onPlaying={this.handlePlaying} onSongSelect={this.handleSongSelect}/>
+                playing={song.idSongs === this.state.nowPlaying.idSongs}
+                onPlaying={this.handlePlaying} onSongSelect={this.handleSongSelect}
+                onPausing={this.props.onPausing}
+                paused={this.props.paused}
+              />
             )
           })}
         </Table.Body>

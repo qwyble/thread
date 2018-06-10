@@ -6,15 +6,15 @@ module.exports = {
   addSongsToPlaylist: function(songs, playlist, owner){
     var songsList = [];
     for(var i = 0; i < songs.length; i++){
-      songsList.push(`(${songs[i]}, ${playlist})`)
+      songsList.push([songs[i], playlist])
     }
-    var insert = songsList.join(',');
+    var insert = songsList;
     console.log(insert);
     return (
       sequelize.query(
-        `INSERT INTO songsplaylistsbridge (song, playlist)
-        VALUES $1;`, {
-          bind: [insert]
+        `INSERT IGNORE INTO songsplaylistsbridge (song, playlist)
+        VALUES :insert;`, {
+          replacements: {insert: insert}
         }
       )
     )

@@ -8,11 +8,45 @@
   color: rgba(255, 255, 255, 0.6) !important;
 }
 
+#pButton{
+	border: none;
+
+	background-position: center;
+  margin: 0;
+  padding: 0;
+  height: 100% !important;
+  width: 100% !important;
+
+
+}
+.ui.grid.playerGrid{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.playRow{
+  max-height: 8.3vh;
+  min-height: 8.3vh;
+}
+.ui.progress .bar {
+  height: 80% !important;
+}
+.progress{
+  margin: 0 !important;
+
+  height: 80% !important;
+}
+
 
 .audioContainer{
   margin: auto;
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  height: auto;
+  color: #2bbbff !important;
+}
 
+.playerCol{
+  color: #2bbbff !important;
 }
 
 .sideBarLoader{
@@ -132,7 +166,7 @@
 
 .pusher {
       width: 100% !important;
-      overflow: auto;
+      overflow: auto !important;
       height: 100% !important;
 
 }
