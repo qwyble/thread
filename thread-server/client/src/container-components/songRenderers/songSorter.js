@@ -64,6 +64,7 @@ class SongSorter extends React.Component{
 
 
   render(){
+    console.log(this.state.isPublic)
     return(
       <div>
       <Table className='t1' size='small' celled striped compact unstackable inverted selectable>
@@ -93,10 +94,16 @@ class SongSorter extends React.Component{
         <Table.Footer className='stickyBottom' fullWidth>
           <Table.Row>
             <Table.HeaderCell />
+            <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
-              <Button floated='right' icon labelPosition='left' primary size='mini'>
-                <Icon name='user' /> Go Public
-              </Button>
+              {this.props.isPublic ?
+                <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePrivate}>
+                    <div><Icon name='privacy' /> Make Private </div>
+                  </Button>
+              : <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePublic}>
+                  <div><Icon name='user' /> Make Public </div>
+                </Button>
+              }
               <Button size='mini'>Bookmark</Button>
 
               <Portal closeOnTriggerClick openOnTriggerClick trigger={

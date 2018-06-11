@@ -11,34 +11,53 @@ class PlaylistController extends React.Component{
     selectedPlaylist: '',
     songs: [],
     _loading: false,
-    nowPlaying: {}
+    nowPlaying: {},
+    isPublic: ''
   }
 
   static getDerivedStateFromProps(props, state){
-    return {selectedPlaylist: props.selectedPlaylist, ended: props.ended, nowPlaying: props.nowPlaying};
+    return {selectedPlaylist: props.selectedPlaylist, ended: props.ended, nowPlaying: props.nowPlaying, isPublic: props.isPublic};
   }
 
-  componentDidUpdate(){
+  componentDidUpdate(prevProps){
     if(this.state.ended){
       this.handleEnd();
     }
-    return true;
+    if(this.props.selectedPlaylist != prevProps.selectedPlaylist){
+      this.setState({_loading: true});
+      var url =  `http://localhost:8080/stream/${this.props.selectedPlaylist}`;
+      axios.get(url, {withCredentials: true}).then((result) => {
+        this.setState({songs: result.data, _loading: false});
+      });
+    }
   }
 
   componentDidMount(){
     this.setState({_loading: true});
     var url = '';
-    if(!this.state.selectedPlaylist){
-      url = 'http://localhost:8080/stream';
-    }else{
-      url = `http://localhost:8080/stream/${this.state.selectedPlaylist}`
-    }
-    axios.get(url,{
-      withCredentials: true
-    })
+    if(!this.state.selectedPlaylist){url = 'http://localhost:8080/stream';}
+    else{url = `http://localhost:8080/stream/${this.state.selectedPlaylist}`}
+    axios.get(url,{withCredentials: true})
     .then((result) => {
-      this.setState({songs: result.data})
-      this.setState({_loading: false});
+      this.setState({songs: result.data, _loading: false})
+    });
+  }
+
+  handleMakePublic = () => {
+    axios.post('http://localhost:8080/makePublic', {
+      plid: this.state.selectedPlaylist,
+      withCredentials: true
+    }).then((result) => {
+      this.setState({isPublic: 1});
+    });
+  }
+
+  handleMakePrivate = () => {
+    axios.post('http://localhost:8080/makePrivate', {
+      plid: this.state.selectedPlaylist,
+      withCredentials: true
+    }).then((result) => {
+      this.setState({isPublic: 0});
     });
   }
 
@@ -65,6 +84,10 @@ class PlaylistController extends React.Component{
           onPausing={this.props.onPausing}
           paused={this.props.paused}
           nowPlaying={this.props.nowPlaying}
+          onMakePublic={this.handleMakePublic}
+          onMakePrivate={this.handleMakePrivate}
+          selectedPlaylist={this.state.selectedPlaylist}
+          isPublic={this.state.isPublic}
         />
       </div>
     )

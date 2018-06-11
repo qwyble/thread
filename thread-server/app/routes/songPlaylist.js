@@ -8,7 +8,7 @@ module.exports = function(app){
       req.body.playlist,
       req.session.user.idUsers
     ).then((result) => {res.status(200).send({message: "Playlist Updated"})});
-    });
 
+  });
 
 }

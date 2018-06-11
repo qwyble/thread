@@ -22,7 +22,8 @@ class SidebarLeftOverlay extends Component {
       loading: true,
       nowPlaying: {},
       ended: false,
-      paused: false
+      paused: false,
+      isPublic: ''
     }
 
   }
@@ -35,10 +36,10 @@ class SidebarLeftOverlay extends Component {
     }).then((categories) => {
       var catpls = categories.data;
       var cats = Object.values(
-        catpls.reduce( (cats, {catname, catid, plname, plid}) => {
+        catpls.reduce( (cats, {catname, catid, plname, plid, isPublic}) => {
           if (! (catid in cats) )
               cats[catid] = {catname, catid, pls: []};
-          cats[catid].pls.push({plname, plid});
+          cats[catid].pls.push({plname, plid, isPublic});
           return cats;
         }, {})
       )
@@ -94,8 +95,8 @@ class SidebarLeftOverlay extends Component {
     });
   }
 
-  handleSelectPlaylist = (e) => {
-    this.setState({selectedPlaylist: e.target.textContent})
+  handleSelectPlaylist = (e, data) => {
+    this.setState({selectedPlaylist: e.target.value, isPublic: data.ispublic})
   }
 
 
@@ -158,6 +159,7 @@ class SidebarLeftOverlay extends Component {
                 onPausing={this.handlePausing}
                 nowPlaying={this.state.nowPlaying}
                 selectedPlaylist={this.state.selectedPlaylist}
+                isPublic={this.state.isPublic}
                 categories={this.state.categories} ended={this.state.ended}
                 paused={this.state.paused}
               />

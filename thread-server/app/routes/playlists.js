@@ -35,7 +35,7 @@ module.exports = function(app){
 
   app.get('/getPlaylists', function(req, res){
     playlist.getCats(req.session.user.idUsers)
-    .then((data) => {console.log(data), res.status(200).send(data);});
+    .then((data) => {res.status(200).send(data);});
   })
 
   app.post('/renameCat', function(req, res){
@@ -46,6 +46,19 @@ module.exports = function(app){
       req.session.user.idUsers
     );
   })
+
+  app.post('/makePublic', function(req, res){
+    playlist.makePublic(
+      req.body.plid
+    ).then((result) => {res.status(200).send('looking good.')})
+  })
+
+  app.post('/makePrivate', function(req, res){
+    playlist.makePrivate(
+      req.body.plid
+    ).then((result) => {res.status(200).send('looking good.')})
+  })
+
 
 
 }

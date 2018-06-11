@@ -4,6 +4,7 @@ const User = require('../models/user.js')(sequelize, Sequelize);
 
 
 module.exports = {
+
   getStream: function(owner){
   return (
     sequelize.query(
@@ -20,6 +21,65 @@ module.exports = {
         type: sequelize.QueryTypes.SELECT
       }
     )
+    )
+  },
+
+  isPublic: function(plid){
+    return (
+      sequelize.query(
+        `SELECT playlists.isPublic
+        FROM playlists
+        WHERE playlists.idplaylists = ?`,{
+          replacements: [plid],
+          type: sequelize.QueryTypes.SELECT
+        }
+      )
+    )
+  },
+
+  getPubPlaylist: function(plid, owner){
+    return (
+      sequelize.query(
+        `SELECT songs.*, users.userName, songratings.rating
+        FROM songs
+          INNER JOIN users
+            ON songs.owner = users.idUsers
+          LEFT JOIN songratings
+            ON songs.idSongs = songratings.song
+            AND users.idUsers = songratings.user
+        WHERE songs.idSongs IN
+          (SELECT song FROM songsplaylistsbridge WHERE
+          songsplaylistsbridge.playlist = ?);`, {
+            replacements: [plid, owner],
+            type: sequelize.QueryTypes.SELECT
+          }
+      )
+    )
+  },
+
+  getPrivPlaylist: function(plid, owner){
+    return (
+      sequelize.query(
+        `SELECT songs.*, users.userName, songratings.rating
+        FROM songs
+          INNER JOIN users
+            ON songs.owner = users.idUsers
+          LEFT JOIN songratings
+            ON songs.idSongs = songratings.song
+            AND users.idUsers = songratings.user
+        WHERE songs.idSongs IN
+          (SELECT song FROM songsplaylistsbridge WHERE
+          songsplaylistsbridge.playlist = ?
+          AND songsplaylistsbridge.playlist IN (
+            SELECT playlists.idplaylists
+            FROM playlists
+              INNER JOIN categories
+                ON playlists.category = categories.idcategories
+            WHERE categories.owner = ?));`, {
+            replacements: [plid, owner],
+            type: sequelize.QueryTypes.SELECT
+          }
+      )
     )
   },
 

@@ -56,12 +56,38 @@ module.exports = {
   getCats: function(owner){
     return(
       sequelize.query(
-        `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid FROM categories
+        `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid, playlists.isPublic as isPublic FROM categories
         LEFT JOIN playlists
         ON categories.idcategories = playlists.category
         WHERE categories.owner = ${owner};`, {
         type: sequelize.QueryTypes.SELECT
       })
+    )
+  },
+
+  makePublic: function(plid){
+    return(
+      sequelize.query(
+        `UPDATE playlists
+        SET isPublic = 1
+        WHERE idplaylists = ?;`,{
+          replacements: [plid],
+          type: sequelize.QueryTypes.UPDATE
+        }
+      )
+    )
+  },
+
+  makePrivate: function(plid){
+    return(
+      sequelize.query(
+        `UPDATE playlists
+        SET isPublic = 0
+        WHERE idplaylists = ?;`,{
+          replacements: [plid],
+          type: sequelize.QueryTypes.UPDATE
+        }
+      )
     )
   }
 

@@ -121,6 +121,7 @@ class Category extends React.Component{
                         playlist={playlist.plname} key={key}
                         id={playlist.plid} onDeleteList={this.handleDeleteList}
                         onSelectPlaylist={this.props.onSelectPlaylist}
+                        isPublic={playlist.isPublic}
                       />
 
                   </Menu.Item>)}

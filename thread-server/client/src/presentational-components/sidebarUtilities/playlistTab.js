@@ -5,8 +5,10 @@ import {Button, Icon} from 'semantic-ui-react';
 class PlaylistTab extends React.Component{
   render(){
     return(
-      <div onClick={this.props.onSelectPlaylist}>
-        {this.props.playlist}
+      <div>
+        <Button size='mini' inverted color='blue' className='playlistButton' value={this.props.id} ispublic={this.props.isPublic} onClick={this.props.onSelectPlaylist}>
+          {this.props.playlist}
+        </Button>
         <Button size='mini' floated='right' className='trashcan' inverted icon
           id={this.props.id}
           name={this.props.playlist}
