@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, Portal,Table, Sticky, Button, Icon, Header, Menu, Checkbox, Rating, Loader} from 'semantic-ui-react';
+import PlaylistPortal from './playlistPortal.js';
 import SongRow from './songRow.js';
 import axios from 'axios';
 
@@ -12,7 +13,8 @@ class SongSorter extends React.Component{
     songsToPlaylist: [],
     _disabled: true,
     playlistToAddTo: '',
-    nowPlaying: ''
+    nowPlaying: '',
+    err: ''
   }
 
   static getDerivedStateFromProps(props, state){
@@ -62,9 +64,28 @@ class SongSorter extends React.Component{
     })
   }
 
+  handleRemoveFromPlaylist = (e, data) => {
+    if(this.state.songsToPlaylist && this.props.selectedPlaylist){
+      axios({
+        method: 'post',
+        url: 'http://localhost:8080/deleteFromPlaylist',
+        data:{
+          songs: this.state.songsToPlaylist,
+          playlist: this.props.selectedPlaylist
+        },
+        withCredentials: true
+      }).then((result) => {
+        this.setState({songs: this.state.songs.filter((song, i) => {return !this.state.songsToPlaylist.includes(song.idSongs)})})
+        this.props.onRemoval(this.state.songs);
+      })
+      .catch((err) => {this.setState({err: 'you do not have permission to modify that playlist'})});
+    }else{
+      this.setState({err: 'you must select songs and a playlist'});
+    }
+  }
+
 
   render(){
-    console.log(this.state.isPublic)
     return(
       <div>
       <Table className='t1' size='small' celled striped compact unstackable inverted selectable>
@@ -83,6 +104,7 @@ class SongSorter extends React.Component{
           {this.state.songs.map((song, key) => {
             return(
               <SongRow key={key} song={song}
+                selected={this.state.songsToPlaylist.includes(song.idSongs)}
                 playing={song.idSongs === this.state.nowPlaying.idSongs}
                 onPlaying={this.handlePlaying} onSongSelect={this.handleSongSelect}
                 onPausing={this.props.onPausing}
@@ -97,39 +119,29 @@ class SongSorter extends React.Component{
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
               {this.props.isPublic ?
-                <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePrivate}>
+                <Button floated='right' icon labelPosition='left'
+                primary size='mini' onClick={this.props.onMakePrivate}>
                     <div><Icon name='privacy' /> Make Private </div>
                   </Button>
-              : <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePublic}>
+              : <Button floated='right' icon labelPosition='left'
+                primary size='mini' onClick={this.props.onMakePublic}>
                   <div><Icon name='user' /> Make Public </div>
                 </Button>
               }
               <Button size='mini'>Bookmark</Button>
 
-              <Portal closeOnTriggerClick openOnTriggerClick trigger={
-                <Button
-                  disabled={this.state._disabled}
-                  size='mini' >Add to Playlist
-                </Button>} closeIcon>
-                <Menu inverted size='mini' style={{ maxHeight: '30vh', overflow: 'auto', left: '22%', position: 'fixed', top: '50%', zIndex: 1000 }} >
-                  {this.props.categories.map((cat, key) => {
-                    return(
-                      <Menu.Item key={key}>
-                        {cat.catname}
-                        <Menu.Menu>
-                          {cat.pls.map((pl, k) => {
-                            return(
-                              <Menu.Item link key={k} value={pl.plid} onClick={this.handleAddToPlaylist}>
-                                {pl.plname}
-                              </Menu.Item>
-                            )
-                          })}
-                        </Menu.Menu>
-                      </Menu.Item>
-                    )
-                  })}
-                </Menu>
-              </Portal>
+              <PlaylistPortal
+                err={this.state.err}
+                _disabled={this.state._disabled}
+                categories={this.props.categories}
+                onAddToPlaylist={this.handleAddToPlaylist}
+              />
+              {this.props.selectedPlaylist ?
+                <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
+                  Delete From Playlist
+                </Button> :
+                <div></div>
+              }
             </Table.HeaderCell>
           </Table.Row>
         </Table.Footer>

@@ -11,4 +11,13 @@ module.exports = function(app){
 
   });
 
+  app.post('/deleteFromPlaylist', function(req, res){
+    songPlaylist.deleteFromPlaylist(
+      req.body.songs,
+      req.body.playlist,
+      req.session.user.idUsers
+    ).then((result) => {res.status(200).send('ok')})
+    .catch((err) => {res.status(300).send('not ok')});
+  })
+
 }

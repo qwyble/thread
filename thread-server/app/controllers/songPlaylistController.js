@@ -18,6 +18,19 @@ module.exports = {
         }
       )
     )
+  },
+
+
+  deleteFromPlaylist: function(songs, playlist, owner){
+    return(
+      sequelize.query(
+        `DELETE FROM songsplaylistsbridge
+        WHERE song IN (?) AND playlist = ?;`,{
+          replacements: [songs, playlist],
+          type: sequelize.QueryTypes.DELETE
+        }
+      )
+    )
   }
 
 }

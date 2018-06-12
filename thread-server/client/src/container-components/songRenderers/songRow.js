@@ -49,7 +49,7 @@ class SongRow extends React.Component{
     return(
       <Table.Row>
         <Table.Cell collapsing>
-          <Checkbox size = 'mini' id={this.props.song.idSongs} onChange={this.props.onSongSelect} />
+          <Checkbox size = 'mini' id={this.props.song.idSongs} checked={this.props.selected} onChange={this.props.onSongSelect} />
           <span className='checkboxSpan' ></span>
         </Table.Cell>
         <Table.Cell collapsing onClick={this.handlePlayToggle}>

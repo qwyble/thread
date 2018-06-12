@@ -71,6 +71,10 @@ class PlaylistController extends React.Component{
     this.handlePlaying(nextSong);
   }
 
+  handleRemoval = (songs) => {
+    this.setState({songs: songs})
+  }
+
 
 
   render(){
@@ -88,6 +92,7 @@ class PlaylistController extends React.Component{
           onMakePrivate={this.handleMakePrivate}
           selectedPlaylist={this.state.selectedPlaylist}
           isPublic={this.state.isPublic}
+          onRemoval={this.handleRemoval}
         />
       </div>
     )
