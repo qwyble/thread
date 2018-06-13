@@ -16,6 +16,7 @@ module.exports = {
           ON songs.idSongs = songratings.song
           AND users.idUsers = songratings.user
       WHERE songs.owner = $1
+      ORDER BY songs.dateUploaded DESC
       LIMIT 20;`,{
         bind: [owner],
         type: sequelize.QueryTypes.SELECT

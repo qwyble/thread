@@ -9,7 +9,7 @@ class AudioRenderer extends React.Component{
     this.myRef = React.createRef();
 
     this.state={
-      percentPlayed: '',
+      percentPlayed: 0,
       currentTime: '',
       _icon: '',
       volume: .5

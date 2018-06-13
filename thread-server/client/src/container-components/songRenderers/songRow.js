@@ -73,6 +73,9 @@ class SongRow extends React.Component{
         <Table.Cell>
           {this.props.song.genres}
         </Table.Cell>
+        <Table.Cell>
+          {this.props.song.dateUploaded.substr(0, 10)}
+        </Table.Cell>
       </Table.Row>
     )
 

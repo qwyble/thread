@@ -6,14 +6,15 @@ module.exports = function(app){
     playlist.addCategory(
       req.body.category,
       req.session.user.idUsers
-    ).catch(err => {console.log(err)});
+    ).then(result => {res.status(200).send('ok')})
+    .catch(err => {res.status(300).send({err: 'category name must be unique'})});
   })
 
   app.post('/deleteCategory', function(req, res){
     playlist.deleteCategory(
       req.body.catid,
       req.session.user.idUsers
-    )
+    ).then((result) => {res.status(200).send('ok')})
   })
 
   app.post('/addPlaylist', function(req, res){
@@ -21,7 +22,7 @@ module.exports = function(app){
       req.body.catid,
       req.body.playlist,
       req.session.user.idUsers
-    ).then((result) => {console.log(result)})
+    ).then((result) => {res.status(200).send('ok')})
     .catch(err => {console.log(err)});
   }),
 
@@ -44,7 +45,8 @@ module.exports = function(app){
       req.body.catid,
       req.body.name,
       req.session.user.idUsers
-    );
+    ).then(result => {res.status(200).send('ok')})
+    .catch(err => {res.status(300).send({err: 'category name must be unique'})});
   })
 
   app.post('/makePublic', function(req, res){

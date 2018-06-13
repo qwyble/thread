@@ -1,7 +1,7 @@
 var songs  = require('../controllers/songController.js');
 
 module.exports = function(app){
-  app.get('/stream/:playlist', function(req, res){
+  app.get('/playlist/:playlist', function(req, res){
 
       songs.isPublic(
         req.params.playlist

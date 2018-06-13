@@ -15,6 +15,7 @@ class MenuItem extends React.Component{
           onSelectPlaylist={this.props.onSelectPlaylist}
           onCategoryEditSubmit={this.props.onCategoryEditSubmit}
           onCategoryDelete={this.props.onCategoryDelete}
+          getCats={this.props.getCats}
         />
       </Menu.Item>
     )

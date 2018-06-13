@@ -23,9 +23,9 @@ class PlaylistController extends React.Component{
     if(this.state.ended){
       this.handleEnd();
     }
-    if(this.props.selectedPlaylist != prevProps.selectedPlaylist){
+    if(this.props.url != prevProps.url){
       this.setState({_loading: true});
-      var url =  `http://localhost:8080/stream/${this.props.selectedPlaylist}`;
+      var url = 'http://localhost:8080'+this.props.url;;
       axios.get(url, {withCredentials: true}).then((result) => {
         this.setState({songs: result.data, _loading: false});
       });
@@ -34,13 +34,12 @@ class PlaylistController extends React.Component{
 
   componentDidMount(){
     this.setState({_loading: true});
-    var url = '';
-    if(!this.state.selectedPlaylist){url = 'http://localhost:8080/stream';}
-    else{url = `http://localhost:8080/stream/${this.state.selectedPlaylist}`}
+    var url = 'http://localhost:8080'+this.props.url;
     axios.get(url,{withCredentials: true})
     .then((result) => {
       this.setState({songs: result.data, _loading: false})
     });
+
   }
 
   handleMakePublic = () => {

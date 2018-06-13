@@ -24,7 +24,7 @@ class ListOptions extends React.Component{
 
   handleCategoryDelete = (e) => {
     if(window.confirm("Are you sure you want to delete the "+this.props.catName+" playlist category? \nThese playlists will be lost.")){
-      this.props.onCategoryDelete(this.props.catid, this.props.id);
+      this.props.onCategoryDelete(this.props.id);
     }
     this.setState({selectValue: ''});
   }

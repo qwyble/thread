@@ -7,7 +7,7 @@ const initialState = {
     title: '',
     description: '',
     songFile: [],
-    genres: [],
+    genre: '',
     songURL: ''
   },
   songURL: '',
@@ -33,26 +33,14 @@ class UploadHandlers extends React.Component{
     }else if(name === 'title'){
       this.setState({uploadButtonToggle: true});
     }
-    /*don't allow two of the same genre,
-    and allow user to subtract genres*/
-    if(name === 'genres'){
-      var genres = this.state.songUploadFields.genres.slice();
-      if(!this.state.songUploadFields.genres.includes(value)){
-        genres.push(value);
-        value = genres;
-      }else{
-        var index = genres.indexOf(value)
-        genres.splice(index, 1);
-        value = genres;
-      }
     //in case of songFile, change 'value' to handle file upload
-    }else if(name==='songFile'){
-      value = e.target.files[0];
-    }
+    if(name==='songFile'){value = e.target.files[0];}
     //update the state
     songUploadFields[name] = value;
     this.setState({songUploadFields});
   }
+
+
 
   handleUpload = () => {
     var data = new FormData();
@@ -61,7 +49,7 @@ class UploadHandlers extends React.Component{
     data.append('songFile', songFile);
     data.append('title', this.state.songUploadFields.title);
     data.append('description', this.state.songUploadFields.description);
-    data.append('genres', this.state.songUploadFields.genres);
+    data.append('genres', this.state.songUploadFields.genre);
     data.append('URL', this.state.songUploadFields.songURL);
     this.setState({isLoading: true});
     console.log(this.state.isLoading);

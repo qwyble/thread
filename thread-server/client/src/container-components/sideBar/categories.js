@@ -2,7 +2,7 @@ import React from 'react';
 import AddPlaylist from '../../presentational-components/sidebarUtilities/addPlaylist.js';
 import PlaylistTab from '../../presentational-components/sidebarUtilities/playlistTab.js';
 import ListOptions from './listOptions.js';
-import {Button, Icon, Menu} from 'semantic-ui-react';
+import {Button, Icon, Menu, Loader} from 'semantic-ui-react';
 import axios from 'axios';
 
 /* renders the playlists in a single category,
@@ -19,12 +19,17 @@ class Category extends React.Component{
       displayLists: false,
       openForm: false,
       toggleSubmit: true,
+      _loading: false
     }
   }
 
   componentDidMount(){
     var playlists = this.props.playLists;
     this.setState({playlists: playlists})
+  }
+
+  static getDerivedStateFromProps(props, state){
+    return { playlists: props.playLists, _loading: false}
   }
 
 
@@ -37,9 +42,15 @@ class Category extends React.Component{
     }
   }
 
+  getPlaylists = () => {
+    console.log('asdfasdf')
+    this.props.getCats();
+    this.setState({openForm: false});
+  }
 
   handleAddList = () => {
     if(this.state.playlistToAdd.length > 1){
+      this.setState({_loading: true});
 
       var data = {};
       data['catid'] = this.props.id;
@@ -50,8 +61,7 @@ class Category extends React.Component{
         url: 'http://localhost:8080/addPlaylist',
         data: data,
         withCredentials: true
-      }).then((result) => {console.log(result)});
-      this.setState({openForm: false, playlists: this.state.playlists.concat(this.state.playlistToAdd)});
+      }).then((result) => this.getPlaylists());
     }
   }
 
@@ -88,7 +98,7 @@ class Category extends React.Component{
       url: 'http://localhost:8080/deletePlaylist',
       data: data,
       withCredentials: true
-    }).then((result) => {console.log(result)});
+    }).then((result) => this.getPlaylists());
   }
 
 
@@ -125,6 +135,12 @@ class Category extends React.Component{
                       />
 
                   </Menu.Item>)}
+
+                  {this.state._loading ?
+                    <Menu.Item style={{padding: '1em 1em'}}>
+                      <Loader active inverted size='mini'/>
+                    </Menu.Item>
+                      : <div></div>}
               </Menu.Menu>
             </div>
             : <span></span>
@@ -133,7 +149,7 @@ class Category extends React.Component{
           {this.state.displayLists ?
             <div>
             <AddPlaylist
-              categoryName={this.props.catName} openForm={this.state.openForm}
+              openForm={this.state.openForm}
               toggleSubmit={this.state.toggleSubmit} onFormSubmit={this.handleAddList}
               onOpenForm={this.handleOpenForm} onInputChange={this.handleInputChange}
             />

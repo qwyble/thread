@@ -17,7 +17,7 @@ module.exports = {
     return(
       sequelize.query(
         `DELETE FROM categories
-        WHERE categories.idcategoriy = "${catid}" AND categories.owner=${owner};`
+        WHERE categories.idcategories = "${catid}" AND categories.owner=${owner};`
       )
     )
   },

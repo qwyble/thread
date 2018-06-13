@@ -20,19 +20,13 @@ class App extends Component {
     return (
       <div>
         <div>
-          <SidebarTopOverlay
-            onUpload={this.handleUpload}
-            logo={logo}/>
+          <SidebarTopOverlay logo={logo}/>
           <Switch>
-            <Route path='/forum'>
-              <ForumSidebarLeftOverlay />
-            </Route>
-            <Route path='/explore' >
-              <Explorer />
-            </Route>
-            <Route path='/'>
-              <SidebarLeftOverlay />
-            </Route>
+            <Route path='/forum' component={ForumSidebarLeftOverlay} />
+            <Route path='/explore' component={Explorer} />
+            <Route path='/stream' component={SidebarLeftOverlay}/>
+            <Route path='/playlist/:playlist' component={SidebarLeftOverlay}/>
+            <Route path='/' component={SidebarLeftOverlay}/>
           </Switch>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Portal, Button, Menu, Icon} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 
 
 class PlaylistPortal extends React.Component{
@@ -20,16 +21,20 @@ class PlaylistPortal extends React.Component{
               <Menu.Item key={key}>
                 {cat.catname}
                 <Menu.Menu>
-                  {cat.pls.map((pl, k) => {
-                    return(
-                      <Menu.Item
-                        link key={k}
-                        value={pl.plid}
-                        onClick={this.props.onAddToPlaylist}>
-                          {pl.plname}
-                      </Menu.Item>
+                  {cat.pls ?
+                    cat.pls.map((pl, k) => {
+                      return(
+                          <Menu.Item
+                            key={k}
+                            link
+                            value={pl.plid}
+                            onClick={this.props.onAddToPlaylist}>
+                            {pl.plname}
+                          </Menu.Item>
                       )
-                    })}
+                    })
+                    : <div></div>
+                  }
                   </Menu.Menu>
                 </Menu.Item>
               )

@@ -58,7 +58,7 @@ class SongSorter extends React.Component{
         },
         withCredentials: true
       }).then((result) => {
-        console.log(result.data.message);
+        this.setState({songsToPlaylist: []})
       })
 
     })
@@ -75,7 +75,10 @@ class SongSorter extends React.Component{
         },
         withCredentials: true
       }).then((result) => {
-        this.setState({songs: this.state.songs.filter((song, i) => {return !this.state.songsToPlaylist.includes(song.idSongs)})})
+        this.setState({
+          songs: this.state.songs.filter((song, i) => {return !this.state.songsToPlaylist.includes(song.idSongs)}),
+          songsToPlaylist: []
+        })
         this.props.onRemoval(this.state.songs);
       })
       .catch((err) => {this.setState({err: 'you do not have permission to modify that playlist'})});
@@ -97,6 +100,7 @@ class SongSorter extends React.Component{
               <Table.HeaderCell>Uploader</Table.HeaderCell>
               <Table.HeaderCell>Rating</Table.HeaderCell>
               <Table.HeaderCell>Genre</Table.HeaderCell>
+              <Table.HeaderCell>Date Uploaded</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -117,7 +121,7 @@ class SongSorter extends React.Component{
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell />
-            <Table.HeaderCell colSpan='4'>
+            <Table.HeaderCell colSpan='5'>
               {this.props.isPublic ?
                 <Button floated='right' icon labelPosition='left'
                 primary size='mini' onClick={this.props.onMakePrivate}>
@@ -140,7 +144,9 @@ class SongSorter extends React.Component{
                 <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
                   Delete From Playlist
                 </Button> :
-                <div></div>
+                <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>
+                  Delete Song
+                </Button>
               }
             </Table.HeaderCell>
           </Table.Row>

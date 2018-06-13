@@ -7,11 +7,13 @@ import Logout from './logout';
 //if user isn't logged in, they can only access the login screen
 class Protected extends React.Component{
 
-
   render(){
     if(!this.props.isLoggedIn){
       return(
-        <Redirect to='/auth/login'/>
+        <Redirect to={{
+          pathname: '/auth/login',
+          state: {url: window.location.pathname}
+        }}/>
       )
     }else{
       return(
@@ -22,7 +24,7 @@ class Protected extends React.Component{
               <Logout {...props} onLogout={this.props.onLogout}/>
             }
           />
-          <Route path="/" component={App} />
+          <Route path='/' component={App} />
         </Switch>
       )
     }

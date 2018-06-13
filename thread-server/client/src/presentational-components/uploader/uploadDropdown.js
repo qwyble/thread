@@ -6,7 +6,6 @@ import {Icon, Modal, Loader, Dimmer, Segment} from 'semantic-ui-react';
 contains the upload form */
 class UploadDropdown extends React.Component{
   render(){
-    console.log(this.props._loading);
     return(
       <div>
         <Modal className='uploadModal' trigger={<div><Icon name='angle double up' />Upload</div>}>

@@ -32,7 +32,7 @@ class SidebarTopOverlay extends Component {
               <UploadHandlers />
             </Menu.Item>
 
-            <Menu.Item name='explor'>
+            <Menu.Item name='explore'>
               <Link to='/explore'>
                 <Icon name='search' />
                 Explore
