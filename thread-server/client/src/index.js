@@ -8,7 +8,9 @@ import './index.css';
 class Index extends React.Component{
   render(){
     return(
-      <UserContainer />
+      <div>
+        <UserContainer />
+      </div>
     )
   }
 }

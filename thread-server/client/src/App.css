@@ -4,6 +4,13 @@
   background-color: #eee;
 }
 
+
+
+.prompt{
+  border-radius: 2px !important;
+  opacity: .8;
+}
+
 .ui.button.playlistButton{
   padding-right: 1cm !important;
   width: 100% !important;
@@ -12,9 +19,7 @@
   opacity: 0.8;
 }
 
-.ui.inverted.table{
-  color: rgba(255, 255, 255, 0.6) !important;
-}
+
 
 #pButton{
 	border: none;
@@ -31,9 +36,9 @@
   margin-top: 0px !important;
   margin-bottom: 0px !important;
 }
-.playRow{
-  max-height: 8.3vh;
-  min-height: 8.3vh;
+.ui.grid > .row.playRow{
+  max-height: 40px;
+  min-height: 40px;
 }
 .ui.progress .bar {
   height: 80% !important;
@@ -49,8 +54,13 @@
   margin: auto;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.9) !important;
-  height: auto;
+  height: 40px;
   color: #2bbbff !important;
+  min-height: 0px !important;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 100vw;
 }
 
 .playerCol{
@@ -76,9 +86,15 @@
   background: rgba(0, 0, 0, .3) !important;
 }
 
-.t1{
+.ui.inverted.table.t1{
   margin: 0 !important;
+  color: rgba(43, 187, 255, .99) !important;
 }
+
+.ui.rating .active.icon{
+  color: rgba(43, 187, 255, .9) !important;
+}
+
 .ui.labeled.icon.button.button2{
 
   width: 100%;
@@ -152,6 +168,12 @@
 }
 
 .primaryContainer {
+  max-height: 84.7vh;
+  min-height: 85vh;
+  margin: 0 !important;
+  margin-bottom: 40px !important;
+}
+.pusherContainer {
   max-height: 84.7vh;
   min-height: 85vh;
   margin: 0 !important;

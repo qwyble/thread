@@ -41,7 +41,7 @@ class SongRow extends React.Component{
           rating: this.state.rating
         },
         withCredentials: true
-      })
+      }).then(() => {this.props.onRefresh()})
     });
   }
 

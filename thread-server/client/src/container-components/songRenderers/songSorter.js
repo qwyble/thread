@@ -113,6 +113,7 @@ class SongSorter extends React.Component{
                 onPlaying={this.handlePlaying} onSongSelect={this.handleSongSelect}
                 onPausing={this.props.onPausing}
                 paused={this.props.paused}
+                onRefresh={this.props.onRefresh}
               />
             )
           })}

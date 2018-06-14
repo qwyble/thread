@@ -8,7 +8,6 @@ class AppProvider extends React.Component{
   }
 
   render() {
-    console.log(this.state.user);
     return (
       <AppContext.Provider value={this.state}>
         {this.props.children}

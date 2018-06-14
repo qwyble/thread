@@ -8,11 +8,12 @@ import Logout from './logout';
 class Protected extends React.Component{
 
   render(){
+
     if(!this.props.isLoggedIn){
       return(
         <Redirect to={{
           pathname: '/auth/login',
-          state: {url: window.location.pathname}
+          state: {from: this.props.location.pathname}
         }}/>
       )
     }else{

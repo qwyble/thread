@@ -39,7 +39,8 @@ class SidebarLeftOverlay extends Component {
         catpls.reduce( (cats, {catname, catid, plname, plid, isPublic}) => {
           if (! (catid in cats) )
               cats[catid] = {catname, catid, pls: []};
-          cats[catid].pls.push({plname, plid, isPublic});
+          if (plid)
+            cats[catid].pls.push({plname, plid, isPublic});
           return cats;
         }, {})
       )
@@ -145,7 +146,7 @@ class SidebarLeftOverlay extends Component {
   render() {
     return (
       <div>
-      <div className='primaryContainer'>
+      <div>
         <Sidebar.Pushable as={Segment} className='primaryContainer'>
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu} visible={this.state.visible} >
             {
@@ -180,7 +181,7 @@ class SidebarLeftOverlay extends Component {
             </div>
             <AddCategory onAddCategory={this.handleAddCategory} />
           </Sidebar>
-          <Sidebar.Pusher className='primaryContainer'>
+          <Sidebar.Pusher className='pusherContainer'>
             <Button inverted icon className='sidebarButton'
               attached='right' color='blue' onClick={this.toggleVisibility}>
               <Icon name={this.state.visible ? 'left arrow' : 'right arrow'}/>

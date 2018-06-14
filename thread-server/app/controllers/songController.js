@@ -88,7 +88,9 @@ module.exports = {
     return(
       sequelize.query(
         `REPLACE INTO songratings (rating, song, user)
-        values(${rating}, ${songId}, ${userId});`
+        values(${rating}, ${songId}, ${userId});`,{
+          type: sequelize.QueryTypes.REPLACE
+        }
       )
     )
   }

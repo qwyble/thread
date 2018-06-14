@@ -18,7 +18,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{backgroundColor: "rgba(0,0,0,.04)"}}>
         <div>
           <SidebarTopOverlay logo={logo}/>
           <Switch>

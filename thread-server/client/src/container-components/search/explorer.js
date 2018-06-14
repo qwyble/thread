@@ -1,5 +1,9 @@
 import React from 'react';
-import {Container, Grid, Segment, Loader, Search} from 'semantic-ui-react';
+import Users from '../../presentational-components/explorer/users.js'
+import Songs from '../../presentational-components/explorer/songs.js'
+import Genres from '../../presentational-components/explorer/genres.js'
+import Playlists from '../../presentational-components/explorer/playlists.js'
+import {Container, Grid, Segment, Loader, Search, Header, Input} from 'semantic-ui-react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
@@ -7,47 +11,61 @@ import {Link} from 'react-router-dom';
 class Explorer extends React.Component{
   state={
     users: [],
+    songs: [],
+    genres: [],
+    playlists: [],
     _loading: false,
-    searchString: ''
+    searchString: '%'
   }
 
   componentDidMount(){
     this.setState({_loading: true});
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/getAllUsers`
-    }).then((result) => {
-      this.setState({users: result.data, _loading: false})
-    })
+    this.getSearch();
   }
+
 
   handleInputChange = (e) => {
-
-    this.setState({searchString: e.target.value, _loading: true}, () => {
-      axios({
-        method: 'get',
-        url: `http://localhost:8080/getAllUsers/${this.state.searchString}`
-      }).then((result) => {this.setState({users: result.data, _loading:false})})
+    console.log(e.target.value);
+    var searchString = (e.target.value.length < 1) ? '%' : e.target.value;
+    this.setState({searchString: searchString, _loading: true}, () => {
+      this.getSearch();
     })
   }
+
+
+  getSearch = () => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/getAllSearch/`+escape(this.state.searchString)
+    }).then((result) => {
+      this.setState({
+        users: result.data.users,
+        playlists: result.data.playlists,
+        genres: result.data.genres,
+        songs: result.data.songs,
+        _loading: false
+      })
+    })
+  }
+
 
   render(){
     return(
       <div>
         <Container>
-          <Search onSearchChange={this.handleInputChange} loading={this.state._loading}/>
           <Grid container columns={4}>
+            <Grid.Row>
+              <Input style={{width: '100%'}} onChange={this.handleInputChange} icon='search' placeholder='Search...' loading={this.state._loading}/>
+            </Grid.Row>
+            <Header>Users</Header>
+            <Users users={this.state.users}/>
+            <Header>Playlists</Header>
+            <Playlists playlists={this.state.playlists}/>
+            <Header>Songs</Header>
+            <Songs songs={this.state.songs} />
+            <Header>Genres</Header>
 
-              {this.state.users.map((user, key) => {
-                return(
-                  <Grid.Column key={key}>
-                    <Link to={`/profile/${user.idUsers}`}>
-                    {user.userName}
-                  </Link>
-                  </Grid.Column>
-                )
-              })}
-          
+
           </Grid>
         </Container>
       </div>

@@ -126,16 +126,14 @@ class Category extends React.Component{
               <Menu.Menu>
                 {this.state.playlists.map((playlist, key) =>
                   <Menu.Item key={key} className='listSidebar'>
-
                       <PlaylistTab
                         playlist={playlist.plname} key={key}
                         id={playlist.plid} onDeleteList={this.handleDeleteList}
                         onSelectPlaylist={this.props.onSelectPlaylist}
                         isPublic={playlist.isPublic}
                       />
-
-                  </Menu.Item>)}
-
+                  </Menu.Item>)
+                }
                   {this.state._loading ?
                     <Menu.Item style={{padding: '1em 1em'}}>
                       <Loader active inverted size='mini'/>

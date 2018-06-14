@@ -39,6 +39,6 @@ module.exports = function(app){
       req.body.songId,
       req.body.rating,
       req.session.user.idUsers
-    )
+    ).then(() => res.status(200).send('ok'));
   })
 }

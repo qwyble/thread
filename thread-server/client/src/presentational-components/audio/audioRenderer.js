@@ -9,60 +9,13 @@ class AudioRenderer extends React.Component{
     this.myRef = React.createRef();
 
     this.state={
-      percentPlayed: 0,
+      percentPlayed: '0',
       currentTime: '',
       _icon: '',
       volume: .5
     }
   }
 
-  componentDidMount() {
-    this.interval = setInterval(() => this.getCurrentTime(), 300);
-  }
-
-  componentDidUpdate(prevProps) {
-    clearInterval(this.interval);
-    this.interval = setInterval(() => this.getCurrentTime(), 300);
-    if(prevProps.paused !== this.props.paused){
-      if(this.state.paused){
-        this.handlePause()
-      }else{
-        this.handlePlay();
-      }
-
-    }
-  }
-  componentWillUnmount(){
-    clearInterval(this.interval);
-  }
-
-  getMinSec= (time) =>{
-    var currentTime = Math.round(time);
-    var minutes = Math.floor(currentTime / 60);
-    var seconds = currentTime % 60;
-    currentTime = minutes+':'+seconds;
-    return currentTime;
-  }
-
-  getCurrentTime = () => {
-    var currentTime = this.getMinSec(this.myRef.current.currentTime);
-    var duration = this.getMinSec(this.myRef.current.duration);
-    var percentPlayed = String((((this.myRef.current.currentTime + 1) / (this.myRef.current.duration+1)) * 100));
-    this.setState({percentPlayed, currentTime, duration});
-  }
-
-  handlePlay = () => {
-    this.myRef.current.play();
-  }
-
-  handlePause = () => {
-    this.myRef.current.pause();
-    clearInterval(this.interval);
-  }
-
-  handleClick = () => {
-    this.props.onAudioButton();
-  }
 
   static getDerivedStateFromProps(props, state){
     if(props.paused){
@@ -79,12 +32,61 @@ class AudioRenderer extends React.Component{
   }
 
 
+  componentDidMount() {
+    this.interval = setInterval(() => this.getCurrentTime(), 300);
+  }
+
+
+  componentDidUpdate(prevProps) {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => this.getCurrentTime(), 300);
+    if(prevProps.paused !== this.props.paused){
+      if(this.state.paused){
+        this.handlePause()
+      }else{
+        this.handlePlay();
+      }
+    }
+  }
+
+
+  componentWillUnmount(){
+    clearInterval(this.interval);
+  }
+
+
+  handlePlay = () => {
+    this.myRef.current.play();
+  }
+
+  handlePause = () => {
+    this.myRef.current.pause();
+    clearInterval(this.interval);
+  }
+
+  handleClick = () => {
+    this.props.onAudioButton();
+  }
+
   handleVolume = (e) => {
     var volume = e.target.value / 100;
     this.setState({volume})
   }
 
+  getMinSec= (time) =>{
+    var currentTime = Math.round(time);
+    var minutes = Math.floor(currentTime / 60);
+    var seconds = currentTime % 60;
+    currentTime = minutes+':'+seconds;
+    return currentTime;
+  }
 
+  getCurrentTime = () => {
+    var currentTime = this.getMinSec(this.myRef.current.currentTime);
+    var duration = this.getMinSec(this.myRef.current.duration);
+    var percentPlayed = String((((this.myRef.current.currentTime + 1) / (this.myRef.current.duration+1)) * 100));
+    this.setState({percentPlayed, currentTime, duration});
+  }
 
   render(){
     return(
