@@ -25,7 +25,7 @@ class Protected extends React.Component{
               <Logout {...props} onLogout={this.props.onLogout}/>
             }
           />
-          <Route path='/' component={App} />
+          <Route path='/' render={props => <App {...props} user={this.props.user}/>} />
         </Switch>
       )
     }

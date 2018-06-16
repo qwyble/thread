@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Icon, Progress, Grid, Container} from 'semantic-ui-react'
+import AudioPlayer from './audioPlayer.js';
 
 
 
@@ -90,36 +91,18 @@ class AudioRenderer extends React.Component{
 
   render(){
     return(
-      <div className="audioContainer">
-        <audio
-          className="audioContainer" id='audio' ref={this.myRef}
-          controls="" src={this.props.song.URL} autoPlay onEnded={this.props.onEnd}
-          volume={this.state.volume}
-        >
-        </audio>
-        <Container >
-          <Grid className='playerGrid'>
-            <Grid.Row className='playRow'>
-              <Grid.Column width={1}>
-                <Button size='mini' inverted color='blue'
-                  id='pButton' icon={this.state._icon}
-                  onClick={this.handleClick}></Button>
-              </Grid.Column>
-              <Grid.Column className='playerCol' width={13}>
-                <Progress percent={String(this.state.percentPlayed)} className='progress'
-                  style={{marginTop: '10px', maxHeight: '10%'}} inverted color='blue'
-                />
-                {this.state.currentTime} / {this.state.duration}
-              </Grid.Column>
-              <Grid.Column>
-                <div className="slidecontainer">
-                  <input type="range" min="0" max="100" value={this.state.volume * 100} onChange={this.handleVolume} className="slider" id="myRange" />
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
-      </div>
+      <AudioPlayer
+        myRef={this.myRef}
+        URL={this.props.song.URL}
+        onEnd={this.props.onEnd}
+        volume={this.state.volume}
+        _icon={this.state._icon}
+        onClick={this.handleClick}
+        percentPlayed={this.state.percentPlayed}
+        currentTime={this.state.currentTime}
+        duration={this.state.duration}
+        onVolume={this.handleVolume}
+      />
     )
   }
 }

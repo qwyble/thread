@@ -14,14 +14,34 @@ module.exports = {
           ON songs.owner = users.idUsers
         LEFT JOIN songratings
           ON songs.idSongs = songratings.song
-          AND users.idUsers = songratings.user
+          AND $1 = songratings.user
       WHERE songs.owner = $1
       ORDER BY songs.dateUploaded DESC
-      LIMIT 20;`,{
+      LIMIT 40;`,{
         bind: [owner],
         type: sequelize.QueryTypes.SELECT
       }
     )
+    )
+  },
+
+  getProfile: function(profile, owner){
+    return(
+      sequelize.query(
+        `SELECT songs.*, users.userName, songratings.rating
+        FROM songs
+          INNER JOIN users
+            ON songs.owner = users.idUsers
+          LEFT JOIN songratings
+            ON songs.idSongs = songratings.song
+            AND songratings.user = $1
+          WHERE songs.owner = $2
+          ORDER BY songs.dateUploaded DESC
+          LIMIT 40;`, {
+            bind: [owner, profile],
+            type: sequelize.QueryTypes.SELECT
+          }
+      )
     )
   },
 
@@ -90,6 +110,19 @@ module.exports = {
         `REPLACE INTO songratings (rating, song, user)
         values(${rating}, ${songId}, ${userId});`,{
           type: sequelize.QueryTypes.REPLACE
+        }
+      )
+    )
+  },
+
+  getSong: function(songId){
+    return(
+      sequelize.query(
+        `SELECT songs.title, songs.description, songs.owner, songs.genres
+        FROM songs
+        WHERE songs.idSongs = ?;`,{
+          replacements: [songId],
+          type: sequelize.QueryTypes.SELECT
         }
       )
     )

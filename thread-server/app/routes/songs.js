@@ -34,11 +34,25 @@ module.exports = function(app){
     });
   });
 
+  app.get('/profile/:profile', function(req, res){
+    songs.getProfile(
+      req.params.profile,
+      req.session.user.idUsers
+    ).then(data => res.status(200).send(data));
+  });
+
   app.post('/rateSong', function(req, res){
     songs.rateSong(
       req.body.songId,
       req.body.rating,
       req.session.user.idUsers
     ).then(() => res.status(200).send('ok'));
-  })
+  });
+
+  app.get('/getSong', function(req,res){
+    console.log(req.query);
+    songs.getSong(
+      req.query.songId
+    ).then(data => res.status(200).send(data));
+  });
 }

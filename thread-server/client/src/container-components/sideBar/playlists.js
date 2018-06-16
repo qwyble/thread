@@ -9,7 +9,7 @@ import axios from 'axios';
   holds the playlists in state. (change this?)
 */
 
-class Category extends React.Component{
+class Playlists extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -107,6 +107,7 @@ class Category extends React.Component{
       <div>
         <div>
           <div>
+
             <Menu.Item className='sideBarItem'>
               <ListOptions
                 id={this.props.id} catName={this.props.catName}
@@ -119,8 +120,11 @@ class Category extends React.Component{
                 {this.props.catName}
               </Button>
             </Menu.Item>
+
             {this.state.renderAlert ? <div>Already exists</div> : <div></div>}
+
           </div>
+
           {this.state.displayLists ?
             <div>
               <Menu.Menu>
@@ -144,6 +148,7 @@ class Category extends React.Component{
             : <span></span>
           }
         </div>
+
           {this.state.displayLists ?
             <div>
             <AddPlaylist
@@ -153,10 +158,11 @@ class Category extends React.Component{
             />
             </div>
         : <div></div>}
+
       </div>
     )
   }
 }
 
 
-export default Category;
+export default Playlists;

@@ -34,8 +34,20 @@ module.exports = function(app){
     )
   }),
 
+  app.get('/getPlaylists/:profile', function(req, res){
+    console.log(req.params);
+    playlist.getCats(
+      req.session.user.idUsers,
+      req.params.profile
+    )
+    .then((data) => {res.status(200).send(data);});
+  })
+
   app.get('/getPlaylists', function(req, res){
-    playlist.getCats(req.session.user.idUsers)
+    console.log(req.params);
+    playlist.getCats(
+      req.session.user.idUsers
+    )
     .then((data) => {res.status(200).send(data);});
   })
 

@@ -6,7 +6,7 @@ import App from './App.js';
 import axios from 'axios';
 import {Loader} from 'semantic-ui-react';
 import Logout from './container-components/authentication/logout.js';
-import AppProvider from './context.js';
+import {AppProvider} from './context.js';
 
 class UserContainer extends React.Component{
   state={
@@ -75,6 +75,7 @@ class UserContainer extends React.Component{
                     <Protected {...props}
                       isLoggedIn={this.state.isLoggedIn}
                       onLogout={this.handleLogout}
+                      user={this.state.user}
                     />
                   }
                 />

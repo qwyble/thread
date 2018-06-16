@@ -53,16 +53,30 @@ module.exports = {
   },
 
 
-  getCats: function(owner){
-    return(
-      sequelize.query(
-        `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid, playlists.isPublic as isPublic FROM categories
-        LEFT JOIN playlists
-        ON categories.idcategories = playlists.category
-        WHERE categories.owner = ${owner};`, {
-        type: sequelize.QueryTypes.SELECT
-      })
-    )
+  getCats: function(user, profile){
+    if(!profile){
+      return(
+        sequelize.query(
+          `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid, playlists.isPublic as isPublic FROM categories
+          LEFT JOIN playlists
+          ON categories.idcategories = playlists.category
+          WHERE categories.owner = ${user};`, {
+            type: sequelize.QueryTypes.SELECT
+          })
+        )
+    }else{
+      return(
+        sequelize.query(
+          `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid, playlists.isPublic as isPublic FROM categories
+          LEFT JOIN playlists
+          ON categories.idcategories = playlists.category
+          WHERE categories.owner = ${profile}
+            AND playlists.isPublic = 1;`, {
+            type: sequelize.QueryTypes.SELECT
+          }
+        )
+      )
+    }
   },
 
   makePublic: function(plid){

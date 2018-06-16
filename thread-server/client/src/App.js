@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import SidebarLeftOverlay from './container-components/sideBar/sideBar.js';
 import ForumSidebarLeftOverlay from './container-components/forum/forumSideBar.js'
 import SidebarTopOverlay from './container-components/topBar/topBar.js';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Explorer from './container-components/search/explorer.js';
-
+import RoutedContext from './routedContext.js';
+import ProfileSidebar from './container-components/profiles/profileSidebar.js';
+import SongDetails from './container-components/songRenderers/songDetails.js';
+import AudioPlayback from './container-components/audioPlayback/audioPlayback.js';
+import {AppContext} from './context.js';
 
 
 /* App controls state for individual songs
@@ -18,16 +21,32 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{backgroundColor: "rgba(0,0,0,.04)"}}>
+      <div>
         <div>
           <SidebarTopOverlay logo={logo}/>
-          <Switch>
-            <Route path='/forum' component={ForumSidebarLeftOverlay} />
-            <Route path='/explore' component={Explorer} />
-            <Route path='/stream' component={SidebarLeftOverlay}/>
-            <Route path='/playlist/:playlist' component={SidebarLeftOverlay}/>
-            <Route path='/' component={SidebarLeftOverlay}/>
-          </Switch>
+          <div>
+            <Switch>
+              <Route path='/forum' component={ForumSidebarLeftOverlay} />
+              <Route path='/explore' component={Explorer} />
+              <Route path='/stream' component={RoutedContext }/>
+              <Route path='/playlist/:playlist' component={RoutedContext }/>
+              <Route path='/profile/:profile' component={RoutedContext } />
+              <Route path='/song/:song' component={SongDetails } />
+              <Redirect from='/' to={'/stream'} />
+            </Switch>
+          </div>
+          <AppContext.Consumer>
+            {context =>
+              <AudioPlayback
+                onEnd={context.onEnd}
+                nowPlaying={context.nowPlaying}
+                paused={context.paused}
+                onPausing={context.onPausing}
+              />
+            }
+          </AppContext.Consumer>
+
+          }
         </div>
       </div>
     );

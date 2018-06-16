@@ -58,7 +58,6 @@ class SearchBar extends React.Component{
             })
           }
         }
-        console.log(results);
 
         this.setState({searchResults: results, _loading: false});
       });
@@ -78,7 +77,6 @@ class SearchBar extends React.Component{
         loading={this.state._loading}
         results={this.state.searchResults}
         resultRenderer={resultRenderer}
-        onSelectionChange={console.log('asdfasfd')}
       />
     )
   }

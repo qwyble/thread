@@ -16,7 +16,12 @@ class PlaylistController extends React.Component{
   }
 
   static getDerivedStateFromProps(props, state){
-    return {selectedPlaylist: props.selectedPlaylist, ended: props.ended, nowPlaying: props.nowPlaying, isPublic: props.isPublic};
+    return {
+      selectedPlaylist: props.selectedPlaylist,
+      ended: props.ended,
+      nowPlaying: props.nowPlaying,
+      isPublic: props.isPublic
+    };
   }
 
   getUrl = () => {
@@ -29,11 +34,12 @@ class PlaylistController extends React.Component{
     var url = this.getUrl();
     axios.get(url, {withCredentials: true}).then((result) => {
       this.setState({songs: result.data, _loading: false});
+      this.props.onSetSongs(result.data);
     });
   }
 
+
   componentDidUpdate(prevProps){
-    if(this.state.ended){ this.handleEnd(); }
     if(this.props.url != prevProps.url){
       this.getSongs();
     }
@@ -62,18 +68,6 @@ class PlaylistController extends React.Component{
     });
   }
 
-  handlePlaying = (song) => {
-    this.props.onPlaying(song);
-  }
-
-  handleEnd = () => {
-    var currentId = this.state.nowPlaying.idSongs;
-    var index = this.state.songs.findIndex(function(song){ return song.idSongs === currentId; });
-    var nextSong = this.state.songs[index+1];
-
-    if(nextSong){ this.handlePlaying(nextSong); }
-    else{ return }
-  }
 
   handleRemoval = (songs) => {
     this.setState({songs: songs})
@@ -88,7 +82,7 @@ class PlaylistController extends React.Component{
           _loading={this.state._loading}
           songs={this.state.songs}
           categories={this.props.categories}
-          onPlaying={this.handlePlaying}
+          onPlaying={this.props.onPlaying}
           onPausing={this.props.onPausing}
           paused={this.props.paused}
           nowPlaying={this.props.nowPlaying}

@@ -58,7 +58,7 @@ class SongSorter extends React.Component{
         },
         withCredentials: true
       }).then((result) => {
-        this.setState({songsToPlaylist: []})
+        this.setState({songsToPlaylist: [], _disabled: true})
       })
 
     })
@@ -133,14 +133,15 @@ class SongSorter extends React.Component{
                   <div><Icon name='user' /> Make Public </div>
                 </Button>
               }
-              <Button size='mini'>Bookmark</Button>
+
 
               <PlaylistPortal
                 err={this.state.err}
                 _disabled={this.state._disabled}
-                categories={this.props.categories}
                 onAddToPlaylist={this.handleAddToPlaylist}
               />
+
+
               {this.props.selectedPlaylist ?
                 <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
                   Delete From Playlist

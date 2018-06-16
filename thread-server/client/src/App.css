@@ -19,7 +19,10 @@
   opacity: 0.8;
 }
 
-
+.songInfoContainer{
+  position: relative;
+  top: 100px;
+}
 
 #pButton{
 	border: none;
@@ -33,13 +36,10 @@
 
 }
 .ui.grid.playerGrid{
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
+  margin-top: 2% !important;
+  margin-bottom: 2% !important;
 }
-.ui.grid > .row.playRow{
-  max-height: 40px;
-  min-height: 40px;
-}
+
 .ui.progress .bar {
   height: 80% !important;
 }
@@ -49,20 +49,25 @@
   height: 80% !important;
 }
 
-
-.audioContainer{
-  margin: auto;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.9) !important;
-  height: 40px;
-  color: #2bbbff !important;
-  min-height: 0px !important;
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  width: 100vw;
+.primaryContainer{
+  max-height: 87vh !important;
+  min-height: 80vh !important;
 }
 
+
+.audioContainer{
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  color: #2bbbff !important;
+  position: fixed;
+  bottom: 0;
+  height: 8vh !important;
+  width: 100vw;
+}
+.ui.grid > .row{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
 .playerCol{
   color: #2bbbff !important;
 }
@@ -88,7 +93,7 @@
 
 .ui.inverted.table.t1{
   margin: 0 !important;
-  color: rgba(43, 187, 255, .99) !important;
+  color: rgba(255, 255, 255, .8) !important;
 }
 
 .ui.rating .active.icon{
@@ -167,15 +172,10 @@
   max-height: 1.15cm;
 }
 
-.primaryContainer {
-  max-height: 84.7vh;
-  min-height: 85vh;
-  margin: 0 !important;
-  margin-bottom: 40px !important;
-}
+
 .pusherContainer {
-  max-height: 84.7vh;
-  min-height: 85vh;
+  max-height: 85vh;
+
   margin: 0 !important;
 }
 
@@ -198,12 +198,7 @@
     transform: translate3d(15vw,0,0)
   }
 
-.pusher {
-      width: 100% !important;
-      overflow: auto !important;
-      height: 100% !important;
 
-}
 .ui.visible.thin.left.sidebar ~ .pusher {
       width: 87% !important;
       transform: scale(85%, 100%) !important;
