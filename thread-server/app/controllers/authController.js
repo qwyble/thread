@@ -54,5 +54,32 @@ login: function(email, password){
       })
     )
   }
-}
+  },
+
+  getUser: function(user){
+    return(
+      sequelize.query(
+        `SELECT users.userName as userName, users.email as email, users.imageUrl as imageUrl
+        FROM users
+        WHERE users.idUsers = ?`,{
+          replacements: [user],
+          type: sequelize.QueryTypes.SELECT
+        }
+      )
+    )
+  },
+
+  editUser: function(email, username, id){
+    return(
+      sequelize.query(
+        `UPDATE users SET
+        email = ?, username = ?
+        WHERE idUsers = ?`, {
+          replacements: [email, username, id],
+          type: sequelize.QueryTypes.UPDATE
+        }
+      )
+    )
+  }
+
 };

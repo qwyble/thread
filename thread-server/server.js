@@ -36,3 +36,4 @@ var songRenderRoute = require('./app/routes/songs.js')(app);
 var playListRoute = require('./app/routes/playlists.js')(app);
 var searchRoute = require('./app/routes/search.js')(app);
 var songPlaylistRoute = require('./app/routes/songPlaylist.js')(app);
+var imageUploadRoute = require('./app/routes/imageUpload.js')(app);

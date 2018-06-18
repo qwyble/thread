@@ -11,6 +11,10 @@
   opacity: .8;
 }
 
+.ui.modal.profileModal{
+  margin: auto;
+
+}
 .ui.button.playlistButton{
   padding-right: 1cm !important;
   width: 100% !important;
@@ -49,9 +53,9 @@
   height: 80% !important;
 }
 
+
 .primaryContainer{
-  max-height: 87vh !important;
-  min-height: 80vh !important;
+  height: 83vh !important;
 }
 
 
@@ -125,17 +129,22 @@
   height: auto;
 }
 
+.ui.floating.dropdown .menu{
+  z-index: 1000000 !important;
+}
 
-.dropOverlay{
-  float: left;
+
+
+.ui.dropdown.dropOverlay{
   position: absolute;
-  height: 100%;
-  width: .5cm;
-  right: 90%;
-  z-index: 1000000;
-  background-color: Black;
-  color: #2bbbff;
-  font-family: arial;
+  font-size: .9rem;
+  float: left;
+  left: 1%;
+  top: 20%;
+
+  z-index: 100;
+  color: #2bbbff !important;
+
 }
 
 .ui.modal.uploadModal{
@@ -174,7 +183,7 @@
 
 
 .pusherContainer {
-  max-height: 85vh;
+  height: 100%;
 
   margin: 0 !important;
 }

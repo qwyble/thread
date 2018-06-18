@@ -39,8 +39,14 @@ module.exports = function(app){
     playlist.getCats(
       req.session.user.idUsers,
       req.params.profile
-    )
-    .then((data) => {res.status(200).send(data);});
+    ).then((cats) => {
+      playlist.getCatOwner(
+        req.params.profile
+      ).then((owner) => {
+        var data = {cats: cats, owner: owner};
+        return data;
+      }).then((data) => {res.status(200).send(data);});
+    })
   })
 
   app.get('/getPlaylists', function(req, res){
@@ -48,7 +54,10 @@ module.exports = function(app){
     playlist.getCats(
       req.session.user.idUsers
     )
-    .then((data) => {res.status(200).send(data);});
+    .then((cats) => {
+      var data = {cats: cats}
+      res.status(200).send(data);
+    });
   })
 
   app.post('/renameCat', function(req, res){

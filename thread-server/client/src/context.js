@@ -10,19 +10,11 @@ class AppProvider extends React.Component{
     songs: [],
     nowPlaying: {},
     ended: false,
-    paused: false,
-    onPlaying: '',
-    onEnd: '',
-    onPausing: '',
-    onSetSongs: ''
+    paused: true,
   }
   componentDidMount(){
     this.setState({
       user: this.props.user,
-      onPlaying: this.handlePlaying,
-      onEnd: this.handleEnd,
-      onPausing: this.handlePausing,
-      onSetSongs: this.handleSetSongs
     });
   }
 
@@ -46,7 +38,6 @@ class AppProvider extends React.Component{
     else{ this.setState({paused: true}) }
   }
 
-  //handleEnd = () => { this.setState({ended: true}); }
 
   handleEnd = () => {
     var currentId = this.state.nowPlaying.idSongs;
@@ -57,9 +48,18 @@ class AppProvider extends React.Component{
     else{ return }
   }
 
+
   render() {
+
+    const handlers = {
+      onPlaying: this.handlePlaying,
+      onEnd: this.handleEnd,
+      onPausing: this.handlePausing,
+      onSetSongs: this.handleSetSongs
+    }
+
     return (
-      <AppContext.Provider value={this.state}>
+      <AppContext.Provider value={{...this.state, ...handlers}}>
         {this.props.children}
       </AppContext.Provider>
     )

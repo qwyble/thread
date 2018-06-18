@@ -28,21 +28,29 @@ class SidebarLeftOverlay extends Component {
     }
   }
 
+  static getDerivedStateFromProps(props, state){
+    if(window.location.pathname === '/stream'){
+      return { selectedPlaylist: '' }
+    }else{
+      return {}
+    }
+  }
+
 
   toggleVisibility = () => { this.setState({ visible: !this.state.visible }) }
 
   handleSelectPlaylist = (e, data) => {
     this.setState({
       selectedPlaylist: e.target.value,
-      isPublic: data.ispublic})
+      isPublic: data.ispublic
+    });
   }
 
 
   render() {
     return (
       <div>
-      <div>
-
+        <div>
         <Sidebar.Pushable as={Segment} className='primaryContainer'>
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu}
             visible={this.state.visible} >
@@ -51,6 +59,9 @@ class SidebarLeftOverlay extends Component {
                <Loader active />
               : <div></div>
             }
+            <Menu.Item style={{color: '#54c8ff'}}>
+              {this.props.owner ? <div>{this.props.owner}'s playlists:</div> : <div>Your playlists:</div>}
+            </Menu.Item>
               {this.props.categories.map((category, key) =>
                 {
                   return(

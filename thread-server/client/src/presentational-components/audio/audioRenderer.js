@@ -11,7 +11,8 @@ class AudioRenderer extends React.Component{
 
     this.state={
       percentPlayed: '0',
-      currentTime: '',
+      duration: '0',
+      currentTime: '0',
       _icon: '',
       volume: .5
     }
@@ -86,6 +87,12 @@ class AudioRenderer extends React.Component{
     var currentTime = this.getMinSec(this.myRef.current.currentTime);
     var duration = this.getMinSec(this.myRef.current.duration);
     var percentPlayed = String((((this.myRef.current.currentTime + 1) / (this.myRef.current.duration+1)) * 100));
+    if(duration === 'NaN:NaN'){
+      percentPlayed = '0';
+      duration = '0';
+      currentTime= '0';
+    }
+
     this.setState({percentPlayed, currentTime, duration});
   }
 

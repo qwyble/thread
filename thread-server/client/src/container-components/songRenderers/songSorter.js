@@ -122,6 +122,30 @@ class SongSorter extends React.Component{
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell />
+            <Table.HeaderCell width={3}>
+              <Button size='mini' onClick={this.props.onClonePlaylist}>Clone Playlist</Button>
+              <PlaylistPortal
+                err={this.state.err}
+                _disabled={this.state._disabled}
+                onAddToPlaylist={this.handleAddToPlaylist}
+              />
+            </Table.HeaderCell>
+            <Table.HeaderCell >
+
+              {window.location.pathname.includes('/profile') ?
+              <div></div>
+              : <div>
+                  {this.props.selectedPlaylist ?
+                    <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
+                      Delete From Playlist
+                    </Button> :
+                    <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>
+                      Delete Song
+                    </Button>
+                  }
+                </div>
+              }
+            </Table.HeaderCell>
             <Table.HeaderCell colSpan='5'>
               {this.props.isPublic ?
                 <Button floated='right' icon labelPosition='left'
@@ -134,23 +158,8 @@ class SongSorter extends React.Component{
                 </Button>
               }
 
-
-              <PlaylistPortal
-                err={this.state.err}
-                _disabled={this.state._disabled}
-                onAddToPlaylist={this.handleAddToPlaylist}
-              />
-
-
-              {this.props.selectedPlaylist ?
-                <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
-                  Delete From Playlist
-                </Button> :
-                <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>
-                  Delete Song
-                </Button>
-              }
             </Table.HeaderCell>
+
           </Table.Row>
         </Table.Footer>
       </Table>

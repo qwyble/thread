@@ -30,8 +30,10 @@ class SidebarTopOverlay extends Component {
             </Menu.Item>
 
             <Menu.Item link name='profile'>
-              <Icon name='user circle outline' />
-              Profile
+              <Link to='/profile'>
+                <Icon name='user circle outline' />
+                Profile
+              </Link>
             </Menu.Item>
 
 

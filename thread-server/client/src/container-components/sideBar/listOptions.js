@@ -1,5 +1,5 @@
 import React from 'react';
-import {TransitionablePortal, Segment, Input, Form, Button} from 'semantic-ui-react';
+import {TransitionablePortal, Icon,  Segment, Input, Form, Button, Dropdown} from 'semantic-ui-react';
 
 
 /* renders options to delete, share, and rename the category or playlist */
@@ -22,7 +22,7 @@ class ListOptions extends React.Component{
   }
 
 
-  handleCategoryDelete = (e) => {
+  handleCategoryDelete = () => {
     if(window.confirm("Are you sure you want to delete the "+this.props.catName+" playlist category? \nThese playlists will be lost.")){
       this.props.onCategoryDelete(this.props.id);
     }
@@ -34,21 +34,40 @@ class ListOptions extends React.Component{
     this.setState({newName: e.target.value})
   }
 
-
   handleRenameSubmit = () => {
     this.props.onCategoryEditSubmit(this.props.catName, this.props.id, this.state.newName);
   }
 
+  handleDropdownChange = (e, d) => {
+    var val = d.value;
+    console.log(d.value);
+    if(val === 'delete'){
+      this.handleCategoryDelete();
+    }else if(val === 'rename'){
+      this.handleOpen()
+    }
+  }
+
 
   render(){
+    const options = [
+      {key: 1, text: 'rename', value: 'rename'},
+      {key: 2, text: 'share', value: 'share'},
+      {key: 3, text: 'delete', value: 'delete'}
+    ]
+
+
     return(
       <div>
-        <select className='dropOverlay' value={this.state.selectValue}>
-          <option value=''></option>
-          <option value='rename' onClick={this.handleOpen}>rename</option>
-          <option value='share'>share</option>
-          <option value='delete' onClick={this.handleCategoryDelete}>delete</option>
-        </select>
+        <Dropdown
+          className='dropOverlay icon'
+          text=' '
+          icon='ellipsis vertical'
+          labeled
+          floating
+          value={this.state.selectValue}
+          options={options}
+          onChange={this.handleDropdownChange} />
         <TransitionablePortal  onClose={this.handleClose} open={this.state.openPortal}>
           <Segment style={{ left: '15%', width: '14%', position: 'fixed', top: '10%', zIndex: 1000 }}>
             <p>Enter a new name:</p>

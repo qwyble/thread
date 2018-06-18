@@ -6,10 +6,11 @@ import SidebarTopOverlay from './container-components/topBar/topBar.js';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Explorer from './container-components/search/explorer.js';
 import RoutedContext from './routedContext.js';
-import ProfileSidebar from './container-components/profiles/profileSidebar.js';
 import SongDetails from './container-components/songRenderers/songDetails.js';
 import AudioPlayback from './container-components/audioPlayback/audioPlayback.js';
+import ProfileContainer from './container-components/profiles/profileContainer.js';
 import {AppContext} from './context.js';
+
 
 
 /* App controls state for individual songs
@@ -30,6 +31,7 @@ class App extends Component {
               <Route path='/explore' component={Explorer} />
               <Route path='/stream' component={RoutedContext }/>
               <Route path='/playlist/:playlist' component={RoutedContext }/>
+              <Route exact path='/profile' component={ProfileContainer} />
               <Route path='/profile/:profile' component={RoutedContext } />
               <Route path='/song/:song' component={SongDetails } />
               <Redirect from='/' to={'/stream'} />
@@ -46,7 +48,6 @@ class App extends Component {
             }
           </AppContext.Consumer>
 
-          }
         </div>
       </div>
     );

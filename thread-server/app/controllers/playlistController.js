@@ -52,6 +52,19 @@ module.exports = {
     )
   },
 
+  getCatOwner: function(profile){
+    return(
+      sequelize.query(
+        `SELECT users.userName
+        FROM users
+        WHERE users.idUsers = ?`,{
+          replacements: [profile],
+          type: sequelize.QueryTypes.SELECT
+        }
+      )
+    )
+  },
+
 
   getCats: function(user, profile){
     if(!profile){
@@ -67,9 +80,15 @@ module.exports = {
     }else{
       return(
         sequelize.query(
-          `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid, playlists.isPublic as isPublic FROM categories
-          LEFT JOIN playlists
-          ON categories.idcategories = playlists.category
+          `SELECT
+            categories.name AS catname,
+            categories.idcategories as catid,
+            playlists.name AS plname,
+            playlists.idplaylists as plid,
+            playlists.isPublic as isPublic
+          FROM categories
+            LEFT JOIN playlists
+              ON categories.idcategories = playlists.category
           WHERE categories.owner = ${profile}
             AND playlists.isPublic = 1;`, {
             type: sequelize.QueryTypes.SELECT

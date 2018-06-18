@@ -15,16 +15,33 @@ class CategoryUtils extends React.Component{
     _loading: true,
     visitingProfile: '',
     categories: [],
+    owner: ''
   }
 
+  static getDerivedStateFromProps(props, state){
+    if(window.location.pathname === '/stream'){
+      return { owner: props.user.userName, visitingProfile: props.visitingProfile }
+    }else{
+      return { visitingProfile: props.visitingProfile }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps !== this.props){
+      this.getCats();
+    }
+  }
+
+
   componentDidMount(){
-    this.setState({_loading: true, visitingProfile: this.props.visitingProfile}, () => {
+    this.setState({_loading: true }, () => {
       this.getCats();
     });
   }
 
 
   getUrl = () => {
+    console.log(this.state.visitingProfile);
     if(this.state.visitingProfile){
       return 'http://localhost:8080/getPlaylists/'+this.state.visitingProfile;
     }else{
@@ -39,7 +56,7 @@ class CategoryUtils extends React.Component{
       url: this.getUrl(),
       withCredentials: true
     }).then((categories) => {
-      var catpls = categories.data;
+      var catpls = categories.data.cats;
       var cats = Object.values(
         catpls.reduce( (cats, {catname, catid, plname, plid, isPublic}) => {
           if (! (catid in cats) ) { cats[catid] = {catname, catid, pls: []}; }
@@ -47,7 +64,12 @@ class CategoryUtils extends React.Component{
           return cats;
         }, {})
       )
-      this.setState({categories: cats, _loading: false});
+      if (categories.data.owner){
+        var owner = categories.data.owner[0].userName;
+      }else{
+        var owner = '';
+      }
+      this.setState({categories: cats, owner: owner, _loading: false});
     });
   }
 
@@ -118,6 +140,7 @@ class CategoryUtils extends React.Component{
         url={this.props.url}
         visitingProfile={this.props.visitingProfile}
         user={this.props.user}
+        owner={this.state.owner}
         categories={this.state.categories}
         err={this.state.err}
         _loading={this.state._loading}

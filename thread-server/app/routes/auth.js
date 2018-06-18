@@ -33,19 +33,36 @@ module.exports = function(app){
       }
     });
   });
-  
+
 
   app.post('/logout', function(req, res){
     req.session.destroy();
     res.status(200).send('logged out');
-  })
+  });
 
   app.get('/auth', function(req, res){
-    console.log(req.session.user);
     if (req.session.user){
       res.status(200).send(req.session.user);
     }else{
       res.status(200).send('not logged in');
     }
   });
+
+
+  app.get('/getUserInfo', function(req, res){
+    auth.getUser(
+      req.session.user.idUsers
+    ).then(data => res.status(200).send(data))
+  });
+
+
+  app.post('/editUserInfo', function(req, res){
+    auth.editUser(
+      req.body.email,
+      req.body.username,
+      req.session.user.idUsers
+    ).then(data => res.status(200).send('ok'))
+    .catch(err => res.status(300).send('err'));
+  })
+
 }

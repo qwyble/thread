@@ -6,6 +6,7 @@ import CategoryUtils from './container-components/sideBar/categoryUtils.js';
 class RoutedContext extends React.Component{
 
   render(){
+    console.log(this.props.match.params.profile);
     return(
       <AppContext.Consumer>{context => (
 
