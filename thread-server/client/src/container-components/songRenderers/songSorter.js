@@ -2,6 +2,7 @@ import React from 'react';
 import {Modal, Portal,Table, Sticky, Button, Icon, Header, Menu, Checkbox, Rating, Loader} from 'semantic-ui-react';
 import PlaylistPortal from './playlistPortal.js';
 import SongRow from './songRow.js';
+import ClonePortal from '../../presentational-components/sidebarUtilities/clonePortal.js';
 import axios from 'axios';
 
 //renders the lst of songs, controls adding and deleting songs to/from playlists
@@ -122,29 +123,33 @@ class SongSorter extends React.Component{
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell />
-            <Table.HeaderCell width={3}>
-              <Button size='mini' onClick={this.props.onClonePlaylist}>Clone Playlist</Button>
+            <Table.HeaderCell colSpan='2'>
+              <ClonePortal
+                refreshCategories={this.props.refreshCategories}
+                categories={this.props.categories}
+                selectedPlaylist={this.props.selectedPlaylist}
+              />
               <PlaylistPortal
                 err={this.state.err}
                 _disabled={this.state._disabled}
                 onAddToPlaylist={this.handleAddToPlaylist}
               />
             </Table.HeaderCell>
+            {window.location.pathname.includes('/profile') ?
+            <div></div>
+            : <Table.HeaderCell>
+                {this.props.selectedPlaylist ?
+                  <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
+                    Delete From Playlist
+                  </Button> :
+                  <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>
+                    Delete Song
+                  </Button>
+                }
+              </Table.HeaderCell>
+            }
             <Table.HeaderCell >
 
-              {window.location.pathname.includes('/profile') ?
-              <div></div>
-              : <div>
-                  {this.props.selectedPlaylist ?
-                    <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
-                      Delete From Playlist
-                    </Button> :
-                    <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>
-                      Delete Song
-                    </Button>
-                  }
-                </div>
-              }
             </Table.HeaderCell>
             <Table.HeaderCell colSpan='5'>
               {this.props.isPublic ?

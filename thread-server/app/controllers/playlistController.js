@@ -37,7 +37,9 @@ module.exports = {
     return (
       sequelize.query(
         `INSERT INTO playlists (name, category)
-        VALUES ("${playlist}", ${catid});`
+        VALUES ("${playlist}", ${catid});`,{
+          type: sequelize.QueryTypes.INSERT
+        }
       )
     )
   },
@@ -119,6 +121,36 @@ module.exports = {
         WHERE idplaylists = ?;`,{
           replacements: [plid],
           type: sequelize.QueryTypes.UPDATE
+        }
+      )
+    )
+  },
+
+
+  getSongsForClone: function(plToClone){
+    return(
+      sequelize.query(
+        `SELECT song
+        FROM songsplaylistsbridge
+        WHERE playlist = ?`, {
+          replacements: [plToClone],
+          type: sequelize.QueryTypes.SELECT
+        }
+      )
+    )
+  },
+
+  clonePlaylist: function(songsList, plid){
+    var songs = []
+    for (var i = 0; i < songsList.length; i++){
+      songs.push([songsList[i].song, plid])
+    }
+    return(
+      sequelize.query(
+        `INSERT INTO songsplaylistsbridge (song, playlist)
+        VALUES ?`,{
+          replacements: [songs],
+          type: sequelize.QueryTypes.INSERT
         }
       )
     )

@@ -13,8 +13,8 @@ const multer = Multer({
 
 module.exports = function(app){
 
-  app.post('/uploadImage', multer.single('file'), (req, res, next) => {
-      upload.upload(req, res, () => {res.status(200).send('ok')}, next);
+  app.post('/uploadImage', multer.single('file'), (req, res) => {
+      upload.upload(req, res, () => {res.status(200).send('ok')});
   });
 
 }

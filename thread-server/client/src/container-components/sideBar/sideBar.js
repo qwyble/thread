@@ -107,6 +107,7 @@ class SidebarLeftOverlay extends Component {
                   ended={context.ended}
                   paused={context.paused}
                   url={this.props.url}
+                  refreshCategories={this.props.refreshCategories}
                 />)}
               </AppContext.Consumer>
             </div>

@@ -7,7 +7,18 @@ module.exports = {
   getUsers: function(searchString){
     return(
       sequelize.query(
-        `SELECT idUsers, userName FROM users WHERE userName LIKE ?
+        `SELECT idUsers, userName, imageUrl, COUNT(playlists.idplaylists) as playlistsCount, songsct.songsCount
+        FROM users
+          LEFT JOIN categories
+            ON users.idUsers = categories.owner
+          LEFT JOIN playlists
+            ON playlists.category = categories.idcategories
+          LEFT JOIN (
+            SELECT owner, count(songs.idSongs) as songsCount FROM songs
+            GROUP BY songs.owner
+          ) AS songsct ON songsct.owner = users.idUsers
+        WHERE userName LIKE ?
+        GROUP BY idUsers
         ORDER BY userName
         LIMIT 40`,{
           replacements: ['%'+searchString+'%'],

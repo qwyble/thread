@@ -92,6 +92,7 @@ class PlaylistController extends React.Component{
           isPublic={this.state.isPublic}
           onRemoval={this.handleRemoval}
           onRefresh={this.getSongs}
+          refreshCategories={this.props.refreshCategories}
         />
       </div>
     )

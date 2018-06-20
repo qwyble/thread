@@ -41,7 +41,6 @@ class CategoryUtils extends React.Component{
 
 
   getUrl = () => {
-    console.log(this.state.visitingProfile);
     if(this.state.visitingProfile){
       return 'http://localhost:8080/getPlaylists/'+this.state.visitingProfile;
     }else{
@@ -144,6 +143,7 @@ class CategoryUtils extends React.Component{
         categories={this.state.categories}
         err={this.state.err}
         _loading={this.state._loading}
+        refreshCategories={this.getCats}
       />
     )
   }

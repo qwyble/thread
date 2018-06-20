@@ -82,6 +82,25 @@ module.exports = function(app){
     ).then((result) => {res.status(200).send('looking good.')})
   })
 
+  app.post('/clonePlaylist', function(req, res){
+    var songsList = [];
+    playlist.getSongsForClone(
+      req.body.plToClone
+    ).then((result) => {
+      songsList = result;
+      playlist.addPlaylist(
+        req.body.selectedCat,
+        req.body.plname
+      ).then((result) => {
+        var plid = result[0]
+        playlist.clonePlaylist(
+          songsList,
+          plid
+        ).then((result) => {res.status(200).send('ok')});
+      });
+    });
+  });
+
 
 
 }
