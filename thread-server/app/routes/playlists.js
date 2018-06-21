@@ -35,7 +35,6 @@ module.exports = function(app){
   }),
 
   app.get('/getPlaylists/:profile', function(req, res){
-    console.log(req.params);
     playlist.getCats(
       req.session.user.idUsers,
       req.params.profile
@@ -50,7 +49,6 @@ module.exports = function(app){
   })
 
   app.get('/getPlaylists', function(req, res){
-    console.log(req.params);
     playlist.getCats(
       req.session.user.idUsers
     )
@@ -61,7 +59,6 @@ module.exports = function(app){
   })
 
   app.post('/renameCat', function(req, res){
-    console.log(req.body);
     playlist.renameCategory(
       req.body.catid,
       req.body.name,

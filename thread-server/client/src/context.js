@@ -11,6 +11,7 @@ class AppProvider extends React.Component{
     nowPlaying: {},
     ended: false,
     paused: true,
+    owner: ''
   }
   componentDidMount(){
     this.setState({
@@ -20,6 +21,12 @@ class AppProvider extends React.Component{
 
   static getDerivedStateFromProps(props, state){
     return {user: props.user}
+  }
+
+  handleSetOwner = (owner) => {
+    if (owner != this.state.owner){
+      this.setState({owner: owner});      
+    }
   }
 
   handleSetSongs = (songs) => {
@@ -55,7 +62,8 @@ class AppProvider extends React.Component{
       onPlaying: this.handlePlaying,
       onEnd: this.handleEnd,
       onPausing: this.handlePausing,
-      onSetSongs: this.handleSetSongs
+      onSetSongs: this.handleSetSongs,
+      onSetOwner: this.handleSetOwner
     }
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Search, Label} from 'semantic-ui-react';
+import {Search, Label, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
@@ -31,7 +31,8 @@ class SearchBar extends React.Component{
               return {
                 "title": user.userName,
                 key: user.idUsers,
-                url: '/profile/'+user.idUsers
+                url: '/profile/'+user.idUsers,
+                image: user.imageUrl
               }
             })
           },
@@ -83,7 +84,13 @@ class SearchBar extends React.Component{
 }
 
 
-const resultRenderer = ({ title, url }) => <Label><Link to={url}>{title}</Link></Label>
+const resultRenderer = ({ title, url, image }) =>
+  <div>
+    <Link to={url}>
+      <Image className='searchImage' floated='left' circular size='mini' src={image} />
+          {title}
+    </Link>
+  </div>
 
 
 export default SearchBar;

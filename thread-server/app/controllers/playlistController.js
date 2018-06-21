@@ -33,7 +33,6 @@ module.exports = {
   },
 
   addPlaylist: function(catid, playlist, owner){
-    console.log(catid, playlist);
     return (
       sequelize.query(
         `INSERT INTO playlists (name, category)
@@ -57,7 +56,7 @@ module.exports = {
   getCatOwner: function(profile){
     return(
       sequelize.query(
-        `SELECT users.userName
+        `SELECT users.userName, users.idUsers
         FROM users
         WHERE users.idUsers = ?`,{
           replacements: [profile],

@@ -60,10 +60,23 @@ class LoginContainer extends React.Component{
     });
   }
 
+  getRedirectUrl = () => {
+    var loc = this.props.location.state
+    if(loc){
+      if(loc.from !== '/logout'){
+        return loc.from;
+      }else{
+        return '/stream'
+      }
+    }else{
+      return '/stream'
+    }
+  }
+
 
   render(){
     if(this.props.isLoggedIn){
-      return <Redirect to={this.props.location.state.from} />
+      return <Redirect to={this.getRedirectUrl()} />
     }
     return(
       <div>

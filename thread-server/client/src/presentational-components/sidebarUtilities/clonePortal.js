@@ -68,7 +68,7 @@ class ClonePortal extends React.Component{
 
   render(){
     return(
-      <Portal onClose={this.handlePortalClose} trigger={<Button onCLick={this.getUserCats} size='mini' content="Clone Playlist"/>} >
+      <Portal onClose={this.handlePortalClose} trigger={<Button onClick={this.getUserCats} size='mini' content="Clone Playlist"/>} >
           <Segment inverted style={{opacity: '.9', width: '250px', position: 'fixed', top: '60%', left: '18%'}}>
             {this.state._loading ? <Loader active={true} /> : <div></div>}
             {this.state.plToClone ?

@@ -3,8 +3,21 @@
   width: 25px;
   background-color: #eee;
 }
+.ui.fluid.search .results{
+  opacity: .95;
+}
 
+.ui.search > .results .result .image.searchImage{
+  float: left;
+  width: 35px;
+  height: auto;
+  border-radius: 500rem;
+}
 
+.ui.fluid.search .results{
+  height: 70vh;
+  overflow: auto;
+}
 
 .prompt{
   border-radius: 2px !important;
@@ -39,10 +52,6 @@
 
 
 }
-.ui.grid.playerGrid{
-  margin-top: 2% !important;
-  margin-bottom: 2% !important;
-}
 
 .ui.progress .bar {
   height: 80% !important;
@@ -68,10 +77,16 @@
   height: 8vh !important;
   width: 100vw;
 }
-.ui.grid > .row{
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+.ui.grid {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
 }
+
+.ui.grid.playerGrid{
+  margin-top: 1% !important;
+  margin-bottom: 3% !important;
+}
+
 .playerCol{
   color: #2bbbff !important;
 }

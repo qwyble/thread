@@ -13,6 +13,7 @@ class RoutedContext extends React.Component{
           url={this.props.match.url}
           visitingProfile={this.props.match.params.profile}
           user={context.user}
+          setOwner={context.onSetOwner}
         />)}
 
       </AppContext.Consumer>

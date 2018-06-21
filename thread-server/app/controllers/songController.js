@@ -16,6 +16,10 @@ module.exports = {
           ON songs.idSongs = songratings.song
           AND $1 = songratings.user
       WHERE songs.owner = $1
+        OR songs.owner IN (
+          SELECT LeaderId FROM usersfollowersbridge
+          WHERE FollowerId = $1
+        )
       ORDER BY songs.dateUploaded DESC
       LIMIT 40;`,{
         bind: [owner],

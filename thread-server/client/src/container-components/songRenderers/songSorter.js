@@ -2,6 +2,8 @@ import React from 'react';
 import {Modal, Portal,Table, Sticky, Button, Icon, Header, Menu, Checkbox, Rating, Loader} from 'semantic-ui-react';
 import PlaylistPortal from './playlistPortal.js';
 import SongRow from './songRow.js';
+import {AppContext} from '../../context.js';
+import FollowUser from '../follower/followUser.js'
 import ClonePortal from '../../presentational-components/sidebarUtilities/clonePortal.js';
 import axios from 'axios';
 
@@ -123,7 +125,7 @@ class SongSorter extends React.Component{
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell />
-            <Table.HeaderCell colSpan='2'>
+            <Table.HeaderCell colSpan='4'>
               <ClonePortal
                 refreshCategories={this.props.refreshCategories}
                 categories={this.props.categories}
@@ -134,10 +136,11 @@ class SongSorter extends React.Component{
                 _disabled={this.state._disabled}
                 onAddToPlaylist={this.handleAddToPlaylist}
               />
-            </Table.HeaderCell>
-            {window.location.pathname.includes('/profile') ?
-            <div></div>
-            : <Table.HeaderCell>
+              {window.location.pathname.includes('/profile') || window.location.pathname.includes('/playlist') ?
+                <AppContext.Consumer>{context =>
+                  <FollowUser isOwner={context.user.idUsers === context.owner} user={context.user.idUsers} owner={context.owner}/>}
+                </AppContext.Consumer>
+              : <div style={{float: 'left'}}>
                 {this.props.selectedPlaylist ?
                   <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
                     Delete From Playlist
@@ -146,10 +149,8 @@ class SongSorter extends React.Component{
                     Delete Song
                   </Button>
                 }
-              </Table.HeaderCell>
+              </div>
             }
-            <Table.HeaderCell >
-
             </Table.HeaderCell>
             <Table.HeaderCell colSpan='5'>
               {this.props.isPublic ?

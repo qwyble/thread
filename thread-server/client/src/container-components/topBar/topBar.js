@@ -49,13 +49,17 @@ class SidebarTopOverlay extends Component {
             </Menu.Item>
 
             <Menu.Item link name='users'>
-              <Icon name='users' />
-              Followers
+              <Link to='/followers'>
+                <Icon name='users' />
+                Followers
+              </Link>
             </Menu.Item>
 
             <Menu.Item link name='following'>
-              <Icon name='flag' />
-              Following
+              <Link to='/following'>
+                <Icon name='flag' />
+                Following
+              </Link>
             </Menu.Item>
 
             <Menu.Item link name='forums'>

@@ -27,7 +27,7 @@ class CategoryUtils extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    if(prevProps !== this.props){
+    if(prevProps.url !== this.props.url){
       this.getCats();
     }
   }
@@ -65,9 +65,12 @@ class CategoryUtils extends React.Component{
       )
       if (categories.data.owner){
         var owner = categories.data.owner[0].userName;
+        var ownerId = categories.data.owner[0].idUsers;
       }else{
         var owner = '';
+        var ownerId= '';
       }
+      this.props.setOwner(ownerId);
       this.setState({categories: cats, owner: owner, _loading: false});
     });
   }

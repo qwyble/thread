@@ -9,6 +9,8 @@ import RoutedContext from './routedContext.js';
 import SongDetails from './container-components/songRenderers/songDetails.js';
 import AudioPlayback from './container-components/audioPlayback/audioPlayback.js';
 import ProfileContainer from './container-components/profiles/profileContainer.js';
+import Following from './container-components/follower/following.js';
+import Followers from './container-components/follower/followers.js';
 import {AppContext} from './context.js';
 
 
@@ -24,9 +26,13 @@ class App extends Component {
     return (
       <div>
         <div>
-          <SidebarTopOverlay logo={logo}/>
+          <div>
+            <SidebarTopOverlay logo={logo}/>
+          </div>
           <div>
             <Switch>
+              <Route path='/followers' component={Followers} />
+              <Route path='/following' component={Following} />
               <Route path='/forum' component={ForumSidebarLeftOverlay} />
               <Route path='/explore' component={Explorer} />
               <Route path='/stream' component={RoutedContext }/>
@@ -37,16 +43,18 @@ class App extends Component {
               <Redirect from='/' to={'/stream'} />
             </Switch>
           </div>
-          <AppContext.Consumer>
-            {context =>
-              <AudioPlayback
-                onEnd={context.onEnd}
-                nowPlaying={context.nowPlaying}
-                paused={context.paused}
-                onPausing={context.onPausing}
-              />
-            }
-          </AppContext.Consumer>
+          <div>
+            <AppContext.Consumer>
+              {context =>
+                <AudioPlayback
+                  onEnd={context.onEnd}
+                  nowPlaying={context.nowPlaying}
+                  paused={context.paused}
+                  onPausing={context.onPausing}
+                />
+              }
+            </AppContext.Consumer>
+          </div>
 
         </div>
       </div>
