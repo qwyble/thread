@@ -4,7 +4,7 @@ import MessagesList from './messagesList.js';
 import SentMessagesList from './sentMessagesList.js';
 import ViewMessage from './viewMessage.js';
 import Composer from './composer.js'
-import {Segment, Loader} from 'semantic-ui-react';
+import {Segment, Loader, Container} from 'semantic-ui-react';
 import axios from 'axios';
 import {Route} from 'react-router-dom';
 
@@ -76,28 +76,31 @@ class MessagesContainer extends React.Component{
         />
 
         <Segment style={{width: '50%', margin: 'auto'}} className='messagesTable'>
+          <Container style={{height: '70vh', overflowY: 'scroll'}}>
 
-          {this.state._loading ? <Loader active /> : <div></div>}
+            {this.state._loading ? <Loader active /> : <div></div>}
 
-          <Route path='/messages/view' component={ViewMessage} />
-          <Route path='/messages/compose' component={Composer} />
+            <Route path='/messages/view' component={ViewMessage} />
+            <Route path='/messages/compose' component={Composer} />
 
+            <Route path='/messages/sent' render={(props) =>
+              <SentMessagesList
+                {...props}
+                messages={this.state.messages}
+              />
+            }/>
 
-          <Route path='/messages/sent' render={(props) =>
-            <SentMessagesList
-              {...props}
-              messages={this.state.messages}
-            />
-          }/>
+            <Route exact path='/messages' render={(props) =>
+              <MessagesList
+                {...props}
+                messages={this.state.messages}
+                selectedMessages={this.state.selectedMessages}
+                onMessageCheck={this.handleMessageCheck}
+              />
+            }/>
 
-          <Route exact path='/messages' render={(props) =>
-            <MessagesList
-              {...props}
-              messages={this.state.messages}
-              selectedMessages={this.state.selectedMessages}
-              onMessageCheck={this.handleMessageCheck}
-            />
-          }/>
+          </Container>
+
 
         </Segment>
       </div>

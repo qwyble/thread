@@ -18,11 +18,12 @@ module.exports = {
   getMessages: function(user){
     return(
       sequelize.query(
-        `SELECT idmessages, subject, sender, date, users.userName AS senderName
+        `SELECT idmessages, subject, viewed, sender, date, users.userName AS senderName
         FROM messages
           JOIN users
           ON sender = users.idUsers
-        WHERE recipient = ?`, {
+        WHERE recipient = ?
+        ORDER BY date DESC`, {
           replacements: [user],
           type: sequelize.QueryTypes.SELECT
         }
@@ -64,10 +65,25 @@ module.exports = {
         FROM messages
           JOIN users
           ON recipient = users.idUsers
-        WHERE sender = ?`, {
+        WHERE sender = ?
+        ORDER BY date DESC`, {
           replacements: [user],
           type: sequelize.QueryTypes.SELECT
         }
+      )
+    )
+  },
+
+  checkMessage: function(user, id){
+    return(
+      sequelize.query(
+        `UPDATE messages
+        SET viewed = 1
+        WHERE idmessages = ?
+          AND recipient = ?`,{
+            replacements: [id, user],
+            type: sequelize.QueryTypes.UPDATE
+          }
       )
     )
   }

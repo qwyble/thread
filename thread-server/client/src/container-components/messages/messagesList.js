@@ -9,13 +9,12 @@ class MessagesList extends React.Component{
   state={
     messages: [],
     messageToView: '',
-    selectedMessages: [],
     redirect: false
   }
 
 
   static getDerivedStateFromProps(props, state){
-    return {messages: props.messages, selectedMessages: props.selectedMessages}
+    return {messages: props.messages }
   }
 
 
@@ -51,13 +50,14 @@ class MessagesList extends React.Component{
 
           <Table.Body>
             {this.state.messages.map((m, i) => {
+              var style = m.viewed ? {opacity: '.6'} : {};
               return(
-                  <Table.Row key={i}>
+                  <Table.Row key={i} style={style} >
                     <Table.Cell>
                       <Checkbox
                         className='messageCheckbox' size = 'mini'
                         id={m.idmessages}
-                        checked={this.state.selectedMessages.includes(m.idmessages)}
+                        checked={this.props.selectedMessages.includes(m.idmessages)}
                         onChange={this.props.onMessageCheck} />
                       <span></span>
                     </Table.Cell>

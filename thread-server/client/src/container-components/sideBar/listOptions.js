@@ -51,11 +51,12 @@ class ListOptions extends React.Component{
 
   render(){
     const options = [
+      {key: 0, text: '', value: ''},
       {key: 1, text: 'rename', value: 'rename'},
       {key: 2, text: 'share', value: 'share'},
       {key: 3, text: 'delete', value: 'delete'}
     ]
-
+    console.log(this.state.selectValue);
 
     return(
       <div>

@@ -23,7 +23,13 @@ module.exports = function(app){
     messages.getMessage(
       req.session.user.idUsers,
       req.query.id
-    ).then((data) => {res.status(200).send(data)});
+    ).then((data) => {
+      messages.checkMessage(
+        req.session.user.idUsers,
+        req.query.id
+      );
+      res.status(200).send(data);
+    });
   });
 
   app.post('/deleteMessages', function(req, res){

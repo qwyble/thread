@@ -1,157 +1,155 @@
 import React from 'react';
 import axios from 'axios';
 import SuccessPrompt from './successPrompt';
+import FieldComponent from '../utilities/fieldComponent.js';
+import TextComponent from '../utilities/textComponent.js';
+import DropdownComponent from '../utilities/dropdownComponent';
 import {Container, Input, Dimmer, Form, Loader, Button, Dropdown, Icon} from 'semantic-ui-react';
 
 
 class Composer extends React.Component{
 
   state = {
-    users: [],
-    searchValue: '',
-    subject: '',
-    body: '',
-    err: {
+    message: {
+      recipient: null,
       subject: '',
-      body: '',
-      recipient: ''
+      body: ''
+    },
+    fieldErrors: {
+      recipient: '',
+      subject: '',
+      body: ''
     },
     _loading: false,
-    _displayErr: '',
     success: false
   }
 
+
   static getDerivedStateFromProps(props, state){
-    return{searchValue: props.recipient}
+    var message = {...state.message}
+    message['recipient'] = props.recipient
+    return{ message: message }
   }
 
-  componentDidMount(){
-    this.getUsers(this.state.searchValue);
-  }
-
-  handleSearchChange = (e, d) => {
-    this.setState({searchValue: e.target.value}, () => {
-      this.getUsers(this.state.searchValue);
-      this.validate();
-    });
-  }
 
   handleDropdownChange = (e, d) => {
-    this.setState({
-      searchValue: d.value,
-    }, () => {
-      this.validate()
-    });
-
+    this.setState({searchValue: d.value});
   }
 
-  handleInputChange = (e) => {
-    var name = e.target.name;
-    var val = e.target.value;
-    this.setState({ [name]: val}, () => {
-      this.validate(name, val);
-    });
+
+  handleInputChange = ({name, value, error}) => {
+    const message = {...this.state.message};
+    const fieldErrors = {...this.state.fieldErrors};
+
+    message[name] = value;
+    fieldErrors[name] = error;
+
+    this.setState({message, fieldErrors});
   }
 
 
   validate = () => {
-    var err = {...this.state.err};
-    if (!this.state.subject){
-      err['subject'] = 'subject is required'
-      this.setState({err});
-    }else{
-      err['subject'] = ''
-      this.setState({err});
-    }
+    const message = {...this.state.message};
+    const fieldErrors = {...this.state.fieldErrors};
+    const errMessages = Object.keys(fieldErrors).filter((k) => fieldErrors[k]);
 
-    if(!this.state.body){
-      err['body'] = 'body is required'
-      this.setState({err});
-    }else{
-      err['body'] = '';
-      this.setState({err});
-    }
+    if(!message.recipient) return true;
+    if(!message.subject) return true;
+    if(!message.body) return true;
+    if(errMessages.length) return true;
 
-    if(!(typeof this.state.searchValue ==='number')){
-      err['recipient'] = 'recipient is required';
-      this.setState({err});
-    }else{
-      err['recipient'] = '';
-      this.setState({err})
-    }
+    return false;
   }
 
 
-  getUsers = (searchString) => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:8080/emailSearch',
-      params: {
-        searchString: searchString
-      }
-    }).then(result => {
-      var users = [];
-      users = result.data.map((user, i) => {
-        return {
-          text: user.userName,
-          image: user.imageUrl,
-          key: user.idUsers,
-          value: user.idUsers
-        }
-      })
-      this.setState({users});
-    })
+  handleFormSubmit = (e) => {
+    const message = this.state.message;
+    e.preventDefault();
+
+    if(this.validate()) return;
+
+    this.sendMessageToDb();
   }
 
 
-  handleFormSubmit = () => {
-    if(typeof this.state.searchValue !== 'number'){
-      this.setState({_displayErr: 'user not found'});
-      return;
-    }
+  sendMessageToDb = () => {
     this.setState({_loading: true});
+
     axios({
       method: 'post',
       url: 'http://localhost:8080/sendMessage',
       data: {
-        subject: this.state.subject,
-        body: this.state.body,
-        recipient: this.state.searchValue,
+        subject: this.state.message.subject,
+        body: this.state.message.body,
+        recipient: this.state.message.recipient,
         date: (new Date()).toISOString().substring(0, 19).replace('T', ' ')
       },
       withCredentials: true
-    }).then(() => {this.setState({_loading: false, success: true})})
+    }).then(() => {
+      this.setState({
+        _loading: false,
+        success: true,
+        message: {
+          recipient: null,
+          subject: '',
+          body: ''
+        }
+      })
+    });
+
   }
 
 
-
   render(){
-    var _disabled = Object.values(this.state.err).some(err => err.length);
+    console.log(this.state.message.recipient);
     return(
       <Container>
+
         {this.state._loading ? <Dimmer inverted active><Loader active /></Dimmer> : <div></div>}
         {this.state.success ? <SuccessPrompt /> : <div></div>}
+
         <Form onSubmit={this.handleFormSubmit}>
-          <Form.Field>
-            <Dropdown
-              error={this.state.err.recipient ? true : false}
-              placeholder='Select user'
-              fluid search selection
-              onChange={this.handleDropdownChange}
-              options={this.state.users}
-              value={this.state.searchValue}
-              onSearchChange={this.handleSearchChange}
+
+          <Form.Field required error={this.state.fieldErrors.recipient ? true : false}>
+            <DropdownComponent
+              name='recipient'
+              placeholder='Choose recipient'
+              value={this.state.message.recipient}
+              onChange={this.handleInputChange}
+              validate={(val) => val ? false : 'recipient is required'}
             />
+            {this.state.fieldErrors.recipient}
           </Form.Field>
-          <Form.Field error={this.state.err.subject ? true : false} required>
-            <Input type='text' name='subject' value={this.state.subject} onChange={this.handleInputChange} placeholder='Subject'/>
+
+          <Form.Field required error={this.state.fieldErrors.subject ? true : false} >
+            <FieldComponent
+              name='subject'
+              placeholder='Subject'
+              value={this.state.message.subject}
+              onChange={this.handleInputChange}
+              validate={(val) => val ? false : 'Subject is required'}
+            />
+            {this.state.fieldErrors.subject}
           </Form.Field>
-          <Form.Field required error={this.state.err.body ? true : false}>
-            <Form.TextArea name='body' value={this.state.body} onChange={this.handleInputChange} placeholder='Body' />
+
+          <Form.Field required error={this.state.fieldErrors.body ? true : false}>
+            <TextComponent
+              name='body'
+              placeholder='Body'
+              value={this.state.message.body}
+              onChange={this.handleInputChange}
+              validate={(val) => val ? false : 'body is required'}
+            />
+            {this.state.fieldErrors.body}
           </Form.Field>
-          <Button disabled={_disabled} type='submit'><Icon name='send' /></Button>
+
+          <Button
+            type='submit'
+            disabled={this.validate()}>
+            <Icon name='send' />
+          </Button>
+
         </Form>
-        {this.state._displayErr}
       </Container>
     )
   }

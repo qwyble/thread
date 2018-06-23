@@ -72,7 +72,7 @@ class ViewMessage extends React.Component{
           {this.state.message.text}
         <Divider />
         <Button icon='reply' onClick={this.handleReply}/>
-        {this.state.reply ? <Composer recipient={this.state.message.senderName}/> : <div></div>}
+        {this.state.reply ? <Composer recipient={this.state.message.sender}/> : <div></div>}
 
       </Container>
 
