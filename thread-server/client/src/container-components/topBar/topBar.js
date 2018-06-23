@@ -14,7 +14,7 @@ class SidebarTopOverlay extends Component {
   render() {
     return (
       <div>
-          <Menu inverted>
+          <Menu inverted className='topBar'>
             <Menu.Item link name='home'>
               <Link to='/'>
                 <img src={this.props.logo} className="App-logo" alt="logo" />
@@ -70,8 +70,10 @@ class SidebarTopOverlay extends Component {
             </Menu.Item>
 
             <Menu.Item link name='messages'>
-              <Icon name='mail' />
-              Messages
+              <Link to='/messages'>
+                <Icon name='mail' />
+                Messages
+              </Link>
             </Menu.Item>
 
             <Menu.Item link name='chat'>

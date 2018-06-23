@@ -11,6 +11,7 @@ import AudioPlayback from './container-components/audioPlayback/audioPlayback.js
 import ProfileContainer from './container-components/profiles/profileContainer.js';
 import Following from './container-components/follower/following.js';
 import Followers from './container-components/follower/followers.js';
+import MessagesContainer from './container-components/messages/messagesContainer.js';
 import {AppContext} from './context.js';
 
 
@@ -31,6 +32,7 @@ class App extends Component {
           </div>
           <div>
             <Switch>
+              <Route path='/messages' component={MessagesContainer} />
               <Route path='/followers' component={Followers} />
               <Route path='/following' component={Following} />
               <Route path='/forum' component={ForumSidebarLeftOverlay} />

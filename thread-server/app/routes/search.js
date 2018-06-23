@@ -13,4 +13,10 @@ module.exports = function(app){
       })
     });
   })
+
+
+  app.get('/emailSearch', function(req,res){
+    search.getUsers(req.query.searchString)
+    .then((users) =>{ res.status(200).send(users) })
+  })
 }
