@@ -4,8 +4,7 @@ import axios from 'axios';
 
 
 /*
-The purpose of this class is to take a load off of SidebarLeftOverlay
-by lifting the 'categories' state and all functions which modify the categories.
+'categories' state and all functions which modify the categories.
 */
 
 class CategoryUtils extends React.Component{
@@ -19,33 +18,23 @@ class CategoryUtils extends React.Component{
   }
 
   static getDerivedStateFromProps(props, state){
-    if(window.location.pathname === '/stream'){
-      return { owner: props.user.userName, visitingProfile: props.visitingProfile }
-    }else{
-      return { visitingProfile: props.visitingProfile }
-    }
+    if(window.location.pathname === '/stream'){ return { owner: props.user.userName, visitingProfile: props.visitingProfile } }
+    else{ return { visitingProfile: props.visitingProfile } }
   }
 
   componentDidUpdate(prevProps, prevState){
-    if(prevProps.url !== this.props.url){
-      this.getCats();
-    }
+    if(prevProps.url !== this.props.url){ this.getCats(); }
   }
 
 
   componentDidMount(){
-    this.setState({_loading: true }, () => {
-      this.getCats();
-    });
+    this.setState({_loading: true }, () => { this.getCats(); });
   }
 
 
   getUrl = () => {
-    if(this.state.visitingProfile){
-      return 'http://localhost:8080/getPlaylists/'+this.state.visitingProfile;
-    }else{
-      return 'http://localhost:8080/getPlaylists';
-    }
+    if(this.state.visitingProfile){ return 'http://localhost:8080/getPlaylists/'+this.state.visitingProfile; }
+    else{ return 'http://localhost:8080/getPlaylists'; }
   }
 
 
@@ -63,14 +52,12 @@ class CategoryUtils extends React.Component{
           return cats;
         }, {})
       )
-      if (categories.data.owner){
-        var owner = categories.data.owner[0].userName;
-        var ownerId = categories.data.owner[0].idUsers;
-      }else{
-        var owner = '';
-        var ownerId= '';
-      }
-      this.props.setOwner(ownerId);
+
+        var owner = categories.data.owner[0]
+
+      this.props.setOwner(owner);
+      console.log(owner);
+
       this.setState({categories: cats, owner: owner, _loading: false});
     });
   }

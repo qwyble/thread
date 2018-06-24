@@ -71,9 +71,15 @@ module.exports = {
     if(!profile){
       return(
         sequelize.query(
-          `SELECT categories.name AS catname, categories.idcategories as catid, playlists.name AS plname, playlists.idplaylists as plid, playlists.isPublic as isPublic FROM categories
-          LEFT JOIN playlists
-          ON categories.idcategories = playlists.category
+          `SELECT
+            categories.name AS catname,
+            categories.idcategories as catid,
+            playlists.name AS plname,
+            playlists.idplaylists as plid,
+            playlists.isPublic as isPublic
+          FROM categories
+            LEFT JOIN playlists
+              ON categories.idcategories = playlists.category
           WHERE categories.owner = ${user};`, {
             type: sequelize.QueryTypes.SELECT
           })

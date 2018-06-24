@@ -32,11 +32,6 @@ class Composer extends React.Component{
   }
 
 
-  handleDropdownChange = (e, d) => {
-    this.setState({searchValue: d.value});
-  }
-
-
   handleInputChange = ({name, value, error}) => {
     const message = {...this.state.message};
     const fieldErrors = {...this.state.fieldErrors};
@@ -75,17 +70,11 @@ class Composer extends React.Component{
   sendMessageToDb = () => {
     this.setState({_loading: true});
 
-    axios({
-      method: 'post',
-      url: 'http://localhost:8080/sendMessage',
-      data: {
-        subject: this.state.message.subject,
-        body: this.state.message.body,
-        recipient: this.state.message.recipient,
-        date: (new Date()).toISOString().substring(0, 19).replace('T', ' ')
-      },
-      withCredentials: true
-    }).then(() => {
+    messagePost(
+      this.state.message.subject,
+      this.state.message.body,
+      this.state.message.recipient
+    ).then(() => {
       this.setState({
         _loading: false,
         success: true,
@@ -106,7 +95,7 @@ class Composer extends React.Component{
       <Container>
 
         {this.state._loading ? <Dimmer inverted active><Loader active /></Dimmer> : <div></div>}
-        {this.state.success ? <SuccessPrompt /> : <div></div>}
+        {this.state.success ? <SuccessPrompt onGetMessages={this.props.onGetMessages} /> : <div></div>}
 
         <Form onSubmit={this.handleFormSubmit}>
 
@@ -154,4 +143,23 @@ class Composer extends React.Component{
     )
   }
 }
+
 export default Composer;
+
+
+
+const messagePost = (subject, body, recipient) => {
+  return(
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/sendMessage',
+      data: {
+        subject: subject,
+        body: body,
+        recipient: recipient,
+        date: (new Date()).toISOString().substring(0, 19).replace('T', ' ')
+      },
+      withCredentials: true
+    })
+  )
+}

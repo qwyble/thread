@@ -40,7 +40,6 @@ class ListOptions extends React.Component{
 
   handleDropdownChange = (e, d) => {
     var val = d.value;
-    console.log(d.value);
     if(val === 'delete'){
       this.handleCategoryDelete();
     }else if(val === 'rename'){
@@ -56,7 +55,6 @@ class ListOptions extends React.Component{
       {key: 2, text: 'share', value: 'share'},
       {key: 3, text: 'delete', value: 'delete'}
     ]
-    console.log(this.state.selectValue);
 
     return(
       <div>

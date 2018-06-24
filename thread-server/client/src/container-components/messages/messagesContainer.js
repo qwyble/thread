@@ -26,43 +26,27 @@ class MessagesContainer extends React.Component{
 
   getMessages = () => {
     this.setState({_loading: true});
-    axios({
-      method: 'get',
-      url: 'http://localhost:8080/getMessages',
-      withCredentials: true
-    }).then((result) => {this.setState({messages: result.data, _loading: false})})
+    messagesGet().then((result) => {this.setState({messages: result.data, _loading: false})})
   }
 
 
   getSentMessages = () => {
     this.setState({ _loading: true });
-    axios({
-      method: 'get',
-      url: 'http://localhost:8080/getSentMessages',
-      withCredentials: true
-    }).then((result) => this.setState({ _loading: false, messages: result.data }));
+    sentMessagesGet().then((result) => this.setState({ _loading: false, messages: result.data }));
   }
 
 
-  handleMessageCheck = (e) => {
+  handleMessageSelect = (e) => {
     var id = parseInt(e.target.id);
-    if(this.state.selectedMessages.includes(id)){
-      this.setState({selectedMessages: this.state.selectedMessages.filter((m) => {m !== id})})
-    }else{
-      this.setState({selectedMessages: this.state.selectedMessages.concat(id)})
-    }
+    var selected = this.state.selectedMessages
+
+    if(selected.includes(id)){ this.setState({selectedMessages: selected.filter((m) => {m !== id})}) }
+    else{ this.setState({selectedMessages: selected.concat(id)}) }
   }
 
 
   handleDelete = () => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:8080/deleteMessages',
-      data: {
-        messages: this.state.selectedMessages
-      },
-      withCredentials: true
-    }).then(() => {this.getMessages()})
+    deletePost(this.state.selectedMessages).then(() => {this.getMessages()})
   }
 
 
@@ -81,21 +65,20 @@ class MessagesContainer extends React.Component{
             {this.state._loading ? <Loader active /> : <div></div>}
 
             <Route path='/messages/view' component={ViewMessage} />
-            <Route path='/messages/compose' component={Composer} />
+
+            <Route path='/messages/compose' render={(props) =>
+              <Composer {...props} onGetMessages={this.getMessages}/>
+            }/>
 
             <Route path='/messages/sent' render={(props) =>
-              <SentMessagesList
-                {...props}
-                messages={this.state.messages}
-              />
+              <SentMessagesList {...props} messages={this.state.messages} />
             }/>
 
             <Route exact path='/messages' render={(props) =>
-              <MessagesList
-                {...props}
+              <MessagesList {...props}
                 messages={this.state.messages}
                 selectedMessages={this.state.selectedMessages}
-                onMessageCheck={this.handleMessageCheck}
+                onMessageSelect={this.handleMessageSelect}
               />
             }/>
 
@@ -109,3 +92,40 @@ class MessagesContainer extends React.Component{
 }
 
 export default MessagesContainer;
+
+
+
+
+const messagesGet = () => {
+  return(
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/getMessages',
+      withCredentials: true
+    })
+  )
+}
+
+
+const sentMessagesGet = () => {
+  return(
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/getSentMessages',
+      withCredentials: true
+    })
+  )
+}
+
+const deletePost = (selectedMessages) => {
+  return(
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/deleteMessages',
+      data: {
+        messages: selectedMessages
+      },
+      withCredentials: true
+    })
+  )
+}

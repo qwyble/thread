@@ -11,7 +11,7 @@ class SuccessPrompt extends React.Component{
           Message sent.
         </Modal.Header>
         <Modal.Content>
-          <Link to='/messages'><Button>Back to messages</Button></Link>
+          <Link to='/messages'><Button onClick={this.props.onGetMessages}>Back to messages</Button></Link>
         </Modal.Content>
       </Modal>
       )

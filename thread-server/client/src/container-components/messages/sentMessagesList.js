@@ -17,7 +17,7 @@ class SentMessagesList extends React.Component{
     return {messages: props.messages}
   }
 
-  handleSelectMessage = (m) => {
+  handleViewMessage = (m) => {
       this.setState({redirect: true, messageToView: m.idmessages});
   }
 
@@ -50,13 +50,13 @@ class SentMessagesList extends React.Component{
             {this.state.messages.map((m, i) => {
               return(
                   <Table.Row key={i}>
-                    <Table.Cell onClick={this.handleSelectMessage.bind(this, m)}>
+                    <Table.Cell onClick={this.handleViewMessage.bind(this, m)}>
                       {m.recipientName}
                     </Table.Cell>
-                    <Table.Cell onClick={this.handleSelectMessage.bind(this, m)}>
+                    <Table.Cell onClick={this.handleViewMessage.bind(this, m)}>
                       {m.subject}
                     </Table.Cell>
-                    <Table.Cell onClick={this.handleSelectMessage.bind(this, m)}>
+                    <Table.Cell onClick={this.handleViewMessage.bind(this, m)}>
                       {m.date.slice(0, 10)}
                     </Table.Cell>
                   </Table.Row>

@@ -44,7 +44,6 @@ class ClonePortal extends React.Component{
   }
 
   handleCatSelect = (e, d) => {
-    console.log(d.value, d.text);
     this.setState({selectedCatId: d.value, selectedCatName: d.text}, () => {this.validateInput()})
   }
 

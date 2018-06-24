@@ -18,7 +18,7 @@ class MessagesList extends React.Component{
   }
 
 
-  handleSelectMessage = (m) => {
+  handleViewMessage = (m) => {
       this.setState({redirect: true, messageToView: m.idmessages});
   }
 
@@ -58,16 +58,16 @@ class MessagesList extends React.Component{
                         className='messageCheckbox' size = 'mini'
                         id={m.idmessages}
                         checked={this.props.selectedMessages.includes(m.idmessages)}
-                        onChange={this.props.onMessageCheck} />
+                        onChange={this.props.onMessageSelect} />
                       <span></span>
                     </Table.Cell>
-                    <Table.Cell onClick={this.handleSelectMessage.bind(this, m)}>
+                    <Table.Cell onClick={this.handleViewMessage.bind(this, m)}>
                       {m.senderName}
                     </Table.Cell>
-                    <Table.Cell onClick={this.handleSelectMessage.bind(this, m)}>
+                    <Table.Cell onClick={this.handleViewMessage.bind(this, m)}>
                       {m.subject}
                     </Table.Cell>
-                    <Table.Cell onClick={this.handleSelectMessage.bind(this, m)}>
+                    <Table.Cell onClick={this.handleViewMessage.bind(this, m)}>
                       {m.date.slice(0, 10)}
                     </Table.Cell>
                   </Table.Row>

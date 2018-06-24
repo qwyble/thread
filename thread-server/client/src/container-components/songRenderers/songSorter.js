@@ -11,29 +11,46 @@ import axios from 'axios';
 //
 class SongSorter extends React.Component{
   state ={
-    _loading: false,
     songs: [],
-    songsToPlaylist: [],
-    _disabled: true,
-    playlistToAddTo: '',
     nowPlaying: '',
-    err: ''
+    playlistToAddTo: '',
+    songsToPlaylist: [],
+    isOwner: true,
+    err: '',
+    _renderPublicity: false,
+    _notStream: false,
+    _disabled: true,
+    _loading: false
   }
 
   static getDerivedStateFromProps(props, state){
-    return {songs: props.songs, _loading: props._loading, nowPlaying: props.nowPlaying};
+    var path = window.location.pathname;
+    var publicity = (path !== '/stream' && state.isOwner)
+    var notStream = (path.includes('/profile') || path.includes('/playlist') )
+
+    return {
+      songs: props.songs,
+      _loading: props._loading,
+      nowPlaying: props.nowPlaying,
+      isOwner: props.isOwner,
+      _notStream: notStream,
+      _renderPublicity: publicity
+    };
   }
+
 
   handlePlaying = (id) =>{
     var song = this.state.songs.filter((song, i) => song.idSongs === id)[0];
     this.props.onPlaying(song)
   }
 
+
   handleSongSelect = (e) => {
     if(e.target.checked){
       this.setState({
         songsToPlaylist: this.state.songsToPlaylist.concat(parseInt(e.target.id))
       }, () => this.handlePlaylistButtonToggle());
+
     }else{
       this.setState({
         songsToPlaylist: this.state.songsToPlaylist.filter((id) => {return (id !== parseInt(e.target.id))})
@@ -107,69 +124,78 @@ class SongSorter extends React.Component{
             </Table.Row>
           </Table.Header>
 
+
         <Table.Body>
           {this.state.songs.map((song, key) => {
             return(
-              <SongRow key={key} song={song}
-                selected={this.state.songsToPlaylist.includes(song.idSongs)}
+              <SongRow
+                key={key} song={song}
+                onPlaying={this.handlePlaying}
+                onSongSelect={this.handleSongSelect}
                 playing={song.idSongs === this.state.nowPlaying.idSongs}
-                onPlaying={this.handlePlaying} onSongSelect={this.handleSongSelect}
-                onPausing={this.props.onPausing}
+                selected={this.state.songsToPlaylist.includes(song.idSongs)}
                 paused={this.props.paused}
+                onPausing={this.props.onPausing}
                 onRefresh={this.props.onRefresh}
               />
             )
           })}
         </Table.Body>
+
+
         <Table.Footer className='stickyBottom' fullWidth>
           <Table.Row>
             <Table.HeaderCell />
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
+
               <ClonePortal
-                refreshCategories={this.props.refreshCategories}
                 categories={this.props.categories}
                 selectedPlaylist={this.props.selectedPlaylist}
+                refreshCategories={this.props.refreshCategories}
               />
+
               <PlaylistPortal
                 err={this.state.err}
                 _disabled={this.state._disabled}
                 onAddToPlaylist={this.handleAddToPlaylist}
               />
-              {window.location.pathname.includes('/profile') || window.location.pathname.includes('/playlist') ?
+
+
+              {this.state._notStream ?
                 <AppContext.Consumer>{context =>
-                  <FollowUser isOwner={context.user.idUsers === context.owner} user={context.user.idUsers} owner={context.owner}/>}
+                  <FollowUser isOwner={context.isOwner} user={context.user.idUsers} owner={context.owner.idUsers}/>}
                 </AppContext.Consumer>
               : <div style={{float: 'left'}}>
                 {this.props.selectedPlaylist ?
-                  <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>
-                    Delete From Playlist
-                  </Button> :
-                  <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>
-                    Delete Song
-                  </Button>
+                  <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>Delete From Playlist</Button> :
+                  <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>Delete Song</Button>
                 }
-              </div>
-            }
-            </Table.HeaderCell>
-            <Table.HeaderCell colSpan='5'>
-              {this.props.isPublic ?
-                <Button floated='right' icon labelPosition='left'
-                primary size='mini' onClick={this.props.onMakePrivate}>
-                    <div><Icon name='privacy' /> Make Private </div>
-                  </Button>
-              : <Button floated='right' icon labelPosition='left'
-                primary size='mini' onClick={this.props.onMakePublic}>
-                  <div><Icon name='user' /> Make Public </div>
-                </Button>
+                </div>
               }
 
             </Table.HeaderCell>
 
+            {this.state._renderPublicity ?
+              <Table.HeaderCell colSpan='5'>
+
+                {this.props.isPublic ?
+                  <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePrivate}>
+                    <div><Icon name='privacy' /> Make Private </div>
+                  </Button>
+                  : <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePublic}>
+                    <div><Icon name='user' /> Make Public </div>
+                  </Button>
+                }
+
+              </Table.HeaderCell>
+
+              : <Table.HeaderCell colSpan='5'></Table.HeaderCell>}
+
           </Table.Row>
         </Table.Footer>
       </Table>
-      {this.state._loading ? <Loader active size='massive'/> :<div></div>}
+      {this.state._loading ? <Loader active size='massive'/> : <div></div>}
     </div>
 
     )

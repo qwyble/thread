@@ -34,16 +34,11 @@ class Playlists extends React.Component{
 
 
   handleInputChange = (e) => {
-    if(e.target.value.length > 1){
-      this.setState({ ...this.state, playlistToAdd: e.target.value, toggleSubmit: false});
-    }
-    else{
-      this.setState({ ...this.state, playlistToAdd: e.target.value, toggleSubmit: true});
-    }
+    if(e.target.value.length > 1){ this.setState({ ...this.state, playlistToAdd: e.target.value, toggleSubmit: false}); }
+    else{ this.setState({ ...this.state, playlistToAdd: e.target.value, toggleSubmit: true}); }
   }
 
   getPlaylists = () => {
-    console.log('asdfasdf')
     this.props.getCats();
     this.setState({openForm: false});
   }
@@ -66,20 +61,14 @@ class Playlists extends React.Component{
   }
 
   handleOpenForm = () => {
-    if(this.state.openForm){
-      this.setState({openForm: false})
-    }else{
-      this.setState({openForm: true});
-    }
+    if(this.state.openForm){ this.setState({openForm: false}) }
+    else{ this.setState({openForm: true}); }
   }
 
 
   handleDisplayLists = () => {
-    if(!this.state.displayLists){
-      this.setState({...this.state, displayLists: true});
-    }else{
-      this.setState({...this.state, displayLists: false});
-    }
+    if(!this.state.displayLists){ this.setState({...this.state, displayLists: true}); }
+    else{ this.setState({...this.state, displayLists: false}); }
   }
 
 

@@ -8,18 +8,13 @@ import axios from 'axios';
 //the selected playlist.
 class PlaylistController extends React.Component{
   state={
-    selectedPlaylist: '',
     songs: [],
-    _loading: false,
-    nowPlaying: {},
-    isPublic: ''
+    isPublic: '',
+    _loading: false
   }
 
   static getDerivedStateFromProps(props, state){
     return {
-      selectedPlaylist: props.selectedPlaylist,
-      ended: props.ended,
-      nowPlaying: props.nowPlaying,
       isPublic: props.isPublic
     };
   }
@@ -31,8 +26,10 @@ class PlaylistController extends React.Component{
 
   getSongs = () => {
     this.setState({_loading: true});
+
     var url = this.getUrl();
-    axios.get(url, {withCredentials: true}).then((result) => {
+
+    songsGet(url).then((result) => {
       this.setState({songs: result.data, _loading: false});
       this.props.onSetSongs(result.data);
     });
@@ -51,21 +48,11 @@ class PlaylistController extends React.Component{
 
 
   handleMakePublic = () => {
-    axios.post('http://localhost:8080/makePublic', {
-      plid: this.state.selectedPlaylist,
-      withCredentials: true
-    }).then((result) => {
-      this.setState({isPublic: 1});
-    });
+    makePublicPost(this.props.selectedPlaylist).then((result) => { this.setState({isPublic: 1}); });
   }
 
   handleMakePrivate = () => {
-    axios.post('http://localhost:8080/makePrivate', {
-      plid: this.state.selectedPlaylist,
-      withCredentials: true
-    }).then((result) => {
-      this.setState({isPublic: 0});
-    });
+    makePrivatePost(this.props.selectedPlaylist).then((result) => { this.setState({isPublic: 0}); });
   }
 
 
@@ -79,20 +66,14 @@ class PlaylistController extends React.Component{
     return(
       <div>
         <SongSorter
+          {...this.props}
           _loading={this.state._loading}
           songs={this.state.songs}
-          categories={this.props.categories}
-          onPlaying={this.props.onPlaying}
-          onPausing={this.props.onPausing}
-          paused={this.props.paused}
-          nowPlaying={this.props.nowPlaying}
           onMakePublic={this.handleMakePublic}
           onMakePrivate={this.handleMakePrivate}
-          selectedPlaylist={this.state.selectedPlaylist}
           isPublic={this.state.isPublic}
           onRemoval={this.handleRemoval}
           onRefresh={this.getSongs}
-          refreshCategories={this.props.refreshCategories}
         />
       </div>
     )
@@ -100,6 +81,32 @@ class PlaylistController extends React.Component{
 }
 
 
-
-
 export default PlaylistController;
+
+
+
+const makePrivatePost = (selectedPlaylist) => {
+  return(
+    axios.post('http://localhost:8080/makePrivate', {
+      plid: selectedPlaylist,
+      withCredentials: true
+    })
+  )
+}
+
+
+const makePublicPost = (selectedPlaylist) => {
+  return(
+    axios.post('http://localhost:8080/makePublic', {
+      plid: selectedPlaylist,
+      withCredentials: true
+    })
+  )
+}
+
+
+const songsGet = (url) => {
+  return(
+    axios.get(url, {withCredentials: true})
+  )
+}

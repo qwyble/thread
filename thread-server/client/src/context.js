@@ -11,6 +11,7 @@ class AppProvider extends React.Component{
     nowPlaying: {},
     ended: false,
     paused: true,
+    isOwner: false,
     owner: ''
   }
   componentDidMount(){
@@ -24,8 +25,9 @@ class AppProvider extends React.Component{
   }
 
   handleSetOwner = (owner) => {
-    if (owner != this.state.owner){
-      this.setState({owner: owner});      
+    var isOwner = (owner.idUsers === this.state.user.idUsers);
+    if (owner !== this.state.owner){
+      this.setState({owner, isOwner});
     }
   }
 
@@ -57,7 +59,6 @@ class AppProvider extends React.Component{
 
 
   render() {
-
     const handlers = {
       onPlaying: this.handlePlaying,
       onEnd: this.handleEnd,

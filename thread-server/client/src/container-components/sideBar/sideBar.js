@@ -22,28 +22,22 @@ class SidebarLeftOverlay extends Component {
       selectedPlaylist: '',
       visible: true,
       isPublic: '',
-      nowPlaying: {},
       ended: false,
       paused: false
     }
   }
 
   static getDerivedStateFromProps(props, state){
-    if(window.location.pathname === '/stream'){
-      return { selectedPlaylist: '' }
-    }else{
-      return {}
-    }
+    if(window.location.pathname === '/stream'){ return { selectedPlaylist: '' }
+    }else{ return {} }
   }
 
 
   toggleVisibility = () => { this.setState({ visible: !this.state.visible }) }
 
+
   handleSelectPlaylist = (e, data) => {
-    this.setState({
-      selectedPlaylist: e.target.value,
-      isPublic: data.ispublic
-    });
+    this.setState({ selectedPlaylist: e.target.value, isPublic: data.ispublic });
   }
 
 
@@ -54,19 +48,22 @@ class SidebarLeftOverlay extends Component {
         <Sidebar.Pushable as={Segment} className='primaryContainer'>
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu}
             visible={this.state.visible} >
+
             {
               this.props._loading ?
                <Loader active />
-              : <div></div>
+              : <div>
+                  <Menu.Item style={{color: '#54c8ff'}}>
+                    {this.props.owner.idUsers !== this.props.user.idUsers ? <div>{this.props.owner.userName}'s playlists:</div> : <div>Your playlists:</div>}
+                  </Menu.Item>
+                </div>
             }
-            <Menu.Item style={{color: '#54c8ff'}}>
-              {this.props.owner ? <div>{this.props.owner}'s playlists:</div> : <div>Your playlists:</div>}
-            </Menu.Item>
+
               {this.props.categories.map((category, key) =>
                 {
                   return(
                     <MenuItem
-                      name={category.catname}
+                      catName={category.catname}
                       playLists={category.pls}
                       key={key} id={category.catid}
                       onSelectPlaylist={this.handleSelectPlaylist}
@@ -89,8 +86,7 @@ class SidebarLeftOverlay extends Component {
 
           </Sidebar>
           <Sidebar.Pusher className='pusherContainer'>
-            <Button inverted icon className='sidebarButton'
-              attached='right' color='blue' onClick={this.toggleVisibility}>
+            <Button inverted icon className='sidebarButton' attached='right' color='blue' onClick={this.toggleVisibility}>
               <Icon name={this.state.visible ? 'left arrow' : 'right arrow'}/>
             </Button>
 
@@ -101,12 +97,12 @@ class SidebarLeftOverlay extends Component {
                   onPausing={context.onPausing}
                   nowPlaying={context.nowPlaying}
                   onSetSongs={context.onSetSongs}
-                  selectedPlaylist={this.state.selectedPlaylist}
+                  paused={context.paused}
+                  isOwner={context.isOwner}
+                  url={this.props.url}
                   isPublic={this.state.isPublic}
                   categories={this.props.categories}
-                  ended={context.ended}
-                  paused={context.paused}
-                  url={this.props.url}
+                  selectedPlaylist={this.state.selectedPlaylist}
                   refreshCategories={this.props.refreshCategories}
                 />)}
               </AppContext.Consumer>

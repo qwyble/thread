@@ -51,10 +51,13 @@ module.exports = function(app){
   app.get('/getPlaylists', function(req, res){
     playlist.getCats(
       req.session.user.idUsers
-    )
-    .then((cats) => {
-      var data = {cats: cats}
-      res.status(200).send(data);
+    ).then((cats) => {
+      playlist.getCatOwner(
+        req.session.user.idUsers
+      ).then((owner) => {
+        var data = {cats: cats, owner: owner};
+        return data;
+      }).then((data) => {res.status(200).send(data);})
     });
   })
 
