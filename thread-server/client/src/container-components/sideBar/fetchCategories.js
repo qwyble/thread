@@ -61,8 +61,6 @@ class FetchCategories extends React.Component{
   render(){
     return(
       <SidebarLeftOverlay
-        onCategoryEditSubmit={this.handleCategoryEditSubmit}
-        onCategoryDelete={this.handleCategoryDelete}
         getCats={this.getCats}
         url={this.props.url}
         owner={this.state.owner}

@@ -9,15 +9,9 @@ import axios from 'axios';
 class PlaylistController extends React.Component{
   state={
     songs: [],
-    isPublic: '',
     _loading: false
   }
 
-  static getDerivedStateFromProps(props, state){
-    return {
-      isPublic: props.isPublic
-    };
-  }
 
   getUrl = () => {
     if (this.props.url.length < 2){ return 'http://localhost:8080'+'/stream'; }
@@ -48,11 +42,13 @@ class PlaylistController extends React.Component{
 
 
   handleMakePublic = () => {
-    makePublicPost(this.props.selectedPlaylist).then((result) => { this.setState({isPublic: 1}); });
+    makePublicPost(this.props.selectedPlaylist);
+    this.props.onPublicity(1);
   }
 
   handleMakePrivate = () => {
-    makePrivatePost(this.props.selectedPlaylist).then((result) => { this.setState({isPublic: 0}); });
+    makePrivatePost(this.props.selectedPlaylist);
+    this.props.onPublicity(0);
   }
 
 
@@ -66,12 +62,15 @@ class PlaylistController extends React.Component{
     return(
       <div>
         <SongSorter
-          {...this.props}
-          _loading={this.state._loading}
+          isPublic={this.props.isPublic}
+          isOwner={this.props.isOwner}
+          refreshCategories={this.props.refreshCategories}
+          selectedPlaylist={this.props.selectedPlaylist}
+          categories={this.props.categories}
           songs={this.state.songs}
+          _loading={this.state._loading}
           onMakePublic={this.handleMakePublic}
           onMakePrivate={this.handleMakePrivate}
-          isPublic={this.state.isPublic}
           onRemoval={this.handleRemoval}
           onRefresh={this.getSongs}
         />

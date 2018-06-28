@@ -39,6 +39,10 @@ class SidebarLeftOverlay extends Component {
     this.setState({ selectedPlaylist: e.target.value, isPublic: data.ispublic });
   }
 
+  handlePublicity = (pub) => {
+    this.setState({isPublic: pub});
+  }
+
 
   render() {
     return (
@@ -85,6 +89,7 @@ class SidebarLeftOverlay extends Component {
               isPublic={this.state.isPublic}
               categories={this.props.categories}
               selectedPlaylist={this.state.selectedPlaylist}
+              onPublicity={this.handlePublicity}
               refreshCategories={this.props.getCats}
             />
 

@@ -3,6 +3,9 @@ import React from 'react';
 const AppContext = React.createContext();
 
 
+//context controls audio playback and
+//isOwner for modifying views based on whether
+//the user owns the view.
 
 class AppProvider extends React.Component{
   state = {

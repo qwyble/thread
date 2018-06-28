@@ -68,14 +68,14 @@ class ClonePortal extends React.Component{
   render(){
     return(
       <Portal onClose={this.handlePortalClose} trigger={<Button onClick={this.getUserCats} size='mini' content="Clone Playlist"/>} >
-          <Segment inverted style={{opacity: '.9', width: '250px', position: 'fixed', top: '60%', left: '18%'}}>
+          <Segment style={{ width: '200px', position: 'fixed', left: '15%', bottom:'10%'}}>
             {this.state._loading ? <Loader active={true} /> : <div></div>}
             {this.state.plToClone ?
 
               <div>
                 {this.state.success ? <div>Playlist successfully cloned.</div> :
                   <div>
-                    <Segment inverted>
+                    <Segment>
                       <Dropdown text={this.state.selectedCatName || 'Select Category: '}>
                         <Dropdown.Menu>
                           {this.props.categories.map((cat, i) =>
@@ -92,12 +92,14 @@ class ClonePortal extends React.Component{
                     <div>
                       Enter a new playlist name:
                     </div>
-                    <Input onChange={this.handleInputChange} />
-                    <Button
-                      disabled={this.state._disabled}
-                      onClick={this.handleClonePlaylist}>
-                      Submit
-                    </Button>
+                    <Segment>
+                      <Input size='mini' onChange={this.handleInputChange} />
+                    </Segment>
+                      <Button
+                        disabled={this.state._disabled}
+                        onClick={this.handleClonePlaylist}>
+                        Submit
+                      </Button>
                   </div>
                 }
               </div>:

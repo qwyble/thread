@@ -1,114 +1,48 @@
 import React from 'react';
-import {Modal, Portal,Table, Sticky, Button, Icon, Header, Menu, Checkbox, Rating, Loader} from 'semantic-ui-react';
+import {Table, Loader} from 'semantic-ui-react';
 import PlaylistPortal from './playlistPortal.js';
-import SongRow from './songRow.js';
 import {AppContext} from '../../context.js';
-import FollowUser from '../follower/followUser.js'
 import ClonePortal from '../../presentational-components/sidebarUtilities/clonePortal.js';
-import axios from 'axios';
+import WrappedSongRows from '../../presentational-components/sidebarUtilities/wrappedSongRows.js';
+import RemoveSongFromPlaylist from '../../presentational-components/sidebarUtilities/removeSongFromPlaylist.js';
+import MakePublic from '../../presentational-components/sidebarUtilities/makePublic.js';
+import FollowContainer from '../follower/followContainer.js';
 
 //renders the lst of songs, controls adding and deleting songs to/from playlists
 //
 class SongSorter extends React.Component{
   state ={
-    songs: [],
-    nowPlaying: '',
-    playlistToAddTo: '',
-    songsToPlaylist: [],
-    isOwner: true,
-    err: '',
-    _renderPublicity: false,
-    _notStream: false,
+    selectedSongs: [],
     _disabled: true,
-    _loading: false
-  }
-
-  static getDerivedStateFromProps(props, state){
-    var path = window.location.pathname;
-    var publicity = (path !== '/stream' && state.isOwner)
-    var notStream = (path.includes('/profile') || path.includes('/playlist') )
-
-    return {
-      songs: props.songs,
-      _loading: props._loading,
-      nowPlaying: props.nowPlaying,
-      isOwner: props.isOwner,
-      _notStream: notStream,
-      _renderPublicity: publicity
-    };
-  }
-
-
-  handlePlaying = (id) =>{
-    var song = this.state.songs.filter((song, i) => song.idSongs === id)[0];
-    this.props.onPlaying(song)
   }
 
 
   handleSongSelect = (e) => {
     if(e.target.checked){
       this.setState({
-        songsToPlaylist: this.state.songsToPlaylist.concat(parseInt(e.target.id))
+        selectedSongs: this.state.selectedSongs.concat(parseInt(e.target.id))
       }, () => this.handlePlaylistButtonToggle());
 
     }else{
       this.setState({
-        songsToPlaylist: this.state.songsToPlaylist.filter((id) => {return (id !== parseInt(e.target.id))})
+        selectedSongs: this.state.selectedSongs.filter((id) => {return (id !== parseInt(e.target.id))})
       }, () => this.handlePlaylistButtonToggle());
     }
   }
 
   handlePlaylistButtonToggle = () => {
-    if(this.state.songsToPlaylist.length < 1){
-      this.setState({_disabled: true});
-    }else{
-      this.setState({_disabled: false});
-    }
+    if(this.state.selectedSongs.length < 1){ this.setState({_disabled: true}); }
+    else{ this.setState({_disabled: false}); }
   }
 
-  handleAddToPlaylist = (e, data) => {
-
-    this.setState({playlistToAddTo: data.value}, () => {
-      axios({
-        method: 'post',
-        url: 'http://localhost:8080/addSongsToPlaylist',
-        data: {
-          songs: this.state.songsToPlaylist,
-          playlist: this.state.playlistToAddTo
-        },
-        withCredentials: true
-      }).then((result) => {
-        this.setState({songsToPlaylist: [], _disabled: true})
-      })
-
-    })
+  resetSelectedSongs = () => {
+    this.setState({selectedSongs: []});
   }
 
-  handleRemoveFromPlaylist = (e, data) => {
-    if(this.state.songsToPlaylist && this.props.selectedPlaylist){
-      axios({
-        method: 'post',
-        url: 'http://localhost:8080/deleteFromPlaylist',
-        data:{
-          songs: this.state.songsToPlaylist,
-          playlist: this.props.selectedPlaylist
-        },
-        withCredentials: true
-      }).then((result) => {
-        this.setState({
-          songs: this.state.songs.filter((song, i) => {return !this.state.songsToPlaylist.includes(song.idSongs)}),
-          songsToPlaylist: []
-        })
-        this.props.onRemoval(this.state.songs);
-      })
-      .catch((err) => {this.setState({err: 'you do not have permission to modify that playlist'})});
-    }else{
-      this.setState({err: 'you must select songs and a playlist'});
-    }
-  }
 
 
   render(){
+    var path = window.location.pathname;
     return(
       <div>
       <Table className='t1' size='small' celled striped compact unstackable inverted selectable>
@@ -125,22 +59,12 @@ class SongSorter extends React.Component{
           </Table.Header>
 
 
-        <Table.Body>
-          {this.state.songs.map((song, key) => {
-            return(
-              <SongRow
-                key={key} song={song}
-                onPlaying={this.handlePlaying}
-                onSongSelect={this.handleSongSelect}
-                playing={song.idSongs === this.state.nowPlaying.idSongs}
-                selected={this.state.songsToPlaylist.includes(song.idSongs)}
-                paused={this.props.paused}
-                onPausing={this.props.onPausing}
-                onRefresh={this.props.onRefresh}
-              />
-            )
-          })}
-        </Table.Body>
+          <WrappedSongRows
+            songs={this.props.songs}
+            onSongSelect={this.handleSongSelect}
+            selectedSongs={this.state.selectedSongs}
+            onRefresh={this.props.onRefresh}
+          />
 
 
         <Table.Footer className='stickyBottom' fullWidth>
@@ -156,46 +80,40 @@ class SongSorter extends React.Component{
               />
 
               <PlaylistPortal
-                err={this.state.err}
                 _disabled={this.state._disabled}
-                onAddToPlaylist={this.handleAddToPlaylist}
+                selectedSongs={this.state.selectedSongs}
+                resetSelectedSongs={this.resetSelectedSongs}
               />
 
 
-              {this.state._notStream ?
-                <AppContext.Consumer>{context =>
-                  <FollowUser isOwner={context.isOwner} user={context.user.idUsers} owner={context.owner.idUsers}/>}
-                </AppContext.Consumer>
-              : <div style={{float: 'left'}}>
-                {this.props.selectedPlaylist ?
-                  <Button size='mini' onClick={this.handleRemoveFromPlaylist} disabled={this.state._disabled}>Delete From Playlist</Button> :
-                  <Button size='mini' onClick={this.handleDeleteSong} disabled={this.state._disabled}>Delete Song</Button>
-                }
-                </div>
-              }
+              <FollowContainer path={window.location.pathname} />
+
+
+              <RemoveSongFromPlaylist
+                selectedPlaylist={this.props.selectedPlaylist}
+                selectedSongs={this.state.selectedSongs}
+                _disabled={this.state._disabled}
+                onRemoval={this.props.onRemoval}
+                songs={this.props.songs}
+                isOwner={this.props.isOwner}
+              />
+
 
             </Table.HeaderCell>
 
-            {this.state._renderPublicity ?
-              <Table.HeaderCell colSpan='5'>
 
-                {this.props.isPublic ?
-                  <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePrivate}>
-                    <div><Icon name='privacy' /> Make Private </div>
-                  </Button>
-                  : <Button floated='right' icon labelPosition='left' primary size='mini' onClick={this.props.onMakePublic}>
-                    <div><Icon name='user' /> Make Public </div>
-                  </Button>
-                }
+            <MakePublic
+              isPublic={this.props.isPublic}
+              onMakePrivate={this.props.onMakePrivate}
+              onMakePublic={this.props.onMakePublic}
+              isOwner={this.props.isOwner}
+            />
 
-              </Table.HeaderCell>
-
-              : <Table.HeaderCell colSpan='5'></Table.HeaderCell>}
 
           </Table.Row>
         </Table.Footer>
       </Table>
-      {this.state._loading ? <Loader active size='massive'/> : <div></div>}
+      {this.props._loading ? <Loader active size='massive'/> : <div></div>}
     </div>
 
     )

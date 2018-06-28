@@ -8,6 +8,7 @@ class PlaylistPortal extends React.Component{
 
   state={
     categories: [],
+    _portalOpen: false,
     _loading: false,
   }
 
@@ -32,19 +33,38 @@ class PlaylistPortal extends React.Component{
     });
   }
 
+  handleAddToPlaylist = (e, data) => {
+    this.setState({_portalOpen: false});
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/addSongsToPlaylist',
+      data: {
+        songs: this.props.selectedSongs,
+        playlist: data.value
+      },
+      withCredentials: true
+    }).then((result) => this.props.resetSelectedSongs())
 
+  }
+
+  portalOpen = () => {
+    if(!this.state._portalOpen) {
+      this.setState({_portalOpen: true});
+      this.getCats()
+    }
+    else this.setState({_portalOpen: false})
+  }
 
 
   render(){
     return(
-      <Portal closeOnTriggerClick openOnTriggerClick trigger={
+      <Portal open={this.state._portalOpen} trigger={
         <Button
           disabled={this.props._disabled}
-          onClick={this.getCats}
+          onClick={this.portalOpen}
           size='mini' >Add to Playlist
         </Button>
       } closeIcon>
-      {this.props.err ? <div>{this.props.err}</div>:
         <Menu inverted size='mini'
           style={{ maxHeight: '30vh', overflow: 'auto',
           left: '22%', position: 'fixed', top: '50%', zIndex: 1000 }} >
@@ -60,7 +80,7 @@ class PlaylistPortal extends React.Component{
                             key={k}
                             link
                             value={pl.plid}
-                            onClick={this.props.onAddToPlaylist}>
+                            onClick={this.handleAddToPlaylist}>
                             {pl.plname}
                           </Menu.Item>
                       )
@@ -72,7 +92,6 @@ class PlaylistPortal extends React.Component{
               )
             })}
           </Menu>
-        }
       </Portal>
     )
   }
