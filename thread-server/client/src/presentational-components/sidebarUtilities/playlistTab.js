@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 
 class PlaylistTab extends React.Component{
   render(){
+    console.log('asdf')
     return(
       <div>
         <Link to={`/playlist/${this.props.id}`} >

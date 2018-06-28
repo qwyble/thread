@@ -41,7 +41,6 @@ class UserContainer extends React.Component{
       url: 'http://localhost:8080/logout',
       withCredentials: true
     }).then((result) => {
-      console.log(result.data);
       this.setState({ user: {}, isLoggedIn: false });
     });
   }

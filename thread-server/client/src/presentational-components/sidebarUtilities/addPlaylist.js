@@ -5,6 +5,34 @@ import {Button, Icon, Input, Form} from 'semantic-ui-react';
 or form to add playlist */
 class AddPlaylist extends React.Component{
 
+  state = {
+    openForm: false,
+    toggleSubmit: true,
+    playListToAdd: ''
+  }
+
+  handleOpenForm = () => {
+    if(this.state.openForm){ this.setState({openForm: false}) }
+    else{ this.setState({openForm: true}); }
+  }
+
+  handleInputChange = (e) => {
+    if(e.target.value.length > 2){
+      this.setState({
+        ...this.state,
+        playlistToAdd: e.target.value,
+        toggleSubmit: false
+      });
+    }
+    else{
+      this.setState({
+        ...this.state,
+        playlistToAdd: e.target.value,
+        toggleSubmit: true
+      });
+    }
+  }
+
   render(){
     return(
       <div>
@@ -13,27 +41,31 @@ class AddPlaylist extends React.Component{
           inverted fluid color='blue'
           size='mini'
           icon
-          onClick={this.props.onOpenForm}>
-          <Icon name={this.props.openForm ? 'minus' : 'plus'}/>
+          onClick={this.handleOpenForm}
+        >
+          <Icon name={this.state.openForm ? 'minus' : 'plus'}/>
         </Button>
-            {this.props.openForm ?
-              <div>
-                <Form onSubmit={this.props.onFormSubmit}>
-                  <Input
-                    size='mini'
-                    placeholder='watcha feelin?'
-                    value={this.props.playlistToAdd}
-                    onChange={this.props.onInputChange}>
-                  </Input>
-                  <Button size='mini' disabled={this.props.toggleSubmit}>
-                    Add Playlist
-                  </Button>
-                </Form>
-              </div>
-              :
-              <div></div>
-            }
-        </div>
+        {this.state.openForm ?
+          <div>
+            <Form onSubmit={() => {
+              this.props.onFormSubmit(this.state.playlistToAdd);
+              this.handleOpenForm();
+            }}>
+              <Input
+                size='mini'
+                placeholder='watcha feelin?'
+                value={this.props.playlistToAdd}
+                onChange={this.handleInputChange}>
+              </Input>
+              <Button size='mini' disabled={this.state.toggleSubmit}>
+                Add Playlist
+              </Button>
+            </Form>
+          </div>
+          :
+          <div></div>
+        }
+      </div>
 
     )
   }

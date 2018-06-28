@@ -1,6 +1,6 @@
 import React from 'react';
 import AddPlaylist from '../../presentational-components/sidebarUtilities/addPlaylist.js';
-import PlaylistTab from '../../presentational-components/sidebarUtilities/playlistTab.js';
+import PlaylistList from '../../presentational-components/sidebarUtilities/playlistList.js';
 import EditCategories from './editCategories.js';
 import {Button, Icon, Menu, Loader} from 'semantic-ui-react';
 import axios from 'axios';
@@ -14,42 +14,36 @@ class Playlists extends React.Component{
     super(props);
     this.state = {
       playlists: [],
-      playlistToAdd: '',
       renderAlert: false,
       displayLists: false,
-      openForm: false,
-      toggleSubmit: true,
       _loading: false
     }
   }
 
-  componentDidMount(){
-    var playlists = this.props.playLists;
-    this.setState({playlists: playlists})
-  }
 
   static getDerivedStateFromProps(props, state){
     return { playlists: props.playLists, _loading: false}
   }
 
 
-  handleInputChange = (e) => {
-    if(e.target.value.length > 1){ this.setState({ ...this.state, playlistToAdd: e.target.value, toggleSubmit: false}); }
-    else{ this.setState({ ...this.state, playlistToAdd: e.target.value, toggleSubmit: true}); }
-  }
-
   getPlaylists = () => {
     this.props.getCats();
-    this.setState({openForm: false});
   }
 
-  handleAddList = () => {
-    if(this.state.playlistToAdd.length > 1){
+
+  handleDisplayLists = () => {
+    if(!this.state.displayLists){ this.setState({...this.state, displayLists: true}); }
+    else{ this.setState({...this.state, displayLists: false}); }
+  }
+
+
+  handleAddList = (plToAdd) => {
+    if(plToAdd.length > 1){
       this.setState({_loading: true});
 
       var data = {};
       data['catid'] = this.props.id;
-      data['playlist'] = this.state.playlistToAdd;
+      data['playlist'] = plToAdd;
 
       axios({
         method: 'post',
@@ -60,16 +54,6 @@ class Playlists extends React.Component{
     }
   }
 
-  handleOpenForm = () => {
-    if(this.state.openForm){ this.setState({openForm: false}) }
-    else{ this.setState({openForm: true}); }
-  }
-
-
-  handleDisplayLists = () => {
-    if(!this.state.displayLists){ this.setState({...this.state, displayLists: true}); }
-    else{ this.setState({...this.state, displayLists: false}); }
-  }
 
 
   handleDeleteList = (e) => {
@@ -125,37 +109,19 @@ class Playlists extends React.Component{
 
           </div>
 
-          {this.state.displayLists ?
-            <div>
-              <Menu.Menu>
-                {this.state.playlists.map((playlist, key) =>
-                  <Menu.Item key={key} className='listSidebar'>
-                      <PlaylistTab
-                        playlist={playlist.plname} key={key}
-                        id={playlist.plid} onDeleteList={this.handleDeleteList}
-                        onSelectPlaylist={this.props.onSelectPlaylist}
-                        isPublic={playlist.isPublic}
-                      />
-                  </Menu.Item>)
-                }
-                  {this.state._loading ?
-                    <Menu.Item style={{padding: '1em 1em'}}>
-                      <Loader active inverted size='mini'/>
-                    </Menu.Item>
-                      : <div></div>}
-              </Menu.Menu>
-            </div>
-            : <span></span>
-          }
+          <PlaylistList
+            displayLists={this.state.displayLists}
+            playlists={this.state.playlists}
+            _loading={this.state._loading}
+            onSelectPlaylist={this.props.onSelectPlaylist}
+            onDeleteList={this.handleDeleteList}
+          />
+
         </div>
 
           {this.state.displayLists ?
             <div>
-            <AddPlaylist
-              openForm={this.state.openForm}
-              toggleSubmit={this.state.toggleSubmit} onFormSubmit={this.handleAddList}
-              onOpenForm={this.handleOpenForm} onInputChange={this.handleInputChange}
-            />
+            <AddPlaylist onFormSubmit={this.handleAddList} />
             </div>
         : <div></div>}
 

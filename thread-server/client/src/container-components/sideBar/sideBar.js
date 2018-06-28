@@ -48,7 +48,6 @@ class SidebarLeftOverlay extends Component {
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu}
             visible={this.state.visible} >
 
-
             {
               this.props._loading ?
                 <div>
