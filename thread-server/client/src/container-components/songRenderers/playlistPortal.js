@@ -18,7 +18,7 @@ class PlaylistPortal extends React.Component{
       url: 'http://localhost:8080/getPlaylists',
       withCredentials: true
     }).then((categories) => {
-      var catpls = categories.data;
+      var catpls = categories.data.cats;
       var cats = Object.values(
         catpls.reduce( (cats, {catname, catid, plname, plid, isPublic}) => {
           if (! (catid in cats) )

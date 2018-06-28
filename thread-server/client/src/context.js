@@ -14,11 +14,7 @@ class AppProvider extends React.Component{
     isOwner: false,
     owner: ''
   }
-  componentDidMount(){
-    this.setState({
-      user: this.props.user,
-    });
-  }
+
 
   static getDerivedStateFromProps(props, state){
     return {user: props.user}

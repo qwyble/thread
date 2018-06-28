@@ -3,27 +3,20 @@ import SidebarLeftOverlay from './sideBar.js';
 import axios from 'axios';
 
 
-/*
-'categories' state and all functions which modify the categories.
-*/
 
 class FetchCategories extends React.Component{
 
   state = {
     err: '',
     _loading: true,
-    visitingProfile: '',
     categories: [],
     owner: ''
   }
 
-  static getDerivedStateFromProps(props, state){
-    if(window.location.pathname === '/stream'){ return { owner: props.user.userName } }
-    else{ return { visitingProfile: props.visitingProfile } }
-  }
+
 
   componentDidUpdate(prevProps, prevState){
-    if(prevProps.url !== this.props.url){ this.getCats(); }
+    if(prevProps.visitingProfile !== this.props.visitingProfile){ this.getCats(); }
   }
 
 
@@ -32,8 +25,9 @@ class FetchCategories extends React.Component{
   }
 
 
+  // if the user is visiting a profile other than their own, set the query url to get another's playlists
   getUrl = () => {
-    if(this.state.visitingProfile){ return 'http://localhost:8080/getPlaylists/'+this.state.visitingProfile; }
+    if(this.props.visitingProfile){ return 'http://localhost:8080/getPlaylists/'+this.props.visitingProfile; }
     else{ return 'http://localhost:8080/getPlaylists'; }
   }
 
@@ -57,7 +51,6 @@ class FetchCategories extends React.Component{
         var owner = categories.data.owner[0]
 
       this.props.setOwner(owner);
-      console.log(owner);
 
       this.setState({categories: cats, owner: owner, _loading: false});
     });
@@ -66,7 +59,6 @@ class FetchCategories extends React.Component{
 
 
   render(){
-    console.log(this.state.categories);
     return(
       <SidebarLeftOverlay
         onCategoryEditSubmit={this.handleCategoryEditSubmit}
