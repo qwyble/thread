@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppContext} from './context.js';
-import CategoryUtils from './container-components/sideBar/categoryUtils.js';
+import FetchCategories from './container-components/sideBar/fetchCategories.js';
 
 
 class RoutedContext extends React.Component{
@@ -9,10 +9,11 @@ class RoutedContext extends React.Component{
     return(
       <AppContext.Consumer>{context => (
 
-        <CategoryUtils
+        <FetchCategories
           url={this.props.match.url}
           visitingProfile={this.props.match.params.profile}
           user={context.user}
+          isOwner={context.isOwner}
           setOwner={context.onSetOwner}
         />)}
 

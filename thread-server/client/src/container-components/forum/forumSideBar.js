@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Icon } from 'semantic-ui-react';
-import MenuItem from '../../presentational-components/sidebarUtilities/menuItem.js';
+import CategoryMenuItem from '../../presentational-components/sidebarUtilities/categoryMenuItem.js';
 import AddCategory from '../../presentational-components/sidebarUtilities/addCategory.js';
 import ForumContainer from '../forum/forumContainer';
 
@@ -74,7 +74,8 @@ class ForumSidebarLeftOverlay extends Component {
             as={Menu}
             visible={this.state.visible}
           >
-            {this.state.categories.map((category, key) =>
+
+            {/*this.state.categories.map((category, key) =>
               {
                 return(
                   <MenuItem
@@ -87,7 +88,7 @@ class ForumSidebarLeftOverlay extends Component {
                   />
                 )
               })
-            }
+            */}
             <AddCategory
               categoryToAdd={this.state.categoryToAdd}
               onAddCategory={this.handleAddCategory}

@@ -13,6 +13,7 @@ import Following from './container-components/follower/following.js';
 import Followers from './container-components/follower/followers.js';
 import MessagesContainer from './container-components/messages/messagesContainer.js';
 import {AppContext} from './context.js';
+import ChatToggle from './presentational-components/chat/chatToggle.js';
 
 
 
@@ -45,6 +46,9 @@ class App extends Component {
               <Redirect from='/' to={'/stream'} />
             </Switch>
           </div>
+
+          <ChatToggle />
+
           <div>
             <AppContext.Consumer>
               {context =>

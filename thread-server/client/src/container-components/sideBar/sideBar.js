@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Icon, Loader, Popup, Grid } from 'semantic-ui-react';
-import MenuItem from '../../presentational-components/sidebarUtilities/menuItem.js';
-import RenderAddCategory from '../../presentational-components/sidebarUtilities/renderAddCategory.js';
+import CategoryMenuItem from '../../presentational-components/sidebarUtilities/categoryMenuItem.js';
+import AddCategory from './addCategory.js';
 import AudioRenderer from '../../presentational-components/audio/audioRenderer.js'
-import PlaylistController from '../songRenderers/playlistController.js';
+import WrappedPlaylistController from '../../presentational-components/sidebarUtilities/wrappedPlaylistController.js';
 import axios from 'axios';
 import {AppContext} from '../../context.js';
 
 /*
-SidebarLeftOverlay is the primary component for rendering
-child components which are responsible for rendering categories,
-playlists, songs, and methods for sorting
-based on playlist, people you follow, or time uploaded.
+SidebarLeftOverlay handles selecting playlists and renders
+child components which render categories,
+playlists, songs, and methods for sorting.
 */
 
 class SidebarLeftOverlay extends Component {
@@ -28,8 +27,8 @@ class SidebarLeftOverlay extends Component {
   }
 
   static getDerivedStateFromProps(props, state){
-    if(window.location.pathname === '/stream'){ return { selectedPlaylist: '' }
-    }else{ return {} }
+    if(window.location.pathname === '/stream') return { selectedPlaylist: '' }
+    else return {}
   }
 
 
@@ -49,64 +48,46 @@ class SidebarLeftOverlay extends Component {
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu}
             visible={this.state.visible} >
 
+
             {
               this.props._loading ?
-               <Loader active />
-              : <div>
-                  <Menu.Item style={{color: '#54c8ff'}}>
-                    {this.props.owner.idUsers !== this.props.user.idUsers ? <div>{this.props.owner.userName}'s playlists:</div> : <div>Your playlists:</div>}
-                  </Menu.Item>
-                </div>
+                <div>
+                  <Loader active />
+                  <Menu.Item />
+                </div> :
+              <div>
+                <Menu.Item style={{color: '#54c8ff'}}>
+                  {!this.props.isOwner ? <div>{this.props.owner.userName}'s playlists:</div> : <div>Your playlists:</div>}
+                </Menu.Item>
+              </div>
             }
 
-              {this.props.categories.map((category, key) =>
-                {
-                  return(
-                    <MenuItem
-                      catName={category.catname}
-                      playLists={category.pls}
-                      key={key} id={category.catid}
-                      onSelectPlaylist={this.handleSelectPlaylist}
-                      onCategoryDelete={this.props.onCategoryDelete}
-                      onCategoryEditSubmit={this.props.onCategoryEditSubmit}
-                      getCats={this.props.getCats}
-                      user={this.props.user.idUsers}
-                    />
-                  )
-                })
-              }
+            <CategoryMenuItem
+              categories={this.props.categories}
+              onSelectPlaylist={this.handleSelectPlaylist}
+              getCats={this.props.getCats}
+            />
 
-            {window.location.pathname === '/stream' ?
-              <RenderAddCategory
-                err={this.props.err}
-                onAddCategory={this.props.onAddCategory}
-                removeErr={() => this.setState({err: ''})}
-              />  : <div></div>
-            }
+            { this.props.isOwner ? <AddCategory getCats={this.props.getCats}/>  : <div></div> }
 
           </Sidebar>
           <Sidebar.Pusher className='pusherContainer'>
-            <Button inverted icon className='sidebarButton' attached='right' color='blue' onClick={this.toggleVisibility}>
+
+            <Button inverted icon
+              className='sidebarButton'
+              attached='right' color='blue'
+              onClick={this.toggleVisibility}
+            >
               <Icon name={this.state.visible ? 'left arrow' : 'right arrow'}/>
             </Button>
 
-            <div>
-              <AppContext.Consumer>{context => (
-                <PlaylistController
-                  onPlaying={context.onPlaying}
-                  onPausing={context.onPausing}
-                  nowPlaying={context.nowPlaying}
-                  onSetSongs={context.onSetSongs}
-                  paused={context.paused}
-                  isOwner={context.isOwner}
-                  url={this.props.url}
-                  isPublic={this.state.isPublic}
-                  categories={this.props.categories}
-                  selectedPlaylist={this.state.selectedPlaylist}
-                  refreshCategories={this.props.refreshCategories}
-                />)}
-              </AppContext.Consumer>
-            </div>
+            <WrappedPlaylistController
+              url={this.props.url}
+              isPublic={this.state.isPublic}
+              categories={this.props.categories}
+              selectedPlaylist={this.state.selectedPlaylist}
+              refreshCategories={this.props.getCats}
+            />
 
           </Sidebar.Pusher>
         </Sidebar.Pushable>

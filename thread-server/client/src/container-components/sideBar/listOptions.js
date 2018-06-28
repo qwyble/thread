@@ -11,6 +11,14 @@ class ListOptions extends React.Component{
     newName: '',
   }
 
+  static getDerivedStateFromProps(props, state){
+    if (props.err){
+      return {openPortal: true}
+    } else {
+      return {openPortal: false}
+    }
+  }
+
 
   handleOpen = () => {
     this.setState({openPortal: true, selectValue: ''});
@@ -35,7 +43,7 @@ class ListOptions extends React.Component{
   }
 
   handleRenameSubmit = () => {
-    this.props.onCategoryEditSubmit(this.props.catName, this.props.id, this.state.newName);
+    this.props.onCategoryRename(this.props.catName, this.props.id, this.state.newName);
   }
 
   handleDropdownChange = (e, d) => {
@@ -72,7 +80,8 @@ class ListOptions extends React.Component{
             <p>Enter a new name:</p>
             <Form onSubmit={this.handleRenameSubmit}>
               <Input style={{width: '100%'}}type='text' value={this.state.newName} onChange={this.handleRenameChange}/>
-              <Button type='submit' onClick={this.handleClose}>Ok</Button>
+              {this.props.err}
+              <Button type='submit' >Ok</Button>
             </Form>
           </Segment>
         </TransitionablePortal>

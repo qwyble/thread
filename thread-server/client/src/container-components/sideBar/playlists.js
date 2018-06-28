@@ -1,7 +1,7 @@
 import React from 'react';
 import AddPlaylist from '../../presentational-components/sidebarUtilities/addPlaylist.js';
 import PlaylistTab from '../../presentational-components/sidebarUtilities/playlistTab.js';
-import ListOptions from './listOptions.js';
+import EditCategories from './editCategories.js';
 import {Button, Icon, Menu, Loader} from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -98,16 +98,27 @@ class Playlists extends React.Component{
           <div>
 
             <Menu.Item className='sideBarItem'>
-              <ListOptions
-                id={this.props.id} catName={this.props.catName}
-                onCategoryDelete={this.props.onCategoryDelete}
-                onCategoryEditSubmit={this.props.onCategoryEditSubmit}
+
+              <EditCategories
+                getCats={this.props.getCats}
+                id={this.props.id}
+                catName={this.props.catName}
+                categories={this.props.categories}
               />
-              <Button className='button2' floated='right' icon inverted color='blue' size='mini' labelPosition='right'
-                onClick={this.handleDisplayLists}>
+
+              <Button
+                className='button2'
+                floated='right'
+                icon inverted
+                color='blue'
+                size='mini'
+                labelPosition='right'
+                onClick={this.handleDisplayLists}
+              >
                 <Icon name={this.state.displayLists ?'down arrow' : 'right arrow'} />
                 {this.props.catName}
               </Button>
+
             </Menu.Item>
 
             {this.state.renderAlert ? <div>Already exists</div> : <div></div>}
