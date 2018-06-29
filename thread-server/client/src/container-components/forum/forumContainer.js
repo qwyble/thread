@@ -1,6 +1,8 @@
 import React from 'react';
 import ForumFeed from './forumFeed';
 import ThreadList from './threadList';
+import ThreadComposer from './threadComposer.js'
+import {Route} from 'react-router-dom'
 import {Grid} from 'semantic-ui-react';
 
 
@@ -14,10 +16,11 @@ class ForumContainer extends React.Component{
   }
   render(){
     return(
-      <Grid style={{width: "100%", height: '100%'}} divided stretched columns={2}>
+      <Grid style={{margin: 'auto'}} divided stretched columns={2}>
         <Grid.Row>
           <Grid.Column width={13}>
-            <ThreadList />
+            <Route path="/forum/post" component={ThreadComposer} />
+            <Route exact path="/forum" component={ThreadList} />
           </Grid.Column>
           <Grid.Column width={3}>
             <ForumFeed />

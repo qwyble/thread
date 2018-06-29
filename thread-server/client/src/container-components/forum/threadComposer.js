@@ -1,22 +1,22 @@
 import React from 'react';
 import axios from 'axios';
-import SuccessPrompt from './successPrompt';
 import FieldComponent from '../utilities/fieldComponent.js';
 import TextComponent from '../utilities/textComponent.js';
-import DropdownComponent from '../utilities/dropdownComponent';
+import CategoryDropdownComponent from '../utilities/categoryDropdownComponent';
+import {Redirect} from 'react-router-dom';
 import {Container, Input, Dimmer, Form, Loader, Button, Dropdown, Icon} from 'semantic-ui-react';
 
 
-class Composer extends React.Component{
+class ThreadComposer extends React.Component{
 
   state = {
-    message: {
-      recipient: null,
+    thread: {
+      category: null,
       subject: '',
       body: ''
     },
     fieldErrors: {
-      recipient: '',
+      category: '',
       subject: '',
       body: ''
     },
@@ -25,36 +25,26 @@ class Composer extends React.Component{
   }
 
 
-  static getDerivedStateFromProps(props, state){
-    if(props.recipient !== state.message['recipient']){
-      var message = {...state.message}
-      message['recipient'] = props.recipient
-      return{ message: message }
-    } else {
-      return {}
-    }
-  }
-
 
   handleInputChange = ({name, value, error}) => {
-    const message = {...this.state.message};
+    const thread = {...this.state.thread};
     const fieldErrors = {...this.state.fieldErrors};
 
-    message[name] = value;
+    thread[name] = value;
     fieldErrors[name] = error;
 
-    this.setState({message, fieldErrors});
+    this.setState({thread, fieldErrors});
   }
 
 
   validate = () => {
-    const message = {...this.state.message};
+    const thread = {...this.state.thread};
     const fieldErrors = {...this.state.fieldErrors};
     const errMessages = Object.keys(fieldErrors).filter((k) => fieldErrors[k]);
 
-    if(!message.recipient) return true;
-    if(!message.subject) return true;
-    if(!message.body) return true;
+    if(!thread.category) return true;
+    if(!thread.subject) return true;
+    if(!thread.body) return true;
     if(errMessages.length) return true;
 
     return false;
@@ -62,28 +52,28 @@ class Composer extends React.Component{
 
 
   handleFormSubmit = (e) => {
-    const message = this.state.message;
+    const thread = this.state.thread;
     e.preventDefault();
 
     if(this.validate()) return;
 
-    this.sendMessageToDb();
+    this.sendThreadToDb();
   }
 
 
-  sendMessageToDb = () => {
+  sendThreadToDb = () => {
     this.setState({_loading: true});
 
-    messagePost(
-      this.state.message.subject,
-      this.state.message.body,
-      this.state.message.recipient
+    threadPost(
+      this.state.thread.subject,
+      this.state.thread.body,
+      this.state.thread.category
     ).then(() => {
       this.setState({
         _loading: false,
         success: true,
-        message: {
-          recipient: null,
+        thread: {
+          category: null,
           subject: '',
           body: ''
         }
@@ -94,31 +84,32 @@ class Composer extends React.Component{
 
 
   render(){
-    console.log(this.state.message.recipient);
+    if(this.state.success) return <Redirect to='/forum' />
+
     return(
       <Container>
 
         {this.state._loading ? <Dimmer inverted active><Loader active /></Dimmer> : <div></div>}
-        {this.state.success ? <SuccessPrompt onGetMessages={this.props.onGetMessages} /> : <div></div>}
+
 
         <Form onSubmit={this.handleFormSubmit}>
 
           <Form.Field required error={this.state.fieldErrors.recipient ? true : false}>
-            <DropdownComponent
-              name='recipient'
-              placeholder='Choose recipient'
-              value={this.state.message.recipient}
+            <CategoryDropdownComponent
+              name='category'
+              placeholder='Choose thread category'
+              value={this.state.thread.category}
               onChange={this.handleInputChange}
-              validate={(val) => val ? false : 'recipient is required'}
+              validate={(val) => val ? false : 'category is required'}
             />
-            {this.state.fieldErrors.recipient}
+            {this.state.fieldErrors.category}
           </Form.Field>
 
           <Form.Field required error={this.state.fieldErrors.subject ? true : false} >
             <FieldComponent
               name='subject'
               placeholder='Subject'
-              value={this.state.message.subject}
+              value={this.state.thread.subject}
               onChange={this.handleInputChange}
               validate={(val) => val ? false : 'Subject is required'}
             />
@@ -129,7 +120,7 @@ class Composer extends React.Component{
             <TextComponent
               name='body'
               placeholder='Body'
-              value={this.state.message.body}
+              value={this.state.thread.body}
               onChange={this.handleInputChange}
               validate={(val) => val ? false : 'body is required'}
             />
@@ -139,7 +130,7 @@ class Composer extends React.Component{
           <Button
             type='submit'
             disabled={this.validate()}>
-            <Icon name='send' />
+            Post
           </Button>
 
         </Form>
@@ -148,19 +139,19 @@ class Composer extends React.Component{
   }
 }
 
-export default Composer;
+export default ThreadComposer;
 
 
 
-const messagePost = (subject, body, recipient) => {
+const threadPost = (subject, body, category) => {
   return(
     axios({
       method: 'post',
-      url: 'http://localhost:8080/sendMessage',
+      url: 'http://localhost:8080/postThread',
       data: {
         subject: subject,
         body: body,
-        recipient: recipient,
+        category: category,
         date: (new Date()).toISOString().substring(0, 19).replace('T', ' ')
       },
       withCredentials: true

@@ -39,3 +39,4 @@ var songPlaylistRoute = require('./app/routes/songPlaylist.js')(app);
 var imageUploadRoute = require('./app/routes/imageUpload.js')(app);
 var followerRouter = require('./app/routes/follower.js')(app);
 var messagesRouter = require('./app/routes/messages.js')(app);
+var forumsRouter = require('./app/routes/forums.js')(app);
