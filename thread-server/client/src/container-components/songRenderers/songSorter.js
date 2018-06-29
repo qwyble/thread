@@ -60,6 +60,7 @@ class SongSorter extends React.Component{
 
 
           <WrappedSongRows
+            _loading={this.props._loading}
             songs={this.props.songs}
             onSongSelect={this.handleSongSelect}
             selectedSongs={this.state.selectedSongs}

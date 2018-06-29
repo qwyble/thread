@@ -46,8 +46,9 @@ class SongRow extends React.Component{
   }
 
   render(){
+      var className = this.props._loading ? 'rows loading' : 'rows';
     return(
-      <Table.Row>
+      <Table.Row className={className}>
         <Table.Cell collapsing>
           <Checkbox size = 'mini' id={this.props.song.idSongs} checked={this.props.selected} onChange={this.props.onSongSelect} />
           <span className='checkboxSpan' ></span>

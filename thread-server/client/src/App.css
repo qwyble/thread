@@ -225,17 +225,13 @@
 
 
 
-.pusherContainer {
+.pushable > .pusher.pusherContainer {
   height: 100%;
-
+  background-color: rgba(0,0,0,.8) ;
   margin: 0 !important;
 }
 
-.listSidebar {
-  z-index: 0;
-  padding: 0 !important;
 
-}
 .ui.inverted.blue.button.sidebarButton{
   position: fixed;
   z-index: 123421;

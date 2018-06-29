@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './css.css'
 import ForumSidebarLeftOverlay from './container-components/forum/forumSideBar.js'
 import SidebarTopOverlay from './container-components/topBar/topBar.js';
 import { Switch, Route, Redirect } from 'react-router-dom';

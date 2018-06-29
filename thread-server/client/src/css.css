@@ -1,0 +1,33 @@
+.listSidebar{
+  opacity: 0;
+  transform: scaleY(0);
+  max-height: 0;
+  transform-origin: top;
+  transition: opacity .25s, transform .25s, max-height .25s;
+}
+
+.listSidebar.displayed{
+  transform: scaleY(1);
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 1;
+
+}
+
+.playlistTab{
+  z-index: 0;
+  padding: 0 !important;
+}
+
+.rows{
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: opacity .2s, transform .2s;
+}
+
+.rows.loading{
+  opacity: 0;
+  transform: scaleY(0);
+}

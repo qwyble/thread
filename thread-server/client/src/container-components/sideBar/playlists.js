@@ -32,8 +32,8 @@ class Playlists extends React.Component{
 
 
   handleDisplayLists = () => {
-    if(!this.state.displayLists){ this.setState({...this.state, displayLists: true}); }
-    else{ this.setState({...this.state, displayLists: false}); }
+    if(!this.state.displayLists){ this.setState({ displayLists: true}); }
+    else{ this.setState({ displayLists: false}); }
   }
 
 
