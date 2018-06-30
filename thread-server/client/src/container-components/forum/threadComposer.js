@@ -13,7 +13,7 @@ class ThreadComposer extends React.Component{
     thread: {
       category: null,
       subject: '',
-      body: ''
+      body: '',
     },
     fieldErrors: {
       category: '',
@@ -67,7 +67,8 @@ class ThreadComposer extends React.Component{
     threadPost(
       this.state.thread.subject,
       this.state.thread.body,
-      this.state.thread.category
+      this.state.thread.category,
+      new Date()
     ).then(() => {
       this.setState({
         _loading: false,

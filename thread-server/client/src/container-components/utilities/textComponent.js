@@ -13,13 +13,10 @@ class TextComponent extends React.Component{
   }
 
   state = {
-    value: this.props.value,
+    value: '',
     error: ''
   }
 
-  static getDerivedStateFromProps(props, state){
-    return { value: props.value }
-  }
 
   onChange = (e) => {
     const name = e.target.name;
@@ -36,7 +33,7 @@ class TextComponent extends React.Component{
         <Form.TextArea
           placeholder={this.props.placeholder}
           name={this.props.name}
-          value={this.state.value}
+          value={this.props.value}
           onChange={this.onChange}
         />
       </div>

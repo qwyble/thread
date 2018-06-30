@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Icon } from 'semantic-ui-react';
 import CategoryMenuItem from '../../presentational-components/sidebarUtilities/categoryMenuItem.js';
 import AddCategory from '../../presentational-components/sidebarUtilities/addCategory.js';
-import ForumContainer from '../forum/forumContainer';
+import ForumGrid from '../forum/forumGrid.js';
 import ForumCategories from './forumCategories';
 
 
@@ -17,13 +17,14 @@ class ForumSidebarLeftOverlay extends Component {
 
     this.state = {
       visible: true,
-      categoryToAdd: '',
-      categories: [],
+      selectedCategory: ''
      }
-  }
+  };
 
 
-  toggleVisibility = () => {this.setState({ visible: !this.state.visible })}
+  toggleVisibility = () => {this.setState({ visible: !this.state.visible })};
+
+  handleSelectCategory = (e) => {this.setState({selectedCategory: e.target.value})};
 
 
 
@@ -33,7 +34,7 @@ class ForumSidebarLeftOverlay extends Component {
         <Sidebar.Pushable as={Segment} className='primaryContainer'>
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu} visible={this.state.visible}>
 
-            <ForumCategories categories={this.state.categories}/>
+            <ForumCategories onSelectCategory={this.handleSelectCategory} categories={this.state.categories}/>
 
           </Sidebar>
 
@@ -44,7 +45,7 @@ class ForumSidebarLeftOverlay extends Component {
             </Button>
 
             <div>
-              <ForumContainer />
+              <ForumGrid selectedCategory={this.state.selectedCategory}/>
             </div>
 
           </Sidebar.Pusher>
