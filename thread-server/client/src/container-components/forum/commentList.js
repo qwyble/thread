@@ -27,7 +27,6 @@ class CommentList extends React.Component{
 
 
   render(){
-    console.log(this.state.comments);
     return(
       <div>
         <Segment>

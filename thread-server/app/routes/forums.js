@@ -32,7 +32,7 @@ module.exports = function(app){
     else var catId = req.params.catId;
     forums.getThreads(catId)
     .then(data => res.status(200).send(data))
-    .catch(err => res.status(400).send(err));
+
   })
 
 
@@ -62,10 +62,31 @@ module.exports = function(app){
 
 
   app.get('/getComments/:threadId', function(req, res){
-    console.log(req.params.threadId)
     forums.getComments(
       req.params.threadId
     ).then((data) => res.status(200).send(data));
+  })
+
+
+  app.get('/getSubscribed/:threadId', function(req, res){
+    forums.getSubscribed(
+      req.params.threadId,
+      req.session.user.idUsers
+    ).then((data) => res.status(200).send(data));
+  })
+
+  app.post('/subscribe/sub', function(req, res){
+    forums.subscribe(
+      req.body.threadId,
+      req.session.user.idUsers
+    ).then(() => res.status(200).send('ok'));
+  })
+
+  app.post('/subscribe/unsub', function(req, res){
+    forums.unsubscribe(
+      req.body.threadId,
+      req.session.user.idUsers
+    ).then(() => res.status(200).send('ok'));
   })
 
 

@@ -15,6 +15,7 @@ class ThreadViewContainer extends React.Component{
     success: false,
     openComment: false,
     commentSuccess: false,
+    _loading: false
   }
 
   componentDidMount(){
@@ -26,13 +27,14 @@ class ThreadViewContainer extends React.Component{
 
 
   getThread = (id) => {
+    this.setState({_loading: true})
     axios({
       method: 'get',
       url: 'http://localhost:8080/getThread',
       params: {
         id: id,
       }
-    }).then(result => this.setState({thread: result.data[0]}));
+    }).then(result => this.setState({thread: result.data[0], _loading: false}));
   }
 
   handleDeleteThread = (id) => {
@@ -66,13 +68,16 @@ class ThreadViewContainer extends React.Component{
   render(){
     return(
       <div>
+
         {this.state.success ? <Redirect to='/forum' /> : <div></div>}
+
         <AppContext.Consumer>{context => (
           <ThreadView
             isOwner={context.user.idUsers === this.state.thread.UserId}
             thread={this.state.thread}
             onOpenComment={this.handleOpenComment}
             onDeleteThread={this.handleDeleteThread}
+            _loading={this.state._loading}
           />)}
         </AppContext.Consumer>
 

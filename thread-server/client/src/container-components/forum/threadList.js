@@ -29,10 +29,10 @@ class ThreadList extends React.Component{
                 {t.category}
               </Table.Cell>
               <Table.Cell>
-
+                {t.replies}
               </Table.Cell>
               <Table.Cell>
-
+                {t.subs}
               </Table.Cell>
               <Table.Cell>
                 {t.date ? t.date.slice(0, 10) : ''}

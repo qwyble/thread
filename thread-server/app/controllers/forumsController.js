@@ -32,12 +32,25 @@ module.exports = {
   getThreads: function(catId){
     return(
       sequelize.query(
-        `SELECT subject, date, threadpost.idThreadPost as id, threadcategories.category, users.userName
+        `SELECT subject, threadpost.date, threadpost.idThreadPost as id,
+        threadcategories.category, users.userName, tsubs.subs AS subs, trep.replies as replies
         FROM threadpost
           JOIN threadcategories
             ON idthreadcategories = threadpost.category
           JOIN users
             ON idUsers = UserId
+          LEFT JOIN (
+            SELECT threadsubs.ThreadId as tsubId, COUNT(idThreadSubs) as subs
+            FROM threadsubs
+            GROUP BY idThreadSubs
+          ) as tsubs
+            ON tsubs.tsubId = threadpost.idThreadPost
+          LEFT JOIN (
+            SELECT threadreplies.ThreadId as tId, COUNT(threadreplies.idThreadReplies) as replies
+            FROM threadreplies
+            GROUP BY threadreplies.ThreadId
+          ) AS trep
+            ON trep.tId = threadpost.idThreadPost
         WHERE idthreadcategories LIKE ?
         ORDER BY date desc
         LIMIT 20;`,{
@@ -49,13 +62,14 @@ module.exports = {
   },
 
 
+
   getThread: function(id){
     return(
       sequelize.query(
         `SELECT threadpost.*, userName FROM threadpost
           JOIN users
             ON idUsers = UserId
-        WHERE idThreadPost = ?`, {
+        WHERE idThreadPost = ?;`, {
           replacements: [id],
           type: sequelize.QueryTypes.SELECT
         }
@@ -102,6 +116,48 @@ module.exports = {
         }
       )
     )
+  },
+
+
+  getSubscribed: function(threadId, user){
+    return(
+      sequelize.query(
+        `SELECT * FROM threadsubs
+          WHERE ThreadId = ? AND UserId = ?
+          LIMIT 1;`, {
+            replacements: [threadId, user],
+            type: sequelize.QueryTypes.SELECT
+          }
+      )
+    )
+  },
+
+
+  subscribe: function(threadId, user){
+    return(
+      sequelize.query(
+        `INSERT INTO threadsubs (ThreadId, UserId)
+        VALUES (?, ?);`, {
+          replacements: [threadId, user],
+          type: sequelize.QueryTypes.INSERT
+        }
+      )
+    )
+  },
+
+
+  unsubscribe: function(threadId, user){
+    return(
+      sequelize.query(
+        `DELETE FROM threadsubs
+        WHERE ThreadId = ? AND UserId = ?;`, {
+          replacements: [threadId, user],
+          type: sequelize.QueryTypes.DELETE
+        }
+      )
+    )
   }
+
+
 
 }
