@@ -87,6 +87,21 @@ module.exports = {
         }
       )
     )
+  },
+
+
+  getComments: function(threadId){
+    return(
+      sequelize.query(
+        `SELECT threadreplies.*, userName, imageUrl FROM threadreplies
+          JOIN users
+            ON UserId = idUsers
+        WHERE ThreadId = ?;`,{
+          replacements: [threadId],
+          type: sequelize.QueryTypes.SELECT,
+        }
+      )
+    )
   }
 
 }

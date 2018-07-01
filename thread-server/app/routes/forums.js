@@ -61,4 +61,12 @@ module.exports = function(app){
   })
 
 
+  app.get('/getComments/:threadId', function(req, res){
+    console.log(req.params.threadId)
+    forums.getComments(
+      req.params.threadId
+    ).then((data) => res.status(200).send(data));
+  })
+
+
 }

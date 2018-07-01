@@ -5,6 +5,7 @@ import {Link, Redirect} from 'react-router-dom';
 import {AppContext} from '../../context.js';
 import ThreadView from '../../presentational-components/forum/threadView.js';
 import NewComment from './newComment.js';
+import CommentList from './commentList.js';
 
 
 
@@ -55,7 +56,7 @@ class ThreadViewContainer extends React.Component{
   }
 
   handleCommentSubmit = () => {
-    this.setState({commentSuccess: true}, () => {
+    this.setState({commentSuccess: true, openComment: false}, () => {
       this.setState({commentSuccess: false});
     });
   }
@@ -83,6 +84,11 @@ class ThreadViewContainer extends React.Component{
             threadId={this.state.thread.idThreadPost}
           /> : <div></div>
         }
+
+        <CommentList
+          threadId={this.state.thread.idThreadPost}
+          commentSuccess={this.state.commentSuccess}
+        />
 
 
       </div>
