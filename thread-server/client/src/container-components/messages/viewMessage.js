@@ -38,7 +38,6 @@ class ViewMessage extends React.Component{
       },
       withCredentials: true
     }).then((result) => {
-      console.log(result.data)
       this.setState({message: result.data[0], _loading: false});
     })
   }

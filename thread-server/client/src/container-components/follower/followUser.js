@@ -10,7 +10,8 @@ gets the user based on window location
 class FollowUser extends React.Component{
   state = {
     isOwner: false,
-    isFollowing: true
+    isFollowing: true,
+    _loading: true
   }
 
   componentDidUpdate(prevProps, prevState){
