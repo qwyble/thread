@@ -55,7 +55,7 @@ class UploadHandlers extends React.Component{
     console.log(this.state.isLoading);
     axios({
       method: 'post',
-      url: 'http://localhost:8080/upload',
+      url: 'http://localhost:8080/uploadSong',
       data: data,
       withCredentials: true
     }).then((result) => {

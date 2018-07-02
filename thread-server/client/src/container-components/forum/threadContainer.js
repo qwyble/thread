@@ -34,7 +34,6 @@ class ThreadContainer extends React.Component{
 
 
   render(){
-        console.log(this.state.threads);
     return(
       <div>
         {this.state._loading ? <Dimmer active inverted><Loader active/></Dimmer> : <div></div>}

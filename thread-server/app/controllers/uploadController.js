@@ -3,6 +3,7 @@ var Promise = require('bluebird');
 var GoogleCloudStorage = Promise.promisifyAll(require('@google-cloud/storage'));
 const uuidv4 = require('uuid/v4');
 
+
 const {sequelize, Sequelize} = require('../db/dbConnect.js');
 const Song = require('../models/song.js')(sequelize, Sequelize);
 
@@ -23,12 +24,37 @@ function getPublicUrl (file_name) {
 
 
 module.exports = {
-  upload: function (req, res, next, fin) {
-      fileToBucket(req, res, next, fin);
+  uploadSong: function (req, res, next, fin) {
+      songFileToBucket(req, res, next, fin);
+  },
+
+  deleteSong: function(req){
+    return (
+      deleteFile(
+        req.body.songIds,
+        req.session.user.idUsers
+      )
+    );
   }
 }
+
+
+deleteFile = (songIds, user) => {
+  return (
+    sequelize.query(
+      `DELETE FROM songs
+      WHERE idSongs IN (?) AND owner = ?`,{
+        replacements: [songIds, user],
+        type: sequelize.QueryTypes.DELETE
+      }
+    )
+  )
+}
+
+
+
 //send file to cloud bucket
-fileToBucket = (req, res, next, fin) => {
+songFileToBucket = (req, res, next, fin) => {
     const file = req.file;
     var url = '';
     const gcsname = uuidv4() + file.originalname;
@@ -46,7 +72,7 @@ fileToBucket = (req, res, next, fin) => {
         return url;
       }).then((url) => {
         console.log('upload complete');
-        metaToDb(req, url, res);
+        songMetaToDb(req, url, res, gcsname);
         fin()
       });
     });
@@ -54,13 +80,14 @@ fileToBucket = (req, res, next, fin) => {
 }
 
 //send metadata to mysql
-metaToDb = (req, url, res) => {
+songMetaToDb = (req, url, res, gcsname) => {
   Song.create({
     title: req.body.title,
     description: req.body.description,
     genres: req.body.genres,
     owner: req.session.user.idUsers,
     dateUploaded: new Date(),
-    URL: url
+    URL: url,
+    fileName: gcsname,
   })
 }

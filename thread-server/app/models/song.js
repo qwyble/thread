@@ -26,6 +26,9 @@ module.exports = function(sequelize, Sequelize){
     },
     URL: {
       type: Sequelize.STRING
+    },
+    fileName: {
+      type: Sequelize.STRING
     }
   });
   return Song;

@@ -1,4 +1,4 @@
-var upload = require('../controllers/imageUploadController.js');
+var imageUpload = require('../controllers/imageUploadController.js');
 
 
 const Multer = require('multer');
@@ -14,7 +14,7 @@ const multer = Multer({
 module.exports = function(app){
 
   app.post('/uploadImage', multer.single('file'), (req, res) => {
-      upload.upload(req, res, () => {res.status(200).send('ok')});
+      imageUpload.uploadImage(req, res, () => {res.status(200).send('ok')});
   });
 
 }

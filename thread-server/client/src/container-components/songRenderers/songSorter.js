@@ -7,6 +7,7 @@ import WrappedSongRows from '../../presentational-components/sidebarUtilities/wr
 import RemoveSongFromPlaylist from '../../presentational-components/sidebarUtilities/removeSongFromPlaylist.js';
 import MakePublic from '../../presentational-components/sidebarUtilities/makePublic.js';
 import FollowContainer from '../follower/followContainer.js';
+import DeleteSongs from './deleteSong.js';
 
 //renders the lst of songs, controls adding and deleting songs to/from playlists
 //
@@ -74,6 +75,7 @@ class SongSorter extends React.Component{
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
 
+
               <ClonePortal
                 categories={this.props.categories}
                 selectedPlaylist={this.props.selectedPlaylist}
@@ -98,6 +100,14 @@ class SongSorter extends React.Component{
                 songs={this.props.songs}
                 isOwner={this.props.isOwner}
               />
+
+              {(this.props.isOwner && window.location.pathname === '/stream') ?
+                <DeleteSongs
+                  onRefresh={this.props.onRefresh}
+                  selectedSongs={this.state.selectedSongs}
+                />
+                : <div></div>
+              }
 
 
             </Table.HeaderCell>

@@ -2,7 +2,7 @@
 var cloud_bucket = require('../controllers/uploadController.js');
 const multer = require('multer');
 
-const upload = multer({
+const uploadSong = multer({
   storage: multer.MemoryStorage,
   fileFilter: function(req, file, cb) {
     console.log(file.mimetype);
@@ -15,9 +15,14 @@ const upload = multer({
 
 module.exports = function(app){
 
-  app.post('/upload', upload.single('songFile'), (req, res) => {
-    cloud_bucket.upload(req, res, console.log, () => res.send());
+  app.post('/uploadSong', uploadSong.single('songFile'), (req, res) => {
+    cloud_bucket.uploadSong(req, res, console.log, () => res.status(200).send('ok'));
   });
+
+  app.post('/deleteSongs', function(req, res){
+    cloud_bucket.deleteSong(req)
+    .then(() => res.status(200).send('ok'));
+  })
 
 
 }

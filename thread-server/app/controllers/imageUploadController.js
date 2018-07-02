@@ -11,6 +11,7 @@ const storage = Storage({
   keyFilename: './thread-projectowner.json'
 });
 
+
 var bucket = storage.bucket(BUCKET_NAME);
 
 function getPublicUrl (file_name) {
@@ -21,14 +22,14 @@ function getPublicUrl (file_name) {
 
 
 module.exports = {
-  upload: function (req, res, fin) {
-      fileToBucket(req, res, fin);
+  uploadImage: function (req, res, fin) {
+      imageToBucket(req, res, fin);
   }
 }
 
 
 //send file to cloud bucket
-fileToBucket = (req, res, fin) => {
+imageToBucket = (req, res, fin) => {
     if (!req.file) {
       return;
     }
@@ -54,14 +55,14 @@ fileToBucket = (req, res, fin) => {
         url = req.file.cloudStoragePublicUrl;
         return url;
       }).then((url) => {
-        metaToDb(req.session.user.idUsers, url).then(() => fin());
+        imageMetaToDb(req.session.user.idUsers, url).then(() => fin());
       });
     });
     stream.end(req.file.buffer);
 }
 
 //send metadata to mysql
-metaToDb = (user, url) => {
+imageMetaToDb = (user, url) => {
   return(
     sequelize.query(
       `UPDATE users

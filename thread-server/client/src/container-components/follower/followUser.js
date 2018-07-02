@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Button} from 'semantic-ui-react';
+import {Button, Loader} from 'semantic-ui-react';
 
 
 /*
@@ -10,7 +10,7 @@ gets the user based on window location
 class FollowUser extends React.Component{
   state = {
     isOwner: this.props.isOwner,
-    isFollowing: false
+    isFollowing: true
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -20,6 +20,7 @@ class FollowUser extends React.Component{
   }
 
   getIsFollowing = (user, owner) => {
+    this.setState({_loading: true});
     axios.get('http://localhost:8080/getIsFollowing', {
       params: {
         user: user,
@@ -27,9 +28,9 @@ class FollowUser extends React.Component{
       }
     }).then((result) => {
       if(result.data.length === 0){
-        this.setState({isFollowing: false});
+        this.setState({isFollowing: false, _loading: false});
       }else{
-        this.setState({isFollowing: true});
+        this.setState({isFollowing: true, _loading: false});
       }
     })
   }
@@ -64,11 +65,16 @@ class FollowUser extends React.Component{
   render(){
     return(
       <div style={{float: 'left'}}>
-        {this.state.isOwner ? <div></div> :
-          <Button size='mini' onClick={this.handleFollow}>
-            {this.state.isFollowing ? <div>Unfollow</div> : <div>Follow</div>
+        {this.state._loading ? <Loader active /> :
+          <div>
+            {this.state.isOwner ? <div></div> :
+              <Button size='mini' onClick={this.handleFollow}>
+                {this.state.isFollowing ? <div>Unfollow</div> : <div>Follow</div>
+                }
+              </Button>
             }
-          </Button>}
+          </div>
+        }
       </div>
     )
   }
