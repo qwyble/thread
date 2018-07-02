@@ -38,8 +38,8 @@ module.exports = {
         FROM messages
           JOIN users
           ON sender = users.idUsers
-        WHERE recipient = ? AND idmessages = ?`, {
-          replacements: [user, messageId],
+        WHERE (recipient = ? OR sender = ?) AND idmessages = ?`, {
+          replacements: [user, user, messageId],
           type: sequelize.QueryTypes.SELECT
         }
       )

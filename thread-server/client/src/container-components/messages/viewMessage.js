@@ -38,6 +38,7 @@ class ViewMessage extends React.Component{
       },
       withCredentials: true
     }).then((result) => {
+      console.log(result.data)
       this.setState({message: result.data[0], _loading: false});
     })
   }
@@ -62,17 +63,23 @@ class ViewMessage extends React.Component{
     return(
       <Container>
         {this.state.loading ? <Loader active /> : <div></div>}
-        <div style={{float: 'right'}}>
-          {this.state.message.date}
-        </div>
-          From: {this.state.message.senderName}
-        <Divider />
-          Subject: {this.state.message.subject}
-        <Divider />
-          {this.state.message.text}
-        <Divider />
-        <Button icon='reply' onClick={this.handleReply}/>
-        {this.state.reply ? <Composer recipient={this.state.message.sender}/> : <div></div>}
+        {this.state.message ?
+          <div>
+            <div style={{float: 'right'}}>
+              {this.state.message.date}
+            </div>
+            From: {this.state.message.senderName}
+            <Divider />
+            Subject: {this.state.message.subject}
+            <Divider />
+            {this.state.message.text}
+            <Divider />
+            <Button icon='reply' onClick={this.handleReply}/>
+            {this.state.reply ? <Composer recipient={this.state.message.sender}/> : <div></div>}
+          </div>
+          : <div></div>
+
+        }
 
       </Container>
 
