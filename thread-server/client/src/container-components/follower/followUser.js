@@ -9,7 +9,7 @@ gets the user based on window location
 */
 class FollowUser extends React.Component{
   state = {
-    isOwner: this.props.isOwner,
+    isOwner: false,
     isFollowing: true
   }
 
@@ -67,7 +67,7 @@ class FollowUser extends React.Component{
       <div style={{float: 'left'}}>
         {this.state._loading ? <Loader active /> :
           <div>
-            {this.state.isOwner ? <div></div> :
+            {this.props.isOwner ? <div></div> :
               <Button size='mini' onClick={this.handleFollow}>
                 {this.state.isFollowing ? <div>Unfollow</div> : <div>Follow</div>
                 }
