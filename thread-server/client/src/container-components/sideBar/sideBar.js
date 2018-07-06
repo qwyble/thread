@@ -5,7 +5,7 @@ import AddCategory from './addCategory.js';
 import AudioRenderer from '../../presentational-components/audio/audioRenderer.js'
 import WrappedPlaylistController from '../../presentational-components/sidebarUtilities/wrappedPlaylistController.js';
 import axios from 'axios';
-import {AppContext} from '../../context.js';
+import {AppContext} from '../../appUtilities/context.js';
 
 /*
 SidebarLeftOverlay handles selecting playlists and renders
@@ -19,10 +19,8 @@ class SidebarLeftOverlay extends Component {
 
     this.state = {
       selectedPlaylist: '',
+      isPublic: false,
       visible: true,
-      isPublic: '',
-      ended: false,
-      paused: false
     }
   }
 
@@ -38,11 +36,6 @@ class SidebarLeftOverlay extends Component {
   handleSelectPlaylist = (e, data) => {
     this.setState({ selectedPlaylist: e.target.value, isPublic: data.ispublic });
   }
-
-  handlePublicity = (pub) => {
-    this.setState({isPublic: pub});
-  }
-
 
   render() {
     return (
@@ -85,11 +78,9 @@ class SidebarLeftOverlay extends Component {
             </Button>
 
             <WrappedPlaylistController
-              url={this.props.url}
-              isPublic={this.state.isPublic}
               categories={this.props.categories}
+              isPublic={this.state.isPublic}
               selectedPlaylist={this.state.selectedPlaylist}
-              onPublicity={this.handlePublicity}
               refreshCategories={this.props.getCats}
             />
 

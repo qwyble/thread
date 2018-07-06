@@ -1,4 +1,4 @@
-import {AppContext} from '../../context.js'
+import {AppContext} from '../../appUtilities/context.js'
 import React from 'react';
 import FollowUser from './followUser';
 

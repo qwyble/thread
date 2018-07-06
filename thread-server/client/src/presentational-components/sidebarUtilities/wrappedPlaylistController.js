@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppContext} from '../../context.js';
+import {AppContext} from '../../appUtilities/context.js';
 import PlaylistController from '../../container-components/songRenderers/playlistController.js';
 
 

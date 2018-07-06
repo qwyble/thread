@@ -1,7 +1,7 @@
 import React from 'react';
-import {Table, Loader} from 'semantic-ui-react';
+import {Table, Loader, Icon} from 'semantic-ui-react';
 import PlaylistPortal from './playlistPortal.js';
-import {AppContext} from '../../context.js';
+import {AppContext} from '../../appUtilities/context.js';
 import ClonePortal from '../../presentational-components/sidebarUtilities/clonePortal.js';
 import WrappedSongRows from '../../presentational-components/sidebarUtilities/wrappedSongRows.js';
 import RemoveSongFromPlaylist from '../../presentational-components/sidebarUtilities/removeSongFromPlaylist.js';
@@ -15,6 +15,7 @@ class SongSorter extends React.Component{
   state ={
     selectedSongs: [],
     _disabled: true,
+    descending: true,
   }
 
 
@@ -40,6 +41,17 @@ class SongSorter extends React.Component{
     this.setState({selectedSongs: []});
   }
 
+  handleSort = (sortBy) => {
+    var descending: true;
+
+    if(this.state.descending) descending = false;
+    else descending = true;
+
+    this.props.onSortBy(sortBy, descending);
+
+    this.setState({descending});
+  }
+
 
 
   render(){
@@ -51,7 +63,10 @@ class SongSorter extends React.Component{
             <Table.Row>
               <Table.HeaderCell />
               <Table.HeaderCell />
-              <Table.HeaderCell>Title</Table.HeaderCell>
+              <Table.HeaderCell>
+                Title
+                <Icon name='sort' onClick={() => this.handleSort('title')} />
+              </Table.HeaderCell>
               <Table.HeaderCell>Uploader</Table.HeaderCell>
               <Table.HeaderCell>Rating</Table.HeaderCell>
               <Table.HeaderCell>Genre</Table.HeaderCell>
@@ -75,12 +90,15 @@ class SongSorter extends React.Component{
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
 
+              {window.location.pathname.includes('/playlist') ?
+                <ClonePortal
+                  categories={this.props.categories}
+                  selectedPlaylist={this.props.selectedPlaylist}
+                  refreshCategories={this.props.refreshCategories}
+                />
+                :<div></div>
+              }
 
-              <ClonePortal
-                categories={this.props.categories}
-                selectedPlaylist={this.props.selectedPlaylist}
-                refreshCategories={this.props.refreshCategories}
-              />
 
               <PlaylistPortal
                 _disabled={this.state._disabled}
@@ -114,10 +132,9 @@ class SongSorter extends React.Component{
 
 
             <MakePublic
-              isPublic={this.props.isPublic}
-              onMakePrivate={this.props.onMakePrivate}
-              onMakePublic={this.props.onMakePublic}
+              selectedPlaylist={this.props.selectedPlaylist}
               isOwner={this.props.isOwner}
+              isPublic={this.props.isPublic}
             />
 
 

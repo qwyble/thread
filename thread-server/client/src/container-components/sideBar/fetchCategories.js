@@ -10,13 +10,14 @@ class FetchCategories extends React.Component{
     err: '',
     _loading: true,
     categories: [],
-    owner: ''
   }
 
 
 
   componentDidUpdate(prevProps, prevState){
-    if(prevProps.visitingProfile !== this.props.visitingProfile){ this.getCats(); }
+    if(prevProps.profile !== this.props.profile){
+      this.getCats();
+    }
   }
 
 
@@ -27,9 +28,10 @@ class FetchCategories extends React.Component{
 
   // if the user is visiting a profile other than their own, set the query url to get another's playlists
   getUrl = () => {
-    if(this.props.visitingProfile){ return 'http://localhost:8080/getPlaylists/'+this.props.visitingProfile; }
+    if(this.props.profile){ return 'http://localhost:8080/getPlaylists/'+this.props.profile; }
     else{ return 'http://localhost:8080/getPlaylists'; }
   }
+
 
 
   getCats = () => {
@@ -52,7 +54,7 @@ class FetchCategories extends React.Component{
 
       this.props.setOwner(owner);
 
-      this.setState({categories: cats, owner: owner, _loading: false});
+      this.setState({categories: cats, _loading: false});
     });
   }
 
@@ -62,8 +64,7 @@ class FetchCategories extends React.Component{
     return(
       <SidebarLeftOverlay
         getCats={this.getCats}
-        url={this.props.url}
-        owner={this.state.owner}
+        owner={this.props.owner}
         isOwner={this.props.isOwner}
         categories={this.state.categories}
         _loading={this.state._loading}

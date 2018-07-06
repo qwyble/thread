@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
-import UserContainer from './userContainer.js';
+import UserContainer from './appUtilities/userContainer.js';
 import {Provider} from 'react-redux';
 import {store} from './redux/store';
 import './semantic-ui-css/semantic.min.css';

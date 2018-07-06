@@ -19,7 +19,9 @@ class ClonePortal extends React.Component{
 
 
   static getDerivedStateFromProps(props, state){
-    return { plToClone: props.selectedPlaylist }
+    if(props.selectedPlaylist !== state.selectedPlaylist){
+      return { plToClone: props.selectedPlaylist }
+    }
   }
 
 
@@ -103,7 +105,7 @@ class ClonePortal extends React.Component{
                   </div>
                 }
               </div>:
-              <div>You must selected a playlist, you cannot clone a stream.</div>
+              <div>You must select a playlist, you can't clone a stream.</div>
             }
             {this.state.err ?
               <div> {this.state.err} </div>

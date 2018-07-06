@@ -1,6 +1,6 @@
 import React from 'react';
 import AudioRenderer from '../../presentational-components/audio/audioRenderer'
-import AppProvider from '../../context.js';
+import AppProvider from '../../appUtilities/context.js';
 
 class AudioPlayback extends React.Component{
 

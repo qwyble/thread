@@ -9,19 +9,22 @@ import axios from 'axios';
 class PlaylistController extends React.Component{
   state={
     songs: [],
-    _loading: false
+    _loading: false,
+    sortBy: 'date',
+    ascDesc: 'desc'
   }
 
 
   getUrl = () => {
-    if (this.props.url.length < 2){ return 'http://localhost:8080'+'/stream'; }
-    else{ return 'http://localhost:8080'+this.props.url; }
+
+    if (window.location.pathname.length < 2){ return 'http://localhost:8080'+'/stream'; }
+    else{ return 'http://localhost:8080'+window.location.pathname; }
   }
 
   getSongs = () => {
     this.setState({_loading: true});
 
-    var url = this.getUrl();
+    var url = this.getUrl(this.state.sortBy);
 
     songsGet(url).then((result) => {
       this.setState({songs: result.data, _loading: false});
@@ -41,19 +44,12 @@ class PlaylistController extends React.Component{
   }
 
 
-  handleMakePublic = () => {
-    makePublicPost(this.props.selectedPlaylist);
-    this.props.onPublicity(1);
-  }
-
-  handleMakePrivate = () => {
-    makePrivatePost(this.props.selectedPlaylist);
-    this.props.onPublicity(0);
-  }
-
-
   handleRemoval = (songs) => {
     this.setState({songs: songs})
+  }
+
+  handleSortBy = (sortBy) => {
+    this.setState({sortBy});
   }
 
 
@@ -69,10 +65,9 @@ class PlaylistController extends React.Component{
           categories={this.props.categories}
           songs={this.state.songs}
           _loading={this.state._loading}
-          onMakePublic={this.handleMakePublic}
-          onMakePrivate={this.handleMakePrivate}
           onRemoval={this.handleRemoval}
           onRefresh={this.getSongs}
+          onSortBy={this.handleSortBy}
         />
       </div>
     )
@@ -81,27 +76,6 @@ class PlaylistController extends React.Component{
 
 
 export default PlaylistController;
-
-
-
-const makePrivatePost = (selectedPlaylist) => {
-  return(
-    axios.post('http://localhost:8080/makePrivate', {
-      plid: selectedPlaylist,
-      withCredentials: true
-    })
-  )
-}
-
-
-const makePublicPost = (selectedPlaylist) => {
-  return(
-    axios.post('http://localhost:8080/makePublic', {
-      plid: selectedPlaylist,
-      withCredentials: true
-    })
-  )
-}
 
 
 const songsGet = (url) => {

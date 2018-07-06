@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppContext} from '../../context.js';
+import {AppContext} from '../../appUtilities/context.js';
 import {Table} from 'semantic-ui-react';
 import SongRow from '../../container-components/songRenderers/songRow.js';
 

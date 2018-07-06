@@ -70,8 +70,6 @@ class ListOptions extends React.Component{
           className='dropOverlay icon'
           text=' '
           icon='ellipsis vertical'
-          labeled
-          floating
           value={this.state.selectValue}
           options={options}
           onChange={this.handleDropdownChange} />

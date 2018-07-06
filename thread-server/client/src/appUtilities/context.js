@@ -9,19 +9,25 @@ const AppContext = React.createContext();
 
 class AppProvider extends React.Component{
   state = {
-    user: this.props.user,
+    user: '',
     songs: [],
     nowPlaying: {},
     ended: false,
     paused: true,
-    isOwner: false,
-    owner: ''
+    isOwner: true,
+    owner: '',
   }
 
 
-  static getDerivedStateFromProps(props, state){
-    return {user: props.user}
+  componentDidUpdate(){
+    if (!this.state.user){
+      this.setState({user: this.props.user});
+    }
+    if (!this.state.owner){
+      this.setState({owner: this.props.user})
+    }
   }
+
 
   handleSetOwner = (owner) => {
     if (owner !== this.state.owner){

@@ -6,14 +6,14 @@ import ForumSidebarLeftOverlay from './container-components/forum/forumSideBar.j
 import SidebarTopOverlay from './container-components/topBar/topBar.js';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Explorer from './container-components/search/explorer.js';
-import RoutedContext from './routedContext.js';
+import RoutedContext from './appUtilities/routedContext.js';
 import SongDetails from './container-components/songRenderers/songDetails.js';
 import AudioPlayback from './container-components/audioPlayback/audioPlayback.js';
 import ProfileContainer from './container-components/profiles/profileContainer.js';
 import Following from './container-components/follower/following.js';
 import Followers from './container-components/follower/followers.js';
 import MessagesContainer from './container-components/messages/messagesContainer.js';
-import {AppContext} from './context.js';
+import {AppContext} from './appUtilities/context.js';
 import ChatToggle from './presentational-components/chat/chatToggle.js';
 
 
