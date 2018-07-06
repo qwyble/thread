@@ -20,6 +20,10 @@ class Playlists extends React.Component{
     }
   }
 
+  componentDidMount(){
+    this.setState({displayLists: false});
+  }
+
 
   static getDerivedStateFromProps(props, state){
     return { playlists: props.playLists, _loading: false}
@@ -83,12 +87,16 @@ class Playlists extends React.Component{
 
             <Menu.Item className='sideBarItem'>
 
-              <EditCategories
-                getCats={this.props.getCats}
-                id={this.props.id}
-                catName={this.props.catName}
-                categories={this.props.categories}
-              />
+              {
+                this.props.isOwner ?
+                <EditCategories
+                  getCats={this.props.getCats}
+                  id={this.props.id}
+                  catName={this.props.catName}
+                  categories={this.props.categories}
+                />
+                :<div></div>
+              }
 
               <Button
                 className='button2'
@@ -110,6 +118,7 @@ class Playlists extends React.Component{
           </div>
 
           <PlaylistList
+            isOwner={this.props.isOwner}
             displayLists={this.state.displayLists}
             playlists={this.state.playlists}
             _loading={this.state._loading}
@@ -121,7 +130,11 @@ class Playlists extends React.Component{
 
           {this.state.displayLists ?
             <div>
-            <AddPlaylist onFormSubmit={this.handleAddList} />
+              {
+                this.props.isOwner ?
+                <AddPlaylist onFormSubmit={this.handleAddList} />
+                : <div></div>
+              }
             </div>
         : <div></div>}
 

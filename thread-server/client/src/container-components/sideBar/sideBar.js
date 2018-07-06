@@ -38,6 +38,7 @@ class SidebarLeftOverlay extends Component {
   }
 
   render() {
+    console.log(this.props.isOwner);
     return (
       <div>
         <div>
@@ -45,23 +46,19 @@ class SidebarLeftOverlay extends Component {
           <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu}
             visible={this.state.visible} >
 
-            {
-              this.props._loading ?
-                <div>
-                  <Loader active />
-                  <Menu.Item />
-                </div> :
-              <div>
-                <Menu.Item style={{color: '#54c8ff'}}>
-                  {!this.props.isOwner ? <div>{this.props.owner.userName}'s playlists:</div> : <div>Your playlists:</div>}
-                </Menu.Item>
-              </div>
-            }
+
+
+            <Menu.Item style={{color: '#54c8ff'}}>
+              {!this.props.isOwner ? <div>{this.props.owner.userName}'s playlists:</div> : <div>Your playlists:</div>}
+            </Menu.Item>
+
+
 
             <CategoryMenuItem
               categories={this.props.categories}
               onSelectPlaylist={this.handleSelectPlaylist}
               getCats={this.props.getCats}
+              isOwner={this.props.isOwner}
             />
 
             { this.props.isOwner ? <AddCategory getCats={this.props.getCats}/>  : <div></div> }

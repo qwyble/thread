@@ -38,7 +38,6 @@ class RoutedContext extends React.Component{
   }
 
   render(){
-    console.log(this.state.profile);
     return(
       <AppContext.Consumer>{context => (
 

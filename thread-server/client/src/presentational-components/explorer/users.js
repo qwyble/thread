@@ -14,7 +14,9 @@ class Users extends React.Component{
                 <Image size='small' src={user.imageUrl} />
               </Grid.Row>
               <Grid.Row>
-                <Link to={`/profile/${user.idUsers}`}>
+                <Link to={{
+                  pathname: `/profile/${user.idUsers}`
+                }}>
                 {user.userName}
               </Link>
               </Grid.Row>

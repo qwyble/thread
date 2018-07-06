@@ -17,7 +17,6 @@ class CategoryMenuItem extends React.Component{
                   catName={category.catname}
                   playLists={category.pls}
                   id={category.catid}
-                  categories={this.props.categories}
                 />
               </Menu.Item>
 

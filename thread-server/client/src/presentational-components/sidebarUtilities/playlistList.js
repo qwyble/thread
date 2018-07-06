@@ -50,10 +50,13 @@ render(){
                   {this.props.playlists.map((playlist, key) =>
                     <Menu.Item key={key} className={'playlistTab'}>
                       <PlaylistTab
-                        playlist={playlist.plname} key={key}
-                        id={playlist.plid} onDeleteList={this.props.onDeleteList}
-                        onSelectPlaylist={this.props.onSelectPlaylist}
+                        key={key}
+                        id={playlist.plid}
+                        playlist={playlist.plname}
+                        isOwner={this.props.isOwner}
                         isPublic={playlist.isPublic}
+                        onDeleteList={this.props.onDeleteList}
+                        onSelectPlaylist={this.props.onSelectPlaylist}
                       />
                     </Menu.Item>
                   )}
