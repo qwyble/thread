@@ -134,6 +134,7 @@
   position: sticky !important;
   top: 0 !important;
   background: rgba(0, 0, 0, .3) !important;
+  z-index: 100;
 }
 .stickyBottom{
   position: -webkit-sticky !important;

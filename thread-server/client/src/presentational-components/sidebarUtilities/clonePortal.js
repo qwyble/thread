@@ -21,7 +21,7 @@ class ClonePortal extends React.Component{
   static getDerivedStateFromProps(props, state){
     if(props.selectedPlaylist !== state.selectedPlaylist){
       return { plToClone: props.selectedPlaylist }
-    }
+    } else return {}
   }
 
 

@@ -41,7 +41,7 @@ class App extends Component {
               <Route path='/explore' component={Explorer} />
               <Route path='/stream' component={RoutedContext }/>
               <Route path='/playlist/:playlist' component={RoutedContext }/>
-              <Route exact path='/profile' component={ProfileContainer} />
+              <Route exact path='/edit' component={ProfileContainer} />
               <Route path='/profile/:profile' component={RoutedContext } />
               <Route path='/song/:song' component={SongDetails } />
               <Redirect from='/' to={'/stream'} />

@@ -10,28 +10,11 @@ class PlaylistController extends React.Component{
   state={
     songs: [],
     _loading: false,
-    sortBy: 'date',
-    ascDesc: 'desc'
   }
 
-
-  getUrl = () => {
-
-    if (window.location.pathname.length < 2){ return 'http://localhost:8080'+'/stream'; }
-    else{ return 'http://localhost:8080'+window.location.pathname; }
+  componentDidMount(){
+    this.getSongs()
   }
-
-  getSongs = () => {
-    this.setState({_loading: true});
-
-    var url = this.getUrl(this.state.sortBy);
-
-    songsGet(url).then((result) => {
-      this.setState({songs: result.data, _loading: false});
-      this.props.onSetSongs(result.data);
-    });
-  }
-
 
   componentDidUpdate(prevProps){
     if(this.props.url != prevProps.url){
@@ -39,8 +22,24 @@ class PlaylistController extends React.Component{
     }
   }
 
-  componentDidMount(){
-    this.getSongs()
+  getUrl = () => {
+    if (window.location.pathname.length < 2)
+      return 'http://localhost:8080'+'/stream';
+    else
+      return 'http://localhost:8080'+window.location.pathname;
+  }
+
+  getSongs = (sortBy, descending) => {
+    this.setState({_loading: true});
+
+    var url = this.getUrl();
+    var _sortBy = sortBy ? sortBy : 'dateUploaded';
+    var _descending = descending ? 'DESC' : 'ASC';
+
+    songsGet(url, _sortBy, _descending).then((result) => {
+      this.setState({songs: result.data, _loading: false});
+      this.props.onSetSongs(result.data);
+    });
   }
 
 
@@ -48,8 +47,8 @@ class PlaylistController extends React.Component{
     this.setState({songs: songs})
   }
 
-  handleSortBy = (sortBy) => {
-    this.setState({sortBy});
+  handleSortBy = (sortBy, descending) => {
+    this.getSongs(sortBy, descending);
   }
 
 
@@ -58,13 +57,8 @@ class PlaylistController extends React.Component{
     return(
       <div>
         <SongSorter
-          isPublic={this.props.isPublic}
-          isOwner={this.props.isOwner}
-          refreshCategories={this.props.refreshCategories}
-          selectedPlaylist={this.props.selectedPlaylist}
-          categories={this.props.categories}
-          songs={this.state.songs}
-          _loading={this.state._loading}
+          {...this.state}
+          {...this.props}
           onRemoval={this.handleRemoval}
           onRefresh={this.getSongs}
           onSortBy={this.handleSortBy}
@@ -78,8 +72,14 @@ class PlaylistController extends React.Component{
 export default PlaylistController;
 
 
-const songsGet = (url) => {
+const songsGet = (url, sortBy, descending) => {
   return(
-    axios.get(url, {withCredentials: true})
+    axios.get(url, {
+      params: {
+        sortBy: sortBy,
+        descending: descending
+      },
+      withCredentials: true
+    })
   )
 }

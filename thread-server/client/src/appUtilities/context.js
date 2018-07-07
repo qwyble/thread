@@ -32,6 +32,7 @@ class AppProvider extends React.Component{
   handleSetOwner = (owner) => {
     if (owner !== this.state.owner){
       var isOwner = (owner.idUsers === this.state.user.idUsers);
+      console.log(owner, this.state.user.idUsers);
       this.setState({owner, isOwner});
     }
   }

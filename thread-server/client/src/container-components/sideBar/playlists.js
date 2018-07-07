@@ -26,7 +26,9 @@ class Playlists extends React.Component{
 
 
   static getDerivedStateFromProps(props, state){
-    return { playlists: props.playLists, _loading: false}
+    if(props.playLists !== state.playlists){
+      return { playlists: props.playLists, _loading: false}
+    } else return {}
   }
 
 

@@ -14,28 +14,31 @@ class RoutedContext extends React.Component{
   }
 
   componentDidMount(){
-    this.getProfile()
+    this.getProfile();
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.props.match.path.includes('/profile')){
-      if(this.props.match.params.profile !== this.state.profile){
-        this.getProfile()
-      }
-    } else if (this.props.match.path === '/stream'){
-      if(this.state.profile !== ''){
-        this.setState({profile: ''})
-      }
-    }
+  componentDidUpdate(){
+    this.getProfile();
   }
+
 
   getProfile = () => {
     if(this.props.match.path.includes('/profile')){
-      this.setState({profile: this.props.match.params.profile})
-    } else if (this.props.match.path === '/stream'){
-      this.setState({profile: ''})
+      if(this.props.match.params.profile !== this.state.profile){
+        var profile = this.props.match.params.profile;
+        this.setState({profile: profile})
+      }
+    } else if (this.props.match.path === '/stream' || this.props.match.path === '/edit'){
+      if(this.state.profile !== ''){
+        var profile = ''
+        this.setState({profile: profile})
+      }
     }
   }
+
+
+
+
 
   render(){
     return(

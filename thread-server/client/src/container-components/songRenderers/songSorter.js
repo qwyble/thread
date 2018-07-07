@@ -15,7 +15,7 @@ class SongSorter extends React.Component{
   state ={
     selectedSongs: [],
     _disabled: true,
-    descending: true,
+    descending: true
   }
 
 
@@ -42,7 +42,7 @@ class SongSorter extends React.Component{
   }
 
   handleSort = (sortBy) => {
-    var descending: true;
+    var descending;
 
     if(this.state.descending) descending = false;
     else descending = true;
@@ -65,12 +65,24 @@ class SongSorter extends React.Component{
               <Table.HeaderCell />
               <Table.HeaderCell>
                 Title
-                <Icon name='sort' onClick={() => this.handleSort('title')} />
+                <Icon name='sort' onClick={() => this.handleSort('songs.title')} />
               </Table.HeaderCell>
-              <Table.HeaderCell>Uploader</Table.HeaderCell>
-              <Table.HeaderCell>Rating</Table.HeaderCell>
-              <Table.HeaderCell>Genre</Table.HeaderCell>
-              <Table.HeaderCell>Date Uploaded</Table.HeaderCell>
+              <Table.HeaderCell>
+                Uploader
+                <Icon name='sort' onClick={() => this.handleSort('songs.owner')} />
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                Rating
+                <Icon name='sort' onClick={() => this.handleSort('songratings.rating')} />
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                Genre
+                <Icon name='sort' onClick={() => this.handleSort('songs.genres')} />
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                Date Uploaded
+                <Icon name='sort' onClick={() => this.handleSort('songs.dateUploaded')} />
+              </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -90,7 +102,7 @@ class SongSorter extends React.Component{
             <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
 
-              {window.location.pathname.includes('/playlist') ?
+              {path.includes('/playlist') ?
                 <ClonePortal
                   categories={this.props.categories}
                   selectedPlaylist={this.props.selectedPlaylist}
@@ -107,7 +119,7 @@ class SongSorter extends React.Component{
               />
 
 
-              <FollowContainer path={window.location.pathname} />
+              <FollowContainer path={path} />
 
 
               <RemoveSongFromPlaylist
@@ -119,7 +131,7 @@ class SongSorter extends React.Component{
                 isOwner={this.props.isOwner}
               />
 
-              {(this.props.isOwner && window.location.pathname === '/stream') ?
+              {(this.props.isOwner && path === '/stream') ?
                 <DeleteSongs
                   onRefresh={this.props.onRefresh}
                   selectedSongs={this.state.selectedSongs}

@@ -7,8 +7,6 @@ import axios from 'axios';
 class FetchCategories extends React.Component{
 
   state = {
-    err: '',
-    _loading: true,
     categories: [],
   }
 
@@ -35,7 +33,6 @@ class FetchCategories extends React.Component{
 
 
   getCats = () => {
-    this.setState({ _loading: true })
     axios({
       method: 'get',
       url: this.getUrl(),
@@ -54,7 +51,7 @@ class FetchCategories extends React.Component{
 
       this.props.setOwner(owner);
 
-      this.setState({categories: cats, _loading: false});
+      this.setState({categories: cats});
     });
   }
 
@@ -67,7 +64,6 @@ class FetchCategories extends React.Component{
         owner={this.props.owner}
         isOwner={this.props.isOwner}
         categories={this.state.categories}
-        _loading={this.state._loading}
       />
     )
   }

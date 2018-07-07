@@ -43,25 +43,36 @@ class SidebarLeftOverlay extends Component {
       <div>
         <div>
         <Sidebar.Pushable as={Segment} className='primaryContainer'>
-          <Sidebar inverted vertical icon='labeled' animation='push' width='thin' as={Menu}
-            visible={this.state.visible} >
+          <Sidebar
+            inverted vertical
+            width='thin' as={Menu}
+            icon='labeled' animation='push'
+            visible={this.state.visible}>
 
 
 
             <Menu.Item style={{color: '#54c8ff'}}>
-              {!this.props.isOwner ? <div>{this.props.owner.userName}'s playlists:</div> : <div>Your playlists:</div>}
+              {
+                !this.props.isOwner ?
+                <div>{this.props.owner.userName}'s playlists:</div>
+                : <div>Your playlists:</div>
+              }
             </Menu.Item>
 
 
 
             <CategoryMenuItem
-              categories={this.props.categories}
-              onSelectPlaylist={this.handleSelectPlaylist}
               getCats={this.props.getCats}
               isOwner={this.props.isOwner}
+              categories={this.props.categories}
+              onSelectPlaylist={this.handleSelectPlaylist}
             />
 
-            { this.props.isOwner ? <AddCategory getCats={this.props.getCats}/>  : <div></div> }
+            {
+              this.props.isOwner ?
+                <AddCategory getCats={this.props.getCats}/>
+                : <div></div>
+            }
 
           </Sidebar>
           <Sidebar.Pusher className='pusherContainer'>
@@ -69,15 +80,14 @@ class SidebarLeftOverlay extends Component {
             <Button inverted icon
               className='sidebarButton'
               attached='right' color='blue'
-              onClick={this.toggleVisibility}
-            >
+              onClick={this.toggleVisibility}>
               <Icon name={this.state.visible ? 'left arrow' : 'right arrow'}/>
             </Button>
 
             <WrappedPlaylistController
-              categories={this.props.categories}
               isPublic={this.state.isPublic}
               selectedPlaylist={this.state.selectedPlaylist}
+              categories={this.props.categories}
               refreshCategories={this.props.getCats}
             />
 

@@ -8,7 +8,9 @@ module.exports = function(app){
       ).then((data) => {
         if(data[0].isPublic){
           songs.getPubPlaylist(
-            req.params.playlist
+            req.params.playlist,
+            encodeURI(req.query.sortBy),
+            encodeURI(req.query.descending)
           ).then((data) => {
             console.log();
             res.status(200).send(data);
@@ -16,7 +18,9 @@ module.exports = function(app){
         }else{
           songs.getPrivPlaylist(
             req.params.playlist,
-            req.session.user.idUsers
+            req.session.user.idUsers,
+            encodeURI(req.query.sortBy),
+            encodeURI(req.query.descending)
           ).then((data) => {
             console.log();
             res.status(200).send(data);
@@ -28,7 +32,9 @@ module.exports = function(app){
 
   app.get('/stream', function(req, res){
     songs.getStream(
-      req.session.user.idUsers
+      req.session.user.idUsers,
+      encodeURI(req.query.sortBy),
+      encodeURI(req.query.descending)
     ).then((data) => {
       res.status(200).send(data);
     });

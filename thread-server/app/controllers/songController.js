@@ -1,11 +1,12 @@
 const {sequelize, Sequelize} = require('../db/dbConnect.js');
+var SqlString = require('sequelize/lib/sql-string');
 const Song = require('../models/song.js')(sequelize, Sequelize);
 const User = require('../models/user.js')(sequelize, Sequelize);
 
 
 module.exports = {
 
-  getStream: function(owner){
+  getStream: function(owner, sortBy, order){
   return (
     sequelize.query(
       `SELECT songs.*, users.userName, songratings.rating
@@ -14,15 +15,15 @@ module.exports = {
           ON songs.owner = users.idUsers
         LEFT JOIN songratings
           ON songs.idSongs = songratings.song
-          AND $1 = songratings.user
-      WHERE songs.owner = $1
+          AND ? = songratings.user
+      WHERE songs.owner = ?
         OR songs.owner IN (
           SELECT LeaderId FROM usersfollowersbridge
-          WHERE FollowerId = $1
+          WHERE FollowerId = ?
         )
-      ORDER BY songs.dateUploaded DESC
+      ORDER BY ${sortBy} ${order}
       LIMIT 40;`,{
-        bind: [owner],
+        replacements: [owner, owner, owner],
         type: sequelize.QueryTypes.SELECT
       }
     )
@@ -62,7 +63,7 @@ module.exports = {
     )
   },
 
-  getPubPlaylist: function(plid, owner){
+  getPubPlaylist: function(plid, sortBy, order){
     return (
       sequelize.query(
         `SELECT songs.*, users.userName, songratings.rating
@@ -74,15 +75,17 @@ module.exports = {
             AND users.idUsers = songratings.user
         WHERE songs.idSongs IN
           (SELECT song FROM songsplaylistsbridge WHERE
-          songsplaylistsbridge.playlist = ?);`, {
-            replacements: [plid, owner],
+          songsplaylistsbridge.playlist = ?)
+        ORDER BY ${sortBy} ${order}
+        LIMIT 20;`, {
+            replacements: [plid],
             type: sequelize.QueryTypes.SELECT
           }
       )
     )
   },
 
-  getPrivPlaylist: function(plid, owner){
+  getPrivPlaylist: function(plid, owner, sortBy, order){
     return (
       sequelize.query(
         `SELECT songs.*, users.userName, songratings.rating
@@ -100,7 +103,9 @@ module.exports = {
             FROM playlists
               INNER JOIN categories
                 ON playlists.category = categories.idcategories
-            WHERE categories.owner = ?));`, {
+            WHERE categories.owner = ?))
+        ORDER BY ${sortBy} ${order}
+        LIMIT 20;`, {
             replacements: [plid, owner],
             type: sequelize.QueryTypes.SELECT
           }

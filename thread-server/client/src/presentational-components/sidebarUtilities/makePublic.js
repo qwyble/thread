@@ -12,7 +12,7 @@ class MakePublic extends React.Component{
   static getDerivedStateFromProps(props, state){
     if (props.isPublic !== state.isPublic){
       return {isPublic: props.isPublic}
-    }
+    } else return {}
   }
 
 

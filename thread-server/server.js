@@ -16,10 +16,11 @@ app.use(bodyParser()); //get information from html forms
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({
-    origin: /.*/,
+    origin: 'http://localhost:3000',
     methods:['GET','POST'],
     credentials: true // enable set cookie
 }));
+
 
 //set up passport
 app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secret
