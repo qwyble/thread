@@ -1,6 +1,7 @@
 import React from 'react';
 import SidebarLeftOverlay from './sideBar.js';
 import axios from 'axios';
+import {Loader} from 'semantic-ui-react';
 
 
 
@@ -8,6 +9,7 @@ class FetchCategories extends React.Component{
 
   state = {
     categories: [],
+    _loading: false
   }
 
 
@@ -33,6 +35,7 @@ class FetchCategories extends React.Component{
 
 
   getCats = () => {
+    this.setState({_loading: true})
     axios({
       method: 'get',
       url: this.getUrl(),
@@ -51,21 +54,24 @@ class FetchCategories extends React.Component{
 
       this.props.setOwner(owner);
 
-      this.setState({categories: cats});
+      this.setState({categories: cats, _loading: false});
     });
   }
 
 
 
   render(){
-    return(
-      <SidebarLeftOverlay
-        getCats={this.getCats}
-        owner={this.props.owner}
-        isOwner={this.props.isOwner}
-        categories={this.state.categories}
-      />
-    )
+    if(this.state._loading)
+      return <Loader active />
+    else
+      return(
+        <SidebarLeftOverlay
+          getCats={this.getCats}
+          owner={this.props.owner}
+          isOwner={this.props.isOwner}
+          categories={this.state.categories}
+        />
+      )
   }
 }
 

@@ -20,7 +20,7 @@ class AppProvider extends React.Component{
 
 
   componentDidUpdate(){
-    if (!this.state.user){
+    if (this.state.user.idUsers !== this.props.user.idUsers){
       this.setState({user: this.props.user});
     }
     if (!this.state.owner){

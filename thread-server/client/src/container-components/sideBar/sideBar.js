@@ -38,7 +38,6 @@ class SidebarLeftOverlay extends Component {
   }
 
   render() {
-    console.log(this.props.isOwner);
     return (
       <div>
         <div>

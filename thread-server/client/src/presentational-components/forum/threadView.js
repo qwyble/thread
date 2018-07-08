@@ -25,9 +25,10 @@ const ThreadView = (props) => (
     </Segment>
 
     <Button onClick={props.onOpenComment}>Comment</Button>
+    <SubscribeToThread threadId={props.thread.idThreadPost} />
+    
     {props.isOwner ? <Button onClick={() => props.onDeleteThread(props.thread.idThreadPost)}>Delete Thread</Button> : <div></div>}
 
-      <SubscribeToThread threadId={props.thread.idThreadPost} />
 
   </div>
 

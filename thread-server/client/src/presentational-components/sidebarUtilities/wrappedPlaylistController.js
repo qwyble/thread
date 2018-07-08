@@ -10,6 +10,7 @@ const WrappedPlaylistController = (props) => (
         {...props}
         onSetSongs={context.onSetSongs}
         isOwner={context.isOwner}
+        url={window.location.pathname}
       />)}
     </AppContext.Consumer>
   </div>
