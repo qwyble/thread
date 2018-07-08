@@ -90,4 +90,11 @@ module.exports = function(app){
   })
 
 
+  app.get('/getForumFeed', function(req, res){
+    forums.getFeed(
+      req.session.user.idUsers
+    ).then((data) => res.status(200).send(data))
+  })
+
+
 }

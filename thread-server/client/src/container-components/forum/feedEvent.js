@@ -1,5 +1,6 @@
 import React from 'react';
 import {Feed, Icon} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 
 class FeedEvent extends React.Component{
 
@@ -8,15 +9,16 @@ class FeedEvent extends React.Component{
       <Feed.Event>
         <Feed.Content>
           <Feed.Summary>
-            <Feed.User>Elliot Fu</Feed.User> added you as a friend
-            <Feed.Date>1 Hour Ago</Feed.Date>
+            <Feed.User>{this.props.user}</Feed.User> commented in
+            <div>
+              <Link to={`/forum/thread/${this.props.threadId}`}>
+                {this.props.subject}
+              </Link>:              
+            </div>
+            <div>
+              "{this.props.body.slice(0, 40)}"
+            </div>
           </Feed.Summary>
-          <Feed.Meta>
-            <Feed.Like>
-              <Icon name='like' />
-              4 Likes
-            </Feed.Like>
-          </Feed.Meta>
         </Feed.Content>
       </Feed.Event>
     )

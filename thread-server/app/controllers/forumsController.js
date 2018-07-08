@@ -156,6 +156,25 @@ module.exports = {
         }
       )
     )
+  },
+
+
+  getFeed: function(user){
+    return(
+      sequelize.query(
+        `SELECT threadreplies.UserId, threadreplies.body, threadpost.subject, threadpost.idThreadPost, users.userName
+        FROM threadreplies
+          JOIN threadpost ON threadreplies.ThreadId = idThreadPost
+          JOIN threadsubs on threadsubs.ThreadId = idThreadPost
+          JOIN users ON idUsers = threadreplies.UserId
+        WHERE threadsubs.UserId = ?
+        ORDER BY threadreplies.date DESC
+        LIMIT 10;`, {
+          replacements: [user, user],
+          type: sequelize.QueryTypes.SELECT
+        }
+      )
+    )
   }
 
 
