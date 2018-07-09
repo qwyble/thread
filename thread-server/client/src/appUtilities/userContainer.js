@@ -6,13 +6,12 @@ import App from '../App.js';
 import axios from 'axios';
 import {Loader} from 'semantic-ui-react';
 import Logout from '../container-components/authentication/logout.js';
-import {AppProvider} from './context.js';
 
 class UserContainer extends React.Component{
   state={
     user: {},
     isLoggedIn: false,
-    isLoading: false
+    isLoading: true
   }
 
   //check with server to see if user is logged in
@@ -55,7 +54,6 @@ class UserContainer extends React.Component{
       )
     }
     return(
-      <AppProvider user={this.state.user}>
         <BrowserRouter>
             <div>
               <Switch>
@@ -81,7 +79,6 @@ class UserContainer extends React.Component{
               </Switch>
             </div>
         </BrowserRouter>
-      </AppProvider>
     )
   }
 }

@@ -84,6 +84,7 @@ class SidebarLeftOverlay extends Component {
             </Button>
 
             <WrappedPlaylistController
+              isOwner={this.props.isOwner}
               isPublic={this.state.isPublic}
               selectedPlaylist={this.state.selectedPlaylist}
               categories={this.props.categories}

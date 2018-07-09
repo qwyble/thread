@@ -9,33 +9,13 @@ const AppContext = React.createContext();
 
 class AppProvider extends React.Component{
   state = {
-    user: '',
     songs: [],
     nowPlaying: {},
     ended: false,
     paused: true,
-    isOwner: true,
-    owner: '',
   }
 
 
-  componentDidUpdate(){
-    if (this.state.user.idUsers !== this.props.user.idUsers){
-      this.setState({user: this.props.user});
-    }
-    if (!this.state.owner){
-      this.setState({owner: this.props.user})
-    }
-  }
-
-
-  handleSetOwner = (owner) => {
-    if (owner !== this.state.owner){
-      var isOwner = (owner.idUsers === this.state.user.idUsers);
-      console.log(owner, this.state.user.idUsers);
-      this.setState({owner, isOwner});
-    }
-  }
 
   handleSetSongs = (songs) => {
     this.setState({songs});
@@ -70,7 +50,6 @@ class AppProvider extends React.Component{
       onEnd: this.handleEnd,
       onPausing: this.handlePausing,
       onSetSongs: this.handleSetSongs,
-      onSetOwner: this.handleSetOwner
     }
 
     return (

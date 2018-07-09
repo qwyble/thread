@@ -1,6 +1,7 @@
 import React from 'react';
-import {AppContext} from './context.js';
+import {AppContext} from './ownerContext.js';
 import FetchCategories from '../container-components/sideBar/fetchCategories.js';
+import {Loader} from 'semantic-ui-react';
 
 //when the component mounts or updates,
 //if the profile being viewed has changed,
@@ -10,7 +11,7 @@ import FetchCategories from '../container-components/sideBar/fetchCategories.js'
 class RoutedContext extends React.Component{
 
   state={
-    profile: ''
+    profile: '',
   }
 
   componentDidMount(){
@@ -42,15 +43,23 @@ class RoutedContext extends React.Component{
 
   render(){
     return(
-      <AppContext.Consumer>{context => (
+      <AppContext.Consumer>{context => {
 
-        <FetchCategories
-          user={context.user}
-          owner={context.owner}
-          profile={this.state.profile}
-          isOwner={context.isOwner}
-          setOwner={context.onSetOwner}
-        />)}
+        if(context.user)
+        return(
+          <FetchCategories
+            user={context.user}
+            owner={context.owner}
+            profile={this.state.profile}
+            isOwner={context.isOwner}
+            setOwner={context.onSetOwner}
+          />
+        )
+        else
+        return(
+          <Loader active />
+        )        
+      }}
 
       </AppContext.Consumer>
 

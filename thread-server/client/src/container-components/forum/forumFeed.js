@@ -22,7 +22,6 @@ class ForumFeed extends React.Component{
       withCredentials: true
     }).then(result => {
       this.setState({feedEvents: result.data, _loading: false});
-      console.log(result.data);
     });
   }
 
