@@ -13,17 +13,16 @@ class PlaylistController extends React.Component{
   }
 
   componentDidMount(){
-    console.log('zxcv')
     this.getSongs()
   }
 
-/*
+
   componentDidUpdate(prevProps){
     if(this.props.url != prevProps.url){
       this.getSongs();
     }
   }
-  */
+
 
   getUrl = () => {
     if (window.location.pathname.length < 2)

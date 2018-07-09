@@ -9,7 +9,7 @@ class FetchCategories extends React.Component{
 
   state = {
     categories: [],
-    _loading: false
+    _loading: true
   }
 
 

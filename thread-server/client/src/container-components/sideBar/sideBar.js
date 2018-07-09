@@ -24,6 +24,7 @@ class SidebarLeftOverlay extends Component {
     }
   }
 
+
   static getDerivedStateFromProps(props, state){
     if(window.location.pathname === '/stream') return { selectedPlaylist: '' }
     else return {}
