@@ -1,7 +1,7 @@
 import React from 'react';
 import RenderAddCategory from '../../presentational-components/sidebarUtilities/renderAddCategory';
 import axios from 'axios';
-import {Loader} from 'semantic-ui-react';
+import {Loader, Button, Icon} from 'semantic-ui-react';
 
 
 
@@ -9,10 +9,10 @@ class AddCategory extends React.Component{
 
   state = {
     _loading: false,
-    err: '',
   }
 
   handleAddCategory = (cat) => {
+    if(!cat) return;
     this.setState({_loading: true});
     axios({
       method: 'post',
@@ -21,21 +21,23 @@ class AddCategory extends React.Component{
       withCredentials: true
     }).then((result) =>{
       this.props.getCats();
-      this.setState({_loading:false})
-    }).catch((err) => this.setState({err: err.response.data.err, _loading:false}))
+      this.setState({_loading:false, displayForm: false})
+    })
   }
 
 
   render(){
+
     return(
       <div>
         {this.state._loading ?
           <Loader active={true} /> :
-          <RenderAddCategory
-            err={this.err}
-            onAddCategory={this.handleAddCategory}
-            removeErr={() => this.setState({err: ''})}
-          />
+          <div>
+            <RenderAddCategory
+              onToggle={this.handleToggle}
+              onAddCategory={this.handleAddCategory}
+            />
+          </div>
         }
 
       </div>

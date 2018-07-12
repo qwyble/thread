@@ -9,7 +9,8 @@ class FetchCategories extends React.Component{
 
   state = {
     categories: [],
-    _loading: true
+    _loading: true,
+    initialRender: true
   }
 
 
@@ -54,18 +55,19 @@ class FetchCategories extends React.Component{
 
       this.props.setOwner(owner);
 
-      this.setState({categories: cats, _loading: false});
+      this.setState({categories: cats, _loading: false, initialRender: false});
     });
   }
 
 
 
   render(){
-    if(this.state._loading)
+    if(this.state._initialRender)
       return <Loader active />
     else
       return(
         <SidebarLeftOverlay
+          _loading={this.state.loading}
           getCats={this.getCats}
           owner={this.props.owner}
           isOwner={this.props.isOwner}

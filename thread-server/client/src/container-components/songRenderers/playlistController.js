@@ -32,11 +32,12 @@ class PlaylistController extends React.Component{
   }
 
   getSongs = (sortBy, descending) => {
+    console.log('get songs');
     this.setState({_loading: true});
 
     var url = this.getUrl();
     var _sortBy = sortBy ? sortBy : 'dateUploaded';
-    var _descending = descending ? 'DESC' : 'ASC';
+    var _descending = descending ? 'ASC' : 'DESC';
 
     songsGet(url, _sortBy, _descending).then((result) => {
       this.setState({songs: result.data, _loading: false});
@@ -57,7 +58,7 @@ class PlaylistController extends React.Component{
 
   render(){
     return(
-      <div>
+      <div className="SongSorter">
         <SongSorter
           {...this.state}
           {...this.props}

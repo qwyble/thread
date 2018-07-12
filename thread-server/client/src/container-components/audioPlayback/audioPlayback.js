@@ -1,18 +1,23 @@
 import React from 'react';
 import AudioRenderer from '../../presentational-components/audio/audioRenderer'
-import AppProvider from '../../appUtilities/context.js';
+import {AppContext} from '../../appUtilities/context.js';
 
 class AudioPlayback extends React.Component{
 
 
   render(){
     return(
-      <AudioRenderer
-        onEnd={this.props.onEnd}
-        song={this.props.nowPlaying}
-        paused={this.props.paused}
-        onAudioButton={this.props.onPausing}
-      />
+      <AppContext.Consumer>
+        {context =>
+          <AudioRenderer
+            onEnd={context.onEnd}
+            song={context.nowPlaying}
+            paused={context.paused}
+            onAudioButton={context.onPausing}
+            skipBack={context.skipBack}
+          />
+        }
+      </AppContext.Consumer>
     )
   }
 }

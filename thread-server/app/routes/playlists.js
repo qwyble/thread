@@ -31,7 +31,7 @@ module.exports = function(app){
       req.body.plid,
       req.body.catid,
       req.session.user.idUsers
-    )
+    ).then(() => res.status(200).send('ok'));
   }),
 
   app.get('/getPlaylists/:profile', function(req, res){

@@ -13,37 +13,16 @@ class AudioRenderer extends React.Component{
       percentPlayed: '0',
       duration: '0',
       currentTime: '0',
-      _icon: '',
       volume: .5
     }
   }
 
 
-  static getDerivedStateFromProps(props, state){
-    if(props.paused){
-      return{
-        _icon: "play",
-        paused: true
-      }
-    }else{
-      return{
-        _icon: "pause",
-        paused: false
-      }
-    }
-  }
-
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.getCurrentTime(), 300);
-  }
-
 
   componentDidUpdate(prevProps) {
-    clearInterval(this.interval);
-    this.interval = setInterval(() => this.getCurrentTime(), 300);
     if(prevProps.paused !== this.props.paused){
-      if(this.state.paused){
+      if(this.interval) clearInterval(this.interval);
+      if(this.props.paused){
         this.handlePause()
       }else{
         this.handlePlay();
@@ -58,6 +37,7 @@ class AudioRenderer extends React.Component{
 
 
   handlePlay = () => {
+    this.interval = setInterval(() => this.getCurrentTime(), 300);
     this.myRef.current.play();
   }
 
@@ -65,6 +45,7 @@ class AudioRenderer extends React.Component{
     this.myRef.current.pause();
     clearInterval(this.interval);
   }
+
 
   handleClick = () => {
     this.props.onAudioButton();
@@ -102,8 +83,9 @@ class AudioRenderer extends React.Component{
         myRef={this.myRef}
         URL={this.props.song.URL}
         onEnd={this.props.onEnd}
+        skipBack={this.props.skipBack}
         volume={this.state.volume}
-        _icon={this.state._icon}
+        _icon={this.props.paused ? 'play' : 'pause'}
         onClick={this.handleClick}
         percentPlayed={this.state.percentPlayed}
         currentTime={this.state.currentTime}

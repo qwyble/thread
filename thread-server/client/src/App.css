@@ -7,6 +7,7 @@
   opacity: .95;
 }
 
+
 .messagePortal{
   position: relative !important;
   margin: auto !important;
@@ -34,9 +35,17 @@
   background-color: rgba(255,255,255,0.6);
 }
 
+.fillerDiv{
+  background-color: rgba(0,0,0,1);
+  height: 10vh;
+}
+
 .ui.menu.topBar {
   z-index: 1000000;
   width: 100vw;
+  height: 7vh;
+  min-height: 30px !important;
+  max-height: 50px !important;
 }
 
 .ui.search > .results .result .image.searchImage{
@@ -96,7 +105,7 @@
 
 
 .primaryContainer{
-  height: 83vh !important;
+  height: 86vh !important;
 }
 
 
@@ -106,7 +115,8 @@
   color: #2bbbff !important;
   position: fixed;
   bottom: 0;
-  height: 8vh !important;
+  padding-bottom: 20px !important;
+  height: 50px !important;
   width: 100vw;
 }
 .ui.grid {
@@ -114,10 +124,7 @@
   margin-bottom: 0em !important;
 }
 
-.ui.grid.playerGrid{
-  margin-top: 1% !important;
-  margin-bottom: 3% !important;
-}
+
 
 .playerCol{
   color: #2bbbff !important;
@@ -172,12 +179,7 @@
   font-size: .5rem;
 }
 
-.ui.inverted.blue.button.button2{
-  width: 100%;
-  right: 0%;
-  height: 1cm;
-  padding-left: 0px;
-}
+
 
 .ui.labeled.icon.menu .item > .icon:not(.dropdown).button2{
   margin: 0 !important;

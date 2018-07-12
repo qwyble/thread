@@ -11,7 +11,7 @@ class FollowUser extends React.Component{
   state = {
     isOwner: false,
     isFollowing: true,
-    _loading: true
+    _loading: false
   }
 
   componentDidUpdate(prevProps, prevState){

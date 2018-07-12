@@ -11,7 +11,6 @@ class AppProvider extends React.Component{
   state = {
     songs: [],
     nowPlaying: {},
-    ended: false,
     paused: true,
   }
 
@@ -24,7 +23,6 @@ class AppProvider extends React.Component{
   handlePlaying = (song) => {
     this.setState({
       nowPlaying: song,
-      ended: false,
       paused: false});
   }
 
@@ -43,6 +41,16 @@ class AppProvider extends React.Component{
     else{ return }
   }
 
+  handleSkipBack = () => {
+    var currentId = this.state.nowPlaying.idSongs;
+    var index = this.state.songs.findIndex(function(song){ return song.idSongs === currentId; });
+
+    var prevSong = this.state.songs[index-1];
+
+    if(prevSong){ this.handlePlaying(prevSong); }
+    else{ this.handlePlaying(this.state.nowPlaying)}
+  }
+
 
   render() {
     const handlers = {
@@ -50,6 +58,7 @@ class AppProvider extends React.Component{
       onEnd: this.handleEnd,
       onPausing: this.handlePausing,
       onSetSongs: this.handleSetSongs,
+      skipBack: this.handleSkipBack
     }
 
     return (

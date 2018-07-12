@@ -52,7 +52,6 @@ class UploadHandlers extends React.Component{
     data.append('genres', this.state.songUploadFields.genre);
     data.append('URL', this.state.songUploadFields.songURL);
     this.setState({isLoading: true});
-    console.log(this.state.isLoading);
     axios({
       method: 'post',
       url: 'http://localhost:8080/uploadSong',
@@ -60,6 +59,7 @@ class UploadHandlers extends React.Component{
       withCredentials: true
     }).then((result) => {
       //access results....
+      console.log(result);
       this.reset();
     });
 

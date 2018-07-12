@@ -60,19 +60,18 @@ class SidebarLeftOverlay extends Component {
             </Menu.Item>
 
 
-
+            {this.props._loading ?
+            <Loader active />:
             <CategoryMenuItem
               getCats={this.props.getCats}
               isOwner={this.props.isOwner}
               categories={this.props.categories}
               onSelectPlaylist={this.handleSelectPlaylist}
-            />
+            />}
 
-            {
-              this.props.isOwner ?
-                <AddCategory getCats={this.props.getCats}/>
-                : <div></div>
-            }
+            {this.props.isOwner ?
+            <AddCategory getCats={this.props.getCats}/>
+            : <div></div>}
 
           </Sidebar>
           <Sidebar.Pusher className='pusherContainer'>

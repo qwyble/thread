@@ -59,7 +59,10 @@ songFileToBucket = (req, res, next, fin) => {
     var url = '';
     const gcsname = uuidv4() + file.originalname;
     file2 = myBucket.file(gcsname);
-    const stream = file2.createWriteStream({metadata: {contentType: file.mimetype}});
+    const stream = file2.createWriteStream({
+      metadata: {contentType: file.mimetype},
+      gzip: true
+    });
     stream.on('error', (err) => {
       file.cloudStorageError = err;
       next(err);

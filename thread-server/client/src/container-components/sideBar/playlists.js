@@ -13,7 +13,6 @@ class Playlists extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      playlists: [],
       renderAlert: false,
       displayLists: false,
       _loading: false
@@ -22,13 +21,6 @@ class Playlists extends React.Component{
 
   componentDidMount(){
     this.setState({displayLists: false});
-  }
-
-
-  static getDerivedStateFromProps(props, state){
-    if(props.playLists !== state.playlists){
-      return { playlists: props.playLists, _loading: false}
-    } else return {}
   }
 
 
@@ -56,17 +48,17 @@ class Playlists extends React.Component{
         url: 'http://localhost:8080/addPlaylist',
         data: data,
         withCredentials: true
-      }).then((result) => this.getPlaylists());
+      }).then((result) => {
+        this.getPlaylists()
+        this.setState({_loading: false})
+      });
     }
   }
 
 
 
   handleDeleteList = (e) => {
-    var id = parseInt(e.target.id, 10);
-    this.setState((prevState) => ({
-      playlists: prevState.playlists.filter((v, i) => v.plid !== id)
-    }));
+    this.setState({_loading: true});
 
     var data = {};
     data['catid'] = this.props.id;
@@ -77,11 +69,15 @@ class Playlists extends React.Component{
       url: 'http://localhost:8080/deletePlaylist',
       data: data,
       withCredentials: true
-    }).then((result) => this.getPlaylists());
+    }).then((result) => {
+      this.getPlaylists();
+      this.setState({_loading: false})
+    });
   }
 
 
   render(){
+    console.log(this.props.playLists);
     return(
       <div>
         <div>
@@ -122,7 +118,7 @@ class Playlists extends React.Component{
           <PlaylistList
             isOwner={this.props.isOwner}
             displayLists={this.state.displayLists}
-            playlists={this.state.playlists}
+            playlists={this.props.playLists}
             _loading={this.state._loading}
             onSelectPlaylist={this.props.onSelectPlaylist}
             onDeleteList={this.handleDeleteList}

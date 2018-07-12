@@ -18,7 +18,15 @@ class UploadDropdown extends React.Component{
               </Modal.Description>
               {this.props._loading ?
                 <Dimmer active>
-                  <Loader size='massive' />
+                  <div>
+                    <Loader size='massive' />
+                  </div>
+                  <div>
+                    <Segment style={{color: 'black'}}>
+                      Your song is being uploaded.
+                      You may continue to browse during the process.
+                    </Segment>
+                  </div>
                 </Dimmer>:<div></div>
               }
               <div>

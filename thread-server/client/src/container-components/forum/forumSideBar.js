@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu, Icon } from 'semantic-ui-react';
 import CategoryMenuItem from '../../presentational-components/sidebarUtilities/categoryMenuItem.js';
-import AddCategory from '../../presentational-components/sidebarUtilities/addCategory.js';
 import ForumGrid from '../forum/forumGrid.js';
 import ForumCategories from './forumCategories';
 

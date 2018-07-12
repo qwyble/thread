@@ -13,7 +13,6 @@ import ProfileContainer from './container-components/profiles/profileContainer.j
 import Following from './container-components/follower/following.js';
 import Followers from './container-components/follower/followers.js';
 import MessagesContainer from './container-components/messages/messagesContainer.js';
-import {AppContext} from './appUtilities/context.js';
 import ChatToggle from './presentational-components/chat/chatToggle.js';
 
 
@@ -29,9 +28,11 @@ class App extends Component {
     return (
       <div>
         <div>
+
           <div>
             <SidebarTopOverlay logo={logo}/>
           </div>
+
           <div>
             <Switch>
               <Route path='/messages' component={MessagesContainer} />
@@ -48,19 +49,11 @@ class App extends Component {
             </Switch>
           </div>
 
-          <ChatToggle />
+
+            <ChatToggle />
 
           <div>
-            <AppContext.Consumer>
-              {context =>
-                <AudioPlayback
-                  onEnd={context.onEnd}
-                  nowPlaying={context.nowPlaying}
-                  paused={context.paused}
-                  onPausing={context.onPausing}
-                />
-              }
-            </AppContext.Consumer>
+            <AudioPlayback />
           </div>
 
         </div>

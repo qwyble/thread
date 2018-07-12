@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Icon, Input, Form} from 'semantic-ui-react';
+import RenderAddPlaylist from './renderAddPlaylist.js';
 
 /* renders either 'add playlist' button
 or form to add playlist */
@@ -8,7 +9,7 @@ class AddPlaylist extends React.Component{
   state = {
     openForm: false,
     toggleSubmit: true,
-    playListToAdd: ''
+    playlistToAdd: ''
   }
 
   handleOpenForm = () => {
@@ -40,31 +41,23 @@ class AddPlaylist extends React.Component{
           className='button2'
           inverted fluid color='blue'
           size='mini'
-          icon
           onClick={this.handleOpenForm}
         >
           <Icon name={this.state.openForm ? 'minus' : 'plus'}/>
+          Playlist
         </Button>
-        {this.state.openForm ?
+
           <div>
-            <Form onSubmit={() => {
-              this.props.onFormSubmit(this.state.playlistToAdd);
-              this.handleOpenForm();
-            }}>
-              <Input
-                size='mini'
-                placeholder='watcha feelin?'
-                value={this.props.playlistToAdd}
-                onChange={this.handleInputChange}>
-              </Input>
-              <Button size='mini' disabled={this.state.toggleSubmit}>
-                Add Playlist
-              </Button>
-            </Form>
+            <RenderAddPlaylist
+              openForm={this.state.openForm}
+              toggleSubmit={this.state.toggleSubmit}
+              onOpenForm={this.handleOpenForm}
+              onInputChange={this.handleInputChange}
+              onFormSubmit={this.props.onFormSubmit}
+              playlistToAdd={this.state.playlistToAdd}
+            />
           </div>
-          :
-          <div></div>
-        }
+
       </div>
 
     )
