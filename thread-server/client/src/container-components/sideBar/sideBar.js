@@ -39,6 +39,7 @@ class SidebarLeftOverlay extends Component {
   }
 
   render() {
+    //console.log('sidebar');
     return (
       <div>
         <div>
@@ -49,29 +50,37 @@ class SidebarLeftOverlay extends Component {
             icon='labeled' animation='push'
             visible={this.state.visible}>
 
+            {this.props.owner ?
+              <Menu.Item style={{color: '#54c8ff'}}>
+                {
+                  !this.props.isOwner ?
+                  <div>{this.props.owner.userName}'s playlists:</div>
+                  : <div>Your playlists:</div>
+                }
+              </Menu.Item>
+              :
+              <div></div>
+            }
 
-
-            <Menu.Item style={{color: '#54c8ff'}}>
-              {
-                !this.props.isOwner ?
-                <div>{this.props.owner.userName}'s playlists:</div>
-                : <div>Your playlists:</div>
-              }
-            </Menu.Item>
 
 
             {this.props._loading ?
-            <Loader active />:
-            <CategoryMenuItem
-              getCats={this.props.getCats}
-              isOwner={this.props.isOwner}
-              categories={this.props.categories}
-              onSelectPlaylist={this.handleSelectPlaylist}
-            />}
+              <Loader active />:
+              <div>
+                <CategoryMenuItem
+                  getCats={this.props.getCats}
+                  isOwner={this.props.isOwner}
+                  categories={this.props.categories}
+                  onSelectPlaylist={this.handleSelectPlaylist}
+                />
+                <div>
+                  {this.props.isOwner ?
+                    <AddCategory getCats={this.props.getCats}/>
+                    : <div></div>}
+                  </div>
+              </div>
+            }
 
-            {this.props.isOwner ?
-            <AddCategory getCats={this.props.getCats}/>
-            : <div></div>}
 
           </Sidebar>
           <Sidebar.Pusher className='pusherContainer'>

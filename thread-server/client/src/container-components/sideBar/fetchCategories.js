@@ -9,6 +9,7 @@ class FetchCategories extends React.Component{
 
   state = {
     categories: [],
+    owner: '',
     _loading: true,
     initialRender: true
   }
@@ -36,27 +37,29 @@ class FetchCategories extends React.Component{
 
 
   getCats = () => {
-    this.setState({_loading: true})
-    axios({
-      method: 'get',
-      url: this.getUrl(),
-      withCredentials: true
-    }).then((categories) => {
-      var catpls = categories.data.cats;
-      var cats = Object.values(
-        catpls.reduce( (cats, {catname, catid, plname, plid, isPublic}) => {
-          if (! (catid in cats) ) { cats[catid] = {catname, catid, pls: []}; }
-          if (plid) { cats[catid].pls.push({plname, plid, isPublic}); }
-          return cats;
-        }, {})
-      )
+    this.setState({_loading: true, owner: ''}, () => {
+      axios({
+        method: 'get',
+        url: this.getUrl(),
+        withCredentials: true
+      }).then((categories) => {
+        var catpls = categories.data.cats;
+        var cats = Object.values(
+          catpls.reduce( (cats, {catname, catid, plname, plid, isPublic}) => {
+            if (! (catid in cats) ) { cats[catid] = {catname, catid, pls: []}; }
+            if (plid) { cats[catid].pls.push({plname, plid, isPublic}); }
+            return cats;
+          }, {})
+        )
 
         var owner = categories.data.owner[0]
 
-      this.props.setOwner(owner);
+        this.props.setOwner(owner);
 
-      this.setState({categories: cats, _loading: false, initialRender: false});
-    });
+        this.setState({categories: cats, owner: owner, _loading: false, initialRender: false});
+      });
+
+    })
   }
 
 
@@ -67,9 +70,9 @@ class FetchCategories extends React.Component{
     else
       return(
         <SidebarLeftOverlay
-          _loading={this.state.loading}
+          _loading={this.state._loading}
           getCats={this.getCats}
-          owner={this.props.owner}
+          owner={this.state.owner}
           isOwner={this.props.isOwner}
           categories={this.state.categories}
         />

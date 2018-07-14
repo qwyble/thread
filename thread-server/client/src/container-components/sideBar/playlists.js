@@ -77,7 +77,7 @@ class Playlists extends React.Component{
 
 
   render(){
-    console.log(this.props.playLists);
+
     return(
       <div>
         <div>

@@ -53,7 +53,14 @@ class AudioRenderer extends React.Component{
 
   handleVolume = (e) => {
     var volume = e.target.value / 100;
+    this.myRef.current.volume = volume;
     this.setState({volume})
+  }
+
+  handleSongPosition = (e) => {
+    var percentMarker = e.target.value / 100;
+    var newPosition = this.myRef.current.duration * percentMarker;
+    this.myRef.current.fastSeek(newPosition);
   }
 
   getMinSec= (time) =>{
@@ -81,16 +88,20 @@ class AudioRenderer extends React.Component{
     return(
       <AudioPlayer
         myRef={this.myRef}
-        URL={this.props.song.URL}
-        onEnd={this.props.onEnd}
-        skipBack={this.props.skipBack}
-        volume={this.state.volume}
-        _icon={this.props.paused ? 'play' : 'pause'}
         onClick={this.handleClick}
-        percentPlayed={this.state.percentPlayed}
-        currentTime={this.state.currentTime}
-        duration={this.state.duration}
         onVolume={this.handleVolume}
+        onSongPosition={this.handleSongPosition}
+        volume={this.state.volume}
+        duration={this.state.duration}
+        currentTime={this.state.currentTime}
+        percentPlayed={this.state.percentPlayed}
+        onEnd={this.props.onEnd}
+        songs={this.props.songs}
+        URL={this.props.song.URL}
+        skipBack={this.props.skipBack}
+        nowPlaying={this.props.nowPlaying}
+        onPlaying={this.props.onPlaying}
+        _icon={this.props.paused ? 'play' : 'pause'}
       />
     )
   }

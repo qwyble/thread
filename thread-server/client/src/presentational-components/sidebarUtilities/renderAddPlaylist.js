@@ -21,7 +21,7 @@ class RenderAddPlaylist extends React.Component{
 
 
   render(){
-    console.log(this.props.playlistToAdd)
+
     const className = {
       entering: 'listSidebar displayed',
       entered: 'listSidebar displayed',

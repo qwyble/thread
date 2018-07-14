@@ -31,8 +31,7 @@ class RoutedContext extends React.Component{
       }
     } else if (this.props.match.path === '/stream' || this.props.match.path === '/edit'){
       if(this.state.profile !== ''){
-        var profile = ''
-        this.setState({profile: profile})
+        this.setState({profile: ''})
       }
     }
   }
@@ -46,19 +45,18 @@ class RoutedContext extends React.Component{
       <AppContext.Consumer>{context => {
 
         if(context.user)
-        return(
-          <FetchCategories
-            user={context.user}
-            owner={context.owner}
-            profile={this.state.profile}
-            isOwner={context.isOwner}
-            setOwner={context.onSetOwner}
-          />
-        )
+          return(
+            <FetchCategories
+              user={context.user}
+              profile={this.state.profile}
+              isOwner={context.isOwner}
+              setOwner={context.onSetOwner}
+            />
+          )
         else
-        return(
-          <Loader active />
-        )        
+          return(
+            <Loader active />
+          )
       }}
 
       </AppContext.Consumer>

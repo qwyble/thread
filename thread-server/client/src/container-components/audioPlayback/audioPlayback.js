@@ -15,6 +15,9 @@ class AudioPlayback extends React.Component{
             paused={context.paused}
             onAudioButton={context.onPausing}
             skipBack={context.skipBack}
+            songs={context.songs}
+            nowPlaying={context.nowPlaying}
+            onPlaying={context.onPlaying}
           />
         }
       </AppContext.Consumer>

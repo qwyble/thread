@@ -32,7 +32,6 @@ class PlaylistController extends React.Component{
   }
 
   getSongs = (sortBy, descending) => {
-    console.log('get songs');
     this.setState({_loading: true});
 
     var url = this.getUrl();

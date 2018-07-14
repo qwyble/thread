@@ -106,17 +106,18 @@
 
 .primaryContainer{
   height: 86vh !important;
+  margin: 0 !important;
 }
 
 
 .audioContainer{
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.9) !important;
+  background-color: rgba(0, 0, 0, .9) !important;
   color: #2bbbff !important;
   position: fixed;
   bottom: 0;
   padding-bottom: 20px !important;
-  height: 50px !important;
+  height: 55px !important;
   width: 100vw;
 }
 .ui.grid {
