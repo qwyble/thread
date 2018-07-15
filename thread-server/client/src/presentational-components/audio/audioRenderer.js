@@ -60,7 +60,9 @@ class AudioRenderer extends React.Component{
   handleSongPosition = (e) => {
     var percentMarker = e.target.value / 100;
     var newPosition = this.myRef.current.duration * percentMarker;
-    this.myRef.current.fastSeek(newPosition);
+    if(newPosition){
+      this.myRef.current.fastSeek(newPosition);
+    }
   }
 
   getMinSec= (time) =>{

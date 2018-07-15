@@ -45,25 +45,31 @@ class AudioPlayer extends React.Component{
                 </div>
 
               </Grid.Column>
+                  <Grid.Column width={2}>
 
-              <Grid.Column width={2}>
+                    <Button inverted color='blue' icon='angle double left' onClick={this.props.skipBack}/>
 
-                <Button inverted color='blue' icon='angle double left' onClick={this.props.skipBack}/>
+                    <Button size='mini' inverted color='blue'
+                      icon={this.props._icon}
+                      onClick={this.props.onClick}>
+                    </Button>
 
-                <Button size='mini' inverted color='blue'
-                   icon={this.props._icon}
-                  onClick={this.props.onClick}>
-                </Button>
+                    <Button inverted color='blue' icon='angle double right' onClick={this.props.onEnd}/>
 
-                <Button inverted color='blue' icon='angle double right' onClick={this.props.onEnd}/>
+                  </Grid.Column>
 
-              </Grid.Column>
-              <Grid.Column>
-                {this.props.currentTime} / {this.props.duration}
-              </Grid.Column>
-              <Grid.Column className='playerCol' width={9}>
-                <input type='range' min='1' max='100' value={this.props.percentPlayed} className='songslider' onChange={this.props.onSongPosition}/>
-              </Grid.Column>
+
+                  <Grid.Column>
+                    {this.props.currentTime} / {this.props.duration}
+                  </Grid.Column>
+
+
+                  <Grid.Column className='playerCol' width={9}>
+                    <input type='range' min='1' max='100' value={this.props.percentPlayed} className='songslider' onChange={this.props.onSongPosition}/>
+                  </Grid.Column>
+
+
+
               <Grid.Column width={2}>
 
                 <Popup trigger={<Icon name='volume up' />} hoverable style={{backgroundColor: 'rgba(0,0,0, .2)', borderStyle: 'none'}}>
