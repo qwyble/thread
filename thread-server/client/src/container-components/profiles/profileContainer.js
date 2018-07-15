@@ -41,7 +41,7 @@ class ProfileContainer extends React.Component{
 
 
   render(){
-    console.log(this.state.user);
+
     return(
       <div>
         <Container className='songInfoContainer'>

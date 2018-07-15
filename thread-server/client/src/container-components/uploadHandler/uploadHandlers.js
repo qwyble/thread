@@ -59,7 +59,7 @@ class UploadHandlers extends React.Component{
       withCredentials: true
     }).then((result) => {
       //access results....
-      console.log(result);
+      
       this.reset();
     });
 

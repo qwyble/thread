@@ -34,7 +34,7 @@ class DropdownComponent extends React.Component{
         searchString: searchString
       }
     }).then(result => {
-      console.log(result.data);
+    
       var users = [];
       users = result.data.map((user, i) => {
         return {

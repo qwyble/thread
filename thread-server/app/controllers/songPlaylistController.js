@@ -9,7 +9,7 @@ module.exports = {
       songsList.push([songs[i], playlist])
     }
     var insert = songsList;
-    console.log(insert);
+
     return (
       sequelize.query(
         `INSERT IGNORE INTO songsplaylistsbridge (song, playlist)

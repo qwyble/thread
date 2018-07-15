@@ -94,7 +94,7 @@ class Composer extends React.Component{
 
 
   render(){
-    console.log(this.state.message.recipient);
+  
     return(
       <Container>
 

@@ -14,7 +14,6 @@ module.exports = function(app){
 
 
   app.post('/postThread', function(req,res){
-    console.log(req.body.date);
     forums.postThread(
       req.body.category,
       req.body.subject,

@@ -10,12 +10,12 @@ class RenderAddPlaylist extends React.Component{
   }
 
   handleEnter = () => {
-    console.log('test')
-    this.setState({_renderAdd: true}, () => console.log(this.state._renderAdd));
+
+    this.setState({_renderAdd: true});
   }
 
   handleExited = () => {
-    console.log('exited');
+
     this.setState({_renderAdd: false});
   }
 

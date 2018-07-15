@@ -74,7 +74,7 @@ songFileToBucket = (req, res, next, fin) => {
         url = file.cloudStoragePublicUrl;
         return url;
       }).then((url) => {
-        console.log('upload complete');
+  
         songMetaToDb(req, url, res, gcsname);
         fin()
       });

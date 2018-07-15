@@ -33,7 +33,7 @@ module.exports = function(app){
   });
 
   app.post('/deleteMessages', function(req, res){
-    console.log(req.body.messages)
+  
     messages.deleteMessages(
       req.session.user.idUsers,
       req.body.messages

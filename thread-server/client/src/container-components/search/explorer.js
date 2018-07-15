@@ -25,7 +25,7 @@ class Explorer extends React.Component{
 
 
   handleInputChange = (e) => {
-    console.log(e.target.value);
+
     var searchString = (e.target.value.length < 1) ? '%' : e.target.value;
     this.setState({searchString: searchString, _loading: true}, () => {
       this.getSearch();

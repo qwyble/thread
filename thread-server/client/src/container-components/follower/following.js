@@ -20,7 +20,6 @@ class Following extends React.Component{
       url: 'http://localhost:8080/getFollowing',
       withCredentials: true
     }).then(result => {
-      console.log(result.data);
       this.setState({users: result.data});
     })
   }

@@ -88,7 +88,6 @@ module.exports = function(app){
       req.body.plToClone
     ).then((result) => {
       songsList = result;
-      console.log(songsList);
       playlist.addPlaylist(
         req.body.selectedCat,
         req.body.plname

@@ -12,7 +12,6 @@ module.exports = function(app){
             encodeURI(req.query.sortBy),
             encodeURI(req.query.descending)
           ).then((data) => {
-            console.log();
             res.status(200).send(data);
           });
         }else{
@@ -22,7 +21,6 @@ module.exports = function(app){
             encodeURI(req.query.sortBy),
             encodeURI(req.query.descending)
           ).then((data) => {
-            console.log();
             res.status(200).send(data);
           });
         }
@@ -58,7 +56,6 @@ module.exports = function(app){
   });
 
   app.get('/getSong', function(req,res){
-    console.log(req.query);
     songs.getSong(
       req.query.songId
     ).then(data => res.status(200).send(data));

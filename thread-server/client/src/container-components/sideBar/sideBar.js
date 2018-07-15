@@ -41,7 +41,7 @@ class SidebarLeftOverlay extends Component {
   }
 
   render() {
-    console.log(this.state.selectedPlaylist);
+    
     return (
       <div>
         <div>

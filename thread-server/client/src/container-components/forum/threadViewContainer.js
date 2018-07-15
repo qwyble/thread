@@ -43,7 +43,6 @@ class ThreadViewContainer extends React.Component{
   }
 
   handleDeleteThread = (id) => {
-    console.log(id);
     axios({
       method: 'post',
       url: 'http://localhost:8080/deleteThread',
