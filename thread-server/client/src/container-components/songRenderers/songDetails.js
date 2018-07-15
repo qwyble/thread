@@ -1,12 +1,15 @@
 import React from 'react';
-import {Header, Container, Grid} from 'semantic-ui-react';
+import {Header, Container, Grid, Icon} from 'semantic-ui-react';
 import axios from 'axios';
+import {AppContext} from '../../appUtilities/context.js';
+import PlaylistPortal from './playlistPortal.js';
 
 
 class SongDetails extends React.Component{
 
   state={
-    song: {}
+    song: {},
+    playing: false
   }
 
   componentDidMount(){
@@ -19,7 +22,13 @@ class SongDetails extends React.Component{
     }).then(result => this.setState({song: result.data[0]}))
   }
 
+  handleToggle = () => {
+    if(this.state.playing) this.setState({playing: false});
+    else this.setState({playing: true});
+  }
+
   render(){
+
     var song = this.state.song;
     return(
       <div>
@@ -31,25 +40,37 @@ class SongDetails extends React.Component{
             textAlign='center'
             colums={4}>
             <Grid.Row>
+              <Grid.Column width={2}>
+
+                <AppContext.Consumer>{(context) => (
+                  <Icon size='huge' name={this.state.playing ? 'pause' : 'play'} onClick={() => {context.onPlaying(song); this.handleToggle()}} />
+                )}
+              </AppContext.Consumer>
+
+
+            </Grid.Column>
               <Grid.Column width={4}>
                 <Header>Title</Header>
                 {song.title}
               </Grid.Column>
               <Grid.Column width={4}>
                 <Header>Uploader</Header>
-                {song.owner}
+                {song.userName}
               </Grid.Column>
               <Grid.Column width={4}>
-                <Header>Included in _ Playlists</Header>
+                <Header>Included in {song.playlists} Playlist(s)</Header>
               </Grid.Column>
-              <Grid.Column width={4}>
+
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column stretched>
                 <Header>Description</Header>
                 {song.description}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-
+                <PlaylistPortal selectedSongs={[song.idSongs]}/>
               </Grid.Column>
             </Grid.Row>
           </Grid>

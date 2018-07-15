@@ -2,7 +2,7 @@ import React from 'react';
 import {Table, Loader, Icon} from 'semantic-ui-react';
 import PlaylistPortal from './playlistPortal.js';
 import {AppContext} from '../../appUtilities/context.js';
-import ClonePortal from '../../presentational-components/sidebarUtilities/clonePortal.js';
+import RenderClonePortal from '../../presentational-components/sidebarUtilities/renderClonePortal.js';
 import WrappedSongRows from '../../presentational-components/sidebarUtilities/wrappedSongRows.js';
 import RemoveSongFromPlaylist from '../../presentational-components/sidebarUtilities/removeSongFromPlaylist.js';
 import MakePublic from '../../presentational-components/sidebarUtilities/makePublic.js';
@@ -103,8 +103,7 @@ class SongSorter extends React.Component{
             <Table.HeaderCell colSpan='4'>
 
               {path.includes('/playlist') ?
-                <ClonePortal
-                  categories={this.props.categories}
+                <RenderClonePortal
                   selectedPlaylist={this.props.selectedPlaylist}
                   refreshCategories={this.props.refreshCategories}
                 />

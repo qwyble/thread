@@ -8,7 +8,7 @@ class RenderAddCategory extends React.Component{
 
   state = {
     categoryToAdd: '',
-    err: '',
+    err: this.props.err,
     displayForm: false,
     renderForm: false
   }
@@ -16,7 +16,7 @@ class RenderAddCategory extends React.Component{
   handleInputChange = (e) => {
     var value = e.target.value;
 
-    this.setState({categoryToAdd: value});
+    this.setState({categoryToAdd: value, err: ''});
   }
 
 
@@ -85,6 +85,12 @@ class RenderAddCategory extends React.Component{
                     </Form>
                   </div>
                 :
+                <div></div>
+              }
+              {this.props.err ?
+                <Button fluid icon inverted size='mini' color='blue'>
+                  {this.props.err}
+                </Button> :
                 <div></div>
               }
               </div>

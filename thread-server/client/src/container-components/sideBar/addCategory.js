@@ -9,20 +9,22 @@ class AddCategory extends React.Component{
 
   state = {
     _loading: false,
+    err: ''
   }
 
   handleAddCategory = (cat) => {
     if(!cat) return;
-    this.setState({_loading: true});
+    this.setState({_loading: true, err: ''});
     axios({
       method: 'post',
       url: 'http://localhost:8080/addCategory',
       data: { category: cat },
       withCredentials: true
     }).then((result) =>{
-      this.props.getCats();
-      this.setState({_loading:false, displayForm: false})
-    })
+      this.setState({_loading:false, displayForm: false}, () => {
+        this.props.getCats();
+      })
+    }).catch((err) => this.setState({_loading: false, err: 'category name must be unique'}));
   }
 
 
@@ -30,14 +32,16 @@ class AddCategory extends React.Component{
 
     return(
       <div>
+        <div>
+          <RenderAddCategory
+            onToggle={this.handleToggle}
+            onAddCategory={this.handleAddCategory}
+            err={this.state.err}
+          />
+        </div>
         {this.state._loading ?
           <Loader active={true} /> :
-          <div>
-            <RenderAddCategory
-              onToggle={this.handleToggle}
-              onAddCategory={this.handleAddCategory}
-            />
-          </div>
+          <div></div>
         }
 
       </div>

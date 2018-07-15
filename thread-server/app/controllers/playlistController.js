@@ -8,7 +8,10 @@ module.exports = {
     return (
       sequelize.query(
         `INSERT INTO categories (name, owner, isPublic)
-        VALUES ("${category}", ${owner}, 0);`
+        VALUES (?, ?, 0);`, {
+          replacements: [category, owner],
+          type: sequelize.QueryTypes.INSERT
+        }
       )
     )
   },
@@ -17,7 +20,10 @@ module.exports = {
     return(
       sequelize.query(
         `DELETE FROM categories
-        WHERE categories.idcategories = "${catid}" AND categories.owner=${owner};`
+        WHERE categories.idcategories = ? AND categories.owner=?;`, {
+          replacements: [catid, owner],
+          type: sequelize.QueryTypes.DELETE
+        }
       )
     )
   },
@@ -26,8 +32,11 @@ module.exports = {
     return(
       sequelize.query(
         `UPDATE categories
-        SET name = "${name}"
-        WHERE idcategories = "${catid}" AND owner=${owner};`
+        SET name = ?
+        WHERE idcategories = ? AND owner=?;`, {
+          replacements: [name, catid, owner],
+          type: sequelize.QueryTypes.UPDATE
+        }
       )
     )
   },
@@ -36,7 +45,8 @@ module.exports = {
     return (
       sequelize.query(
         `INSERT INTO playlists (name, category)
-        VALUES ("${playlist}", ${catid});`,{
+        VALUES (?, ?);`,{
+          replacements: [playlist, catid],
           type: sequelize.QueryTypes.INSERT
         }
       )
@@ -48,7 +58,10 @@ module.exports = {
     return(
       sequelize.query(
         `DELETE FROM playlists
-        WHERE idplaylists = "${plid}" AND category = ${catid};`
+        WHERE idplaylists = ? AND category = ?;`, {
+          replacements: [plid, catid],
+          type: sequelize.QueryTypes.DELETE
+        }
       )
     )
   },
@@ -80,7 +93,8 @@ module.exports = {
           FROM categories
             LEFT JOIN playlists
               ON categories.idcategories = playlists.category
-          WHERE categories.owner = ${user};`, {
+          WHERE categories.owner = ?;`, {
+            replacements: [user],
             type: sequelize.QueryTypes.SELECT
           })
         )
@@ -96,8 +110,9 @@ module.exports = {
           FROM categories
             LEFT JOIN playlists
               ON categories.idcategories = playlists.category
-          WHERE categories.owner = ${profile}
+          WHERE categories.owner = ?
             AND playlists.isPublic = 1;`, {
+            replacements: [profile],
             type: sequelize.QueryTypes.SELECT
           }
         )
@@ -156,6 +171,20 @@ module.exports = {
         VALUES ?`,{
           replacements: [songs],
           type: sequelize.QueryTypes.INSERT
+        }
+      )
+    )
+  },
+
+
+  getCatsOnly: function(user){
+    return(
+      sequelize.query(
+        `SELECT categories.*
+        FROM categories
+        WHERE owner = ?`, {
+          replacements: [user],
+          type: sequelize.QueryTypes.SELECT
         }
       )
     )

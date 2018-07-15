@@ -88,6 +88,7 @@ module.exports = function(app){
       req.body.plToClone
     ).then((result) => {
       songsList = result;
+      console.log(songsList);
       playlist.addPlaylist(
         req.body.selectedCat,
         req.body.plname
@@ -99,6 +100,12 @@ module.exports = function(app){
         ).then((result) => {res.status(200).send('ok')});
       });
     });
+  });
+
+  app.get('/getCatsOnly', function(req, res){
+    playlist.getCatsOnly(
+      req.session.user.idUsers
+    ).then((result) => {res.status(200).send(result)});
   });
 
 

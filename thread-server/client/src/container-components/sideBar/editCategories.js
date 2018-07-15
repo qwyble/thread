@@ -9,7 +9,6 @@ class EditCategories extends React.Component {
   }
 
   handleCategoryDelete = (id) => {
-    this.setState({_loading: true});
     axios({
       method: 'post',
       url: 'http://localhost:8080/deleteCategory',

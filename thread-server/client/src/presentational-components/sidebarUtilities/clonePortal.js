@@ -8,6 +8,7 @@ class ClonePortal extends React.Component{
 
   state={
     plToClone: '',
+    categories: [],
     selectedCatId: '',
     selectedCatName: '',
     plname: '',
@@ -22,6 +23,10 @@ class ClonePortal extends React.Component{
     if(props.selectedPlaylist !== state.selectedPlaylist){
       return { plToClone: props.selectedPlaylist }
     } else return {}
+  }
+
+  componentDidMount(){
+    this.getUserCats();
   }
 
 
@@ -66,11 +71,21 @@ class ClonePortal extends React.Component{
     this.setState({success: false});
   }
 
+  getUserCats = () => {
+    this.setState({_loading: true});
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/getCatsOnly',
+      withCredentials: true
+    }).then(result => this.setState({categories: result.data, _loading:false}));
+  }
+
 
   render(){
+
     return(
-      <Portal onClose={this.handlePortalClose} trigger={<Button onClick={this.getUserCats} size='mini' content="Clone Playlist"/>} >
-          <Segment style={{ width: '200px', position: 'fixed', left: '15%', bottom:'10%'}}>
+
+          <Segment inverted style={{ width: '200px', position: 'fixed', left: '15%', bottom:'10%'}}>
             {this.state._loading ? <Loader active={true} /> : <div></div>}
             {this.state.plToClone ?
 
@@ -80,12 +95,12 @@ class ClonePortal extends React.Component{
                     <Segment>
                       <Dropdown text={this.state.selectedCatName || 'Select Category: '}>
                         <Dropdown.Menu>
-                          {this.props.categories.map((cat, i) =>
+                          {this.state.categories.map((cat, i) =>
                             <Dropdown.Item
                               key={i}
                               onClick={this.handleCatSelect}
-                              value={cat.catid}
-                              text={cat.catname}
+                              value={cat.idcategories}
+                              text={cat.name}
                             />
                           )}
                         </Dropdown.Menu>
@@ -111,7 +126,7 @@ class ClonePortal extends React.Component{
               <div> {this.state.err} </div>
               : <div></div>}
             </Segment>
-      </Portal>
+
     )
   }
 }

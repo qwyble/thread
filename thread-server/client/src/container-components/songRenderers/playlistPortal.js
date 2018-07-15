@@ -66,8 +66,8 @@ class PlaylistPortal extends React.Component{
         </Button>
       } closeIcon>
         <Menu inverted size='mini'
-          style={{ maxHeight: '30vh', overflow: 'auto',
-          left: '22%', position: 'fixed', top: '50%', zIndex: 1000 }} >
+          style={{ maxHeight: '60vh', overflow: 'auto',
+          left: '40vw', position: 'fixed', top: '20vh', zIndex: 1000 }} >
           {this.state.categories.map((cat, key) => {
             return(
               <Menu.Item key={key}>

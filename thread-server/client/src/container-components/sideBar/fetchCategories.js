@@ -37,7 +37,7 @@ class FetchCategories extends React.Component{
 
 
   getCats = () => {
-    this.setState({_loading: true, owner: ''}, () => {
+    this.setState({_loading: true}, () => {
       axios({
         method: 'get',
         url: this.getUrl(),

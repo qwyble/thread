@@ -43,7 +43,9 @@ module.exports = function(app){
   app.get('/profile/:profile', function(req, res){
     songs.getProfile(
       req.params.profile,
-      req.session.user.idUsers
+      req.session.user.idUsers,
+      encodeURI(req.query.sortBy),
+      encodeURI(req.query.descending)
     ).then(data => res.status(200).send(data));
   });
 

@@ -30,7 +30,7 @@ module.exports = {
     )
   },
 
-  getProfile: function(profile, owner){
+  getProfile: function(profile, owner, sortBy, orderBy){
     return(
       sequelize.query(
         `SELECT songs.*, users.userName, songratings.rating
@@ -41,7 +41,7 @@ module.exports = {
             ON songs.idSongs = songratings.song
             AND songratings.user = $1
           WHERE songs.owner = $2
-          ORDER BY songs.dateUploaded DESC
+          ORDER BY ${sortBy} ${orderBy}
           LIMIT 40;`, {
             bind: [owner, profile],
             type: sequelize.QueryTypes.SELECT
@@ -117,7 +117,8 @@ module.exports = {
     return(
       sequelize.query(
         `REPLACE INTO songratings (rating, song, user)
-        values(${rating}, ${songId}, ${userId});`,{
+        values(?, ?, ?);`,{
+          replacements: [rating, songId, userId],
           type: sequelize.QueryTypes.REPLACE
         }
       )
@@ -127,10 +128,16 @@ module.exports = {
   getSong: function(songId){
     return(
       sequelize.query(
-        `SELECT songs.title, songs.description, songs.owner, songs.genres
+        `SELECT songs.*, users.userName as userName, COUNT(playlist) as playlists
         FROM songs
-        WHERE songs.idSongs = ?;`,{
-          replacements: [songId],
+          LEFT JOIN users
+            ON users.idUsers = songs.owner
+          LEFT JOIN songsplaylistsbridge
+            ON songs.idSongs = song
+        WHERE songs.idSongs = ?
+        GROUP BY song
+        ;`,{
+          replacements: [songId, songId],
           type: sequelize.QueryTypes.SELECT
         }
       )

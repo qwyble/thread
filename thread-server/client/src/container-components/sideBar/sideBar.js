@@ -26,7 +26,9 @@ class SidebarLeftOverlay extends Component {
 
 
   static getDerivedStateFromProps(props, state){
-    if(window.location.pathname === '/stream') return { selectedPlaylist: '' }
+    var path = window.location.pathname;
+    if(path === '/stream' || path.includes('/profile')) return { selectedPlaylist: '' }
+    else if(path.includes('/playlist')) return {selectedPlaylist: path.slice(10)}
     else return {}
   }
 
@@ -39,7 +41,7 @@ class SidebarLeftOverlay extends Component {
   }
 
   render() {
-    //console.log('sidebar');
+    console.log(this.state.selectedPlaylist);
     return (
       <div>
         <div>
@@ -63,9 +65,6 @@ class SidebarLeftOverlay extends Component {
             }
 
 
-
-            {this.props._loading ?
-              <Loader active />:
               <div>
                 <CategoryMenuItem
                   getCats={this.props.getCats}
@@ -73,13 +72,17 @@ class SidebarLeftOverlay extends Component {
                   categories={this.props.categories}
                   onSelectPlaylist={this.handleSelectPlaylist}
                 />
-                <div>
-                  {this.props.isOwner ?
-                    <AddCategory getCats={this.props.getCats}/>
-                    : <div></div>}
-                  </div>
+              <div>
+                {this.props._loading ?
+                  <Loader active />:
+                    <div>
+                      {this.props.isOwner ?
+                        <AddCategory getCats={this.props.getCats}/>
+                        : <div></div>}
+                    </div>
+                }
               </div>
-            }
+            </div>
 
 
           </Sidebar>
