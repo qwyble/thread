@@ -8,6 +8,7 @@ import RemoveSongFromPlaylist from '../../presentational-components/sidebarUtili
 import MakePublic from '../../presentational-components/sidebarUtilities/makePublic.js';
 import FollowContainer from '../follower/followContainer.js';
 import DeleteSongs from './deleteSong.js';
+import Paginator from '../utilities/paginator.js'
 
 //renders the lst of songs, controls adding and deleting songs to/from playlists
 //
@@ -59,7 +60,7 @@ class SongSorter extends React.Component{
     return(
       <div>
       <Table className='t1' size='small' celled striped compact unstackable inverted selectable>
-          <Table.Header fullWidth className='stickyTop'>
+          <Table.Header className='stickyTop'>
             <Table.Row>
               <Table.HeaderCell />
               <Table.HeaderCell />
@@ -96,10 +97,8 @@ class SongSorter extends React.Component{
           />
 
 
-        <Table.Footer className='stickyBottom' fullWidth>
+        <Table.Footer className='stickyBottom' >
           <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell />
             <Table.HeaderCell colSpan='4'>
 
               {path.includes('/playlist') ?
@@ -138,15 +137,26 @@ class SongSorter extends React.Component{
                 : <div></div>
               }
 
-
             </Table.HeaderCell>
 
 
-            <MakePublic
-              selectedPlaylist={this.props.selectedPlaylist}
-              isOwner={this.props.isOwner}
-              isPublic={this.props.isPublic}
-            />
+
+            <Table.HeaderCell colSpan='1' />
+
+
+              <MakePublic
+                selectedPlaylist={this.props.selectedPlaylist}
+                isOwner={this.props.isOwner}
+                isPublic={this.props.isPublic}
+              />
+
+
+              {window.location.pathname === '/stream' ?
+                <Table.Cell collapsing >
+                  <Paginator totalPages={this.props.totalPages} onSetCurrentItem={this.props.onSetCurrentItem}/>
+                </Table.Cell>
+                : <Table.Cell></Table.Cell>
+              }
 
 
           </Table.Row>

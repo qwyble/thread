@@ -6,7 +6,7 @@ const User = require('../models/user.js')(sequelize, Sequelize);
 
 module.exports = {
 
-  getStream: function(owner, sortBy, order){
+  getStream: function(owner, sortBy, order, currentItem){
   return (
     sequelize.query(
       `SELECT songs.*, users.userName, songratings.rating
@@ -22,11 +22,28 @@ module.exports = {
           WHERE FollowerId = ?
         )
       ORDER BY ${sortBy} ${order}
-      LIMIT 40;`,{
+      LIMIT ${currentItem}, 20;`,{
         replacements: [owner, owner, owner],
         type: sequelize.QueryTypes.SELECT
       }
     )
+    )
+  },
+
+  getStreamCount: function(owner){
+    return(
+      sequelize.query(
+        `SELECT COUNT(*) as count
+        FROM songs
+        WHERE songs.owner = ?
+          OR songs.owner IN (
+            SELECT LeaderId FROM usersfollowersbridge
+            WHERE FollowerId = ?
+          );`, {
+          replacements: [owner, owner],
+          type: sequelize.QueryTypes.SELECT
+          }
+      )
     )
   },
 

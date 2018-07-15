@@ -10,6 +10,8 @@ class PlaylistController extends React.Component{
   state={
     songs: [],
     _loading: false,
+    currentItem: 0,
+    totalPages: 1
   }
 
   componentDidMount(){
@@ -35,12 +37,17 @@ class PlaylistController extends React.Component{
     this.setState({_loading: true});
 
     var url = this.getUrl();
+    var _currentItem = this.state.currentItem;
     var _sortBy = sortBy ? sortBy : 'dateUploaded';
     var _descending = descending ? 'ASC' : 'DESC';
 
-    songsGet(url, _sortBy, _descending).then((result) => {
-      this.setState({songs: result.data, _loading: false});
-      this.props.onSetSongs(result.data);
+    songsGet(url, _sortBy, _descending, _currentItem).then((result) => {
+      console.log(result.data)
+      this.setState({
+        songs: result.data[0],
+        _loading: false,
+        totalPages: result.data[1][0] ? Math.ceil(result.data[1][0].count / 20) : 1});
+      this.props.onSetSongs(result.data[0]);
     });
   }
 
@@ -51,6 +58,10 @@ class PlaylistController extends React.Component{
 
   handleSortBy = (sortBy, descending) => {
     this.getSongs(sortBy, descending);
+  }
+
+  handleSetCurrentItem = (currentItem) => {
+    this.setState({currentItem}, () => this.getSongs());
   }
 
 
@@ -64,6 +75,8 @@ class PlaylistController extends React.Component{
           onRemoval={this.handleRemoval}
           onRefresh={this.getSongs}
           onSortBy={this.handleSortBy}
+          onSetCurrentItem={this.handleSetCurrentItem}
+
         />
       </div>
     )
@@ -74,12 +87,13 @@ class PlaylistController extends React.Component{
 export default PlaylistController;
 
 
-const songsGet = (url, sortBy, descending) => {
+const songsGet = (url, sortBy, descending, currentItem) => {
   return(
     axios.get(url, {
       params: {
         sortBy: sortBy,
-        descending: descending
+        descending: descending,
+        currentItem: currentItem
       },
       withCredentials: true
     })

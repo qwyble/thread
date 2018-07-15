@@ -12,7 +12,7 @@ module.exports = function(app){
             encodeURI(req.query.sortBy),
             encodeURI(req.query.descending)
           ).then((data) => {
-            res.status(200).send(data);
+            res.status(200).send([data, []]);
           });
         }else{
           songs.getPrivPlaylist(
@@ -21,7 +21,7 @@ module.exports = function(app){
             encodeURI(req.query.sortBy),
             encodeURI(req.query.descending)
           ).then((data) => {
-            res.status(200).send(data);
+            res.status(200).send([data, []]);
           });
         }
       })
@@ -32,9 +32,15 @@ module.exports = function(app){
     songs.getStream(
       req.session.user.idUsers,
       encodeURI(req.query.sortBy),
-      encodeURI(req.query.descending)
+      encodeURI(req.query.descending),
+      encodeURI(req.query.currentItem)
     ).then((data) => {
-      res.status(200).send(data);
+      songs.getStreamCount(req.session.user.idUsers)
+      .then((data2) => {
+
+        res.status(200).send([data, data2]);
+
+      })
     });
   });
 
@@ -44,7 +50,7 @@ module.exports = function(app){
       req.session.user.idUsers,
       encodeURI(req.query.sortBy),
       encodeURI(req.query.descending)
-    ).then(data => res.status(200).send(data));
+    ).then(data => res.status(200).send([data, []]));
   });
 
   app.post('/rateSong', function(req, res){
