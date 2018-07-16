@@ -34,7 +34,7 @@ class Explorer extends React.Component{
   getSearch = () => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/getAllSearch/`+escape(this.state.searchString)
+      url: `https://dotwave.herokuapp.com/getAllSearch/`+escape(this.state.searchString)
     }).then((result) => {
       this.setState({
         users: result.data.users,

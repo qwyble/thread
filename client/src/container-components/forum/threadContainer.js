@@ -26,7 +26,7 @@ class ThreadContainer extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getThreads/'+(this.props.selectedCategory || 'all'),
+      url: 'https://dotwave.herokuapp.com/getThreads/'+(this.props.selectedCategory || 'all'),
     }).then(result => this.setState({threads: result.data, _loading: false}));
   }
 

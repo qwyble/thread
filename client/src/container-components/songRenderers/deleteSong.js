@@ -8,7 +8,7 @@ class DeleteSongs extends React.Component{
   handleDeleteSongs = () => {
     axios({
       method: 'post',
-      url: 'http://localhost:8080/deleteSongs',
+      url: 'https://dotwave.herokuapp.com/deleteSongs',
       data: {
         songIds: this.props.selectedSongs
       },

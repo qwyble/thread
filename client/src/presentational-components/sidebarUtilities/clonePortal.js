@@ -56,7 +56,7 @@ class ClonePortal extends React.Component{
 
   handleClonePlaylist = () => {
     this.setState({_loading: true});
-    axios.post('http://localhost:8080/clonePlaylist',{
+    axios.post('https://dotwave.herokuapp.com/clonePlaylist',{
       selectedCat: this.state.selectedCatId,
       plToClone: this.state.plToClone,
       plname: this.state.plname},
@@ -75,7 +75,7 @@ class ClonePortal extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getCatsOnly',
+      url: 'https://dotwave.herokuapp.com/getCatsOnly',
       withCredentials: true
     }).then(result => this.setState({categories: result.data, _loading:false}));
   }

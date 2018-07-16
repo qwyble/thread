@@ -28,7 +28,7 @@ class NewComment extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'post',
-      url: 'http://localhost:8080/postComment',
+      url: 'https://dotwave.herokuapp.com/postComment',
       data: {
         comment: this.state.comment,
         threadId: this.props.threadId,

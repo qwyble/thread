@@ -54,7 +54,7 @@ class UploadHandlers extends React.Component{
     this.setState({isLoading: true});
     axios({
       method: 'post',
-      url: 'http://localhost:8080/uploadSong',
+      url: 'https://dotwave.herokuapp.com/uploadSong',
       data: data,
       withCredentials: true
     }).then((result) => {

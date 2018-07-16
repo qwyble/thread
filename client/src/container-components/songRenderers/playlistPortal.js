@@ -15,7 +15,7 @@ class PlaylistPortal extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getPlaylists',
+      url: 'https://dotwave.herokuapp.com/getPlaylists',
       withCredentials: true
     }).then((categories) => {
       var catpls = categories.data.cats;
@@ -36,7 +36,7 @@ class PlaylistPortal extends React.Component{
     this.setState({_portalOpen: false});
     axios({
       method: 'post',
-      url: 'http://localhost:8080/addSongsToPlaylist',
+      url: 'https://dotwave.herokuapp.com/addSongsToPlaylist',
       data: {
         songs: this.props.selectedSongs,
         playlist: data.value

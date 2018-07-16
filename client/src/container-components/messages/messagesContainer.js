@@ -100,7 +100,7 @@ const messagesGet = () => {
   return(
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getMessages',
+      url: 'https://dotwave.herokuapp.com/getMessages',
       withCredentials: true
     })
   )
@@ -111,7 +111,7 @@ const sentMessagesGet = () => {
   return(
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getSentMessages',
+      url: 'https://dotwave.herokuapp.com/getSentMessages',
       withCredentials: true
     })
   )
@@ -121,7 +121,7 @@ const deletePost = (selectedMessages) => {
   return(
     axios({
       method: 'post',
-      url: 'http://localhost:8080/deleteMessages',
+      url: 'https://dotwave.herokuapp.com/deleteMessages',
       data: {
         messages: selectedMessages
       },

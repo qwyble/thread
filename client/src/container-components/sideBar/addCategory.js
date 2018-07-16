@@ -17,7 +17,7 @@ class AddCategory extends React.Component{
     this.setState({_loading: true, err: ''});
     axios({
       method: 'post',
-      url: 'http://localhost:8080/addCategory',
+      url: 'https://dotwave.herokuapp.com/addCategory',
       data: { category: cat },
       withCredentials: true
     }).then((result) =>{

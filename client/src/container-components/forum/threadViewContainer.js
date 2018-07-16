@@ -34,7 +34,7 @@ class ThreadViewContainer extends React.Component{
     this.setState({_loading: true})
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getThread',
+      url: 'https://dotwave.herokuapp.com/getThread',
       params: {
         id: id,
       }
@@ -44,7 +44,7 @@ class ThreadViewContainer extends React.Component{
   handleDeleteThread = (id) => {
     axios({
       method: 'post',
-      url: 'http://localhost:8080/deleteThread',
+      url: 'https://dotwave.herokuapp.com/deleteThread',
       data: {
         id: id
       },

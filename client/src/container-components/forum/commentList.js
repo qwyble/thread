@@ -20,7 +20,7 @@ class CommentList extends React.Component{
 
   getComments = () => {
     this.setState({_loading: true})
-    axios.get('http://localhost:8080/getComments/'+this.props.threadId)
+    axios.get('https://dotwave.herokuapp.com/getComments/'+this.props.threadId)
     .then((result) => this.setState({ comments: result.data, _loading: false }));
 
   }

@@ -45,7 +45,7 @@ class Playlists extends React.Component{
 
       axios({
         method: 'post',
-        url: 'http://localhost:8080/addPlaylist',
+        url: 'https://dotwave.herokuapp.com/addPlaylist',
         data: data,
         withCredentials: true
       }).then((result) => {
@@ -66,7 +66,7 @@ class Playlists extends React.Component{
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/deletePlaylist',
+      url: 'https://dotwave.herokuapp.com/deletePlaylist',
       data: data,
       withCredentials: true
     }).then((result) => {

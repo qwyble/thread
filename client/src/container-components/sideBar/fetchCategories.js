@@ -30,8 +30,8 @@ class FetchCategories extends React.Component{
 
   // if the user is visiting a profile other than their own, set the query url to get another's playlists
   getUrl = () => {
-    if(this.props.profile){ return 'http://localhost:8080/getPlaylists/'+this.props.profile; }
-    else{ return 'http://localhost:8080/getPlaylists'; }
+    if(this.props.profile){ return 'https://dotwave.herokuapp.com/getPlaylists/'+this.props.profile; }
+    else{ return 'https://dotwave.herokuapp.com/getPlaylists'; }
   }
 
 

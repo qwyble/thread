@@ -35,7 +35,7 @@ class SongRow extends React.Component{
     this.setState({rating: d.rating}, () => {
       axios({
         method: 'post',
-        url: 'http://localhost:8080/rateSong',
+        url: 'https://dotwave.herokuapp.com/rateSong',
         data:{
           songId: this.props.song.idSongs,
           rating: this.state.rating

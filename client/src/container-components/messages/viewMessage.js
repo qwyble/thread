@@ -32,7 +32,7 @@ class ViewMessage extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getMessage',
+      url: 'https://dotwave.herokuapp.com/getMessage',
       params: {
         id: this.state.messageId
       },

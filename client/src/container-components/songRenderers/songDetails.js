@@ -15,7 +15,7 @@ class SongDetails extends React.Component{
   componentDidMount(){
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getSong',
+      url: 'https://dotwave.herokuapp.com/getSong',
       params: {
         songId: this.props.match.params.song
       }
