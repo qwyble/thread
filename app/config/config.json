@@ -1,0 +1,45 @@
+{
+
+    "development": {
+
+        "username": "admin",
+
+        "password": "raptorj3sus!",
+
+        "database": "mydb",
+
+        "host": "127.0.0.1",
+
+        "dialect": "mysql"
+
+    },
+
+    "test": {
+
+        "username": "",
+
+        "password": null,
+
+        "database": "",
+
+        "host": "",
+
+        "dialect": "mysql"
+
+    },
+
+    "production": {
+
+        "username": "admin",
+
+        "password": "raptorj3sus!",
+
+        "database": "mydb",
+
+        "host": "35.238.48.6",
+
+        "dialect": "mysql"
+
+    }
+
+}
