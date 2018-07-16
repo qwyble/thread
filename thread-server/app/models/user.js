@@ -15,7 +15,6 @@ module.exports = function(sequelize, Sequelize){
     password: {
       type: Sequelize.STRING
     },
-    playLists: Sequelize.JSON,
     forumLists: Sequelize.JSON,
     lastLoggedIn: Sequelize.DATE
 

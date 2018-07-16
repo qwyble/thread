@@ -1,59 +1,45 @@
 import React from 'react';
-import { Table, Icon, Button,Label,Menu} from 'semantic-ui-react';
-import SongsList from '../songRenderers/songSorter';
+import {Table} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
+
+
 
 class ThreadList extends React.Component{
   render(){
     return(
-      <Table celled>
-       <Table.Header>
-         <Table.Row>
-           <Table.HeaderCell>Subject</Table.HeaderCell>
-           <Table.HeaderCell>Summary</Table.HeaderCell>
-           <Table.HeaderCell>Replies</Table.HeaderCell>
-           <Table.HeaderCell>Subs</Table.HeaderCell>
-         </Table.Row>
-       </Table.Header>
-
-       <Table.Body>
-         <Table.Row>
-           <Table.Cell>
-             <Label ribbon>First</Label>
-           </Table.Cell>
-           <Table.Cell>Cell</Table.Cell>
-           <Table.Cell>Cell</Table.Cell>
-         </Table.Row>
-         <Table.Row>
-           <Table.Cell>Cell</Table.Cell>
-           <Table.Cell>Cell</Table.Cell>
-           <Table.Cell>Cell</Table.Cell>
-         </Table.Row>
-         <Table.Row>
-           <Table.Cell>Cell</Table.Cell>
-           <Table.Cell>Cell</Table.Cell>
-           <Table.Cell>Cell</Table.Cell>
-         </Table.Row>
-       </Table.Body>
-
-       <Table.Footer>
-         <Table.Row>
-           <Table.HeaderCell colSpan='3'>
-             <Menu floated='right' pagination>
-               <Menu.Item as='a' icon>
-                 <Icon name='chevron left' />
-               </Menu.Item>
-               <Menu.Item as='a'>1</Menu.Item>
-               <Menu.Item as='a'>2</Menu.Item>
-               <Menu.Item as='a'>3</Menu.Item>
-               <Menu.Item as='a'>4</Menu.Item>
-               <Menu.Item as='a' icon>
-                 <Icon name='chevron right' />
-               </Menu.Item>
-             </Menu>
-           </Table.HeaderCell>
-         </Table.Row>
-       </Table.Footer>
-     </Table>
+      <Table.Body>
+        {this.props.threads.map((t, i) => (
+            <Table.Row key={i}>
+              <Table.Cell>
+                <Link
+                  to={{
+                    pathname: `/forum/thread/${t.id}`,
+                    state: {
+                      id: t.id,
+                    }
+                  }}
+                >
+                  {t.subject}
+                </Link>
+              </Table.Cell>
+              <Table.Cell>
+                {t.userName}
+              </Table.Cell>
+              <Table.Cell>
+                {t.category}
+              </Table.Cell>
+              <Table.Cell>
+                {t.replies}
+              </Table.Cell>
+              <Table.Cell>
+                {t.subs}
+              </Table.Cell>
+              <Table.Cell>
+                {t.date ? t.date.slice(0, 10) : ''}
+              </Table.Cell>
+            </Table.Row>
+        ))}
+      </Table.Body>
     )
   }
 }

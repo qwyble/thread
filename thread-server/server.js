@@ -15,16 +15,29 @@ app.use(morgan('dev')); //log every request to the console
 app.use(bodyParser()); //get information from html forms
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors());
+app.use(cors({
+    origin: /.*/,
+    methods:['GET','POST'],
+    credentials: true // enable set cookie
+}));
+
 
 //set up passport
-app.use(session({ secret: 'notaverysecretsecretbutworksanyway', resave: true, saveUninitialized: true})); //session secret
+app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secret
 
 
 //launch
 app.listen(port);
 console.log('it happens on port ' + port);
 
-
 //routes
 var authRoute = require('./app/routes/auth.js')(app);
+var uploadRoute = require('./app/routes/upload.js')(app);
+var songRenderRoute = require('./app/routes/songs.js')(app);
+var playListRoute = require('./app/routes/playlists.js')(app);
+var searchRoute = require('./app/routes/search.js')(app);
+var songPlaylistRoute = require('./app/routes/songPlaylist.js')(app);
+var imageUploadRoute = require('./app/routes/imageUpload.js')(app);
+var followerRouter = require('./app/routes/follower.js')(app);
+var messagesRouter = require('./app/routes/messages.js')(app);
+var forumsRouter = require('./app/routes/forums.js')(app);

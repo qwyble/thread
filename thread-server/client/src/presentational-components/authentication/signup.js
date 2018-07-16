@@ -1,5 +1,6 @@
 import React from 'react';
 import {Grid, Container, Button, Input, Form, Segment} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 
 class Signup extends React.Component{
   render(){
@@ -23,6 +24,9 @@ class Signup extends React.Component{
               </Form.Field>
               <Button type="submit">Sign Up </Button>
             </Form>
+            {this.props.error ? <div>{this.props.error}</div> : <div></div>}
+            <br />
+            <Link to='/auth/login'>Login</Link>
           </Segment>
         </Grid>
         </Container>

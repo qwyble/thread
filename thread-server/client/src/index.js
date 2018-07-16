@@ -1,24 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import UserContainer from './appUtilities/userContainer.js';
+import {Provider} from 'react-redux';
+import {store} from './redux/store';
 import './semantic-ui-css/semantic.min.css';
-import App from './App';
-import LoginContainer from './container-components/loginContainer'
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import './index.css';
 
+class Index extends React.Component{
+  render(){
+    return(
+      <div>
+        <UserContainer />
+      </div>
+    )
+  }
+}
+
+const WrappedApp = () => (
+  <Provider store={store}>
+    <Index />
+  </Provider>
+)
 
 
 ReactDOM.render((
-  <BrowserRouter>
-    <Switch>
-      <Route path='/auth'>
-        <LoginContainer />
-      </Route>
-      <Route path='/'>
-        <App />
-      </Route>
-    </Switch>
-  </BrowserRouter>
+  <WrappedApp />
   ), document.getElementById('root'));
 registerServiceWorker();
