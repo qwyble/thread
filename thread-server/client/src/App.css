@@ -148,7 +148,7 @@
   position: -webkit-sticky !important;
   position: sticky !important;
   bottom: 0 !important;
-  background: rgba(0, 0, 0, .3) !important;
+  background: rgba(0, 0, 0, .5) !important;
 }
 
 .ui.inverted.table.t1{

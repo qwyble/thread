@@ -25,6 +25,10 @@ app.use(cors({
 //set up passport
 app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secret
 
+//if production, serve static bundle
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
 
 //launch
 app.listen(port);
