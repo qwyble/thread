@@ -1,6 +1,5 @@
 import React from 'react';
-import { Table, Icon,Label,Menu, Button, Loader, Dimmer} from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
+import { Loader, Dimmer} from 'semantic-ui-react';
 import axios from 'axios';
 import ThreadTable from '../../presentational-components/forum/threadTable.js';
 

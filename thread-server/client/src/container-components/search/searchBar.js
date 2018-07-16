@@ -1,5 +1,5 @@
 import React from 'react';
-import {Search, Label, Image} from 'semantic-ui-react';
+import {Search, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Sidebar, Segment, Button, Menu, Icon, Loader, Popup, Grid } from 'semantic-ui-react';
+import { Sidebar, Segment, Button, Menu, Icon, Loader } from 'semantic-ui-react';
 import CategoryMenuItem from '../../presentational-components/sidebarUtilities/categoryMenuItem.js';
 import AddCategory from './addCategory.js';
-import AudioRenderer from '../../presentational-components/audio/audioRenderer.js'
 import WrappedPlaylistController from '../../presentational-components/sidebarUtilities/wrappedPlaylistController.js';
-import axios from 'axios';
-import {AppContext} from '../../appUtilities/context.js';
 
 /*
 SidebarLeftOverlay handles selecting playlists and renders
@@ -41,7 +38,7 @@ class SidebarLeftOverlay extends Component {
   }
 
   render() {
-    
+
     return (
       <div>
         <div>

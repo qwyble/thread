@@ -1,7 +1,6 @@
 import React from 'react';
 import Signup from '../../presentational-components/authentication/signup.js';
 import Login from '../../presentational-components/authentication/login.js';
-import Logout from './logout';
 import axios from 'axios';
 import {Switch, Route, Redirect} from 'react-router-dom';
 

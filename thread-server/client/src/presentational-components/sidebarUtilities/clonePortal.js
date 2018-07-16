@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Dropdown, Portal, Button, Loader, Segment, Input} from 'semantic-ui-react';
+import {Dropdown, Button, Loader, Segment, Input} from 'semantic-ui-react';
 
 
 

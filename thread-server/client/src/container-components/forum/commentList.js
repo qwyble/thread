@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Segment, Item, Header, Loader} from 'semantic-ui-react';
+import {Segment, Header, Loader} from 'semantic-ui-react';
 import CommentView from '../../presentational-components/forum/commentView.js';
 
 

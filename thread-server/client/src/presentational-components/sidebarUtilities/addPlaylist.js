@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Input, Form} from 'semantic-ui-react';
+import {Button, Icon } from 'semantic-ui-react';
 import RenderAddPlaylist from './renderAddPlaylist.js';
 
 /* renders either 'add playlist' button

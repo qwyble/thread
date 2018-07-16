@@ -37,10 +37,10 @@ class MessagesContainer extends React.Component{
 
 
   handleMessageSelect = (e) => {
-    var id = parseInt(e.target.id);
+    var id = parseInt(e.target.id, 10);
     var selected = this.state.selectedMessages
 
-    if(selected.includes(id)){ this.setState({selectedMessages: selected.filter((m) => {m !== id})}) }
+    if(selected.includes(id)){ this.setState({selectedMessages: selected.filter((m) => (m !== id))}) }
     else{ this.setState({selectedMessages: selected.concat(id)}) }
   }
 

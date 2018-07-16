@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Segment} from 'semantic-ui-react';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {AppContext} from '../../appUtilities/ownerContext.js';
 import ThreadView from '../../presentational-components/forum/threadView.js';
 import NewComment from './newComment.js';

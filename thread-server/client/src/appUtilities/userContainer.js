@@ -2,10 +2,8 @@ import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Protected from '../container-components/authentication/protected.js';
 import LoginContainer from '../container-components/authentication/loginContainer.js';
-import App from '../App.js';
 import axios from 'axios';
 import {Loader} from 'semantic-ui-react';
-import Logout from '../container-components/authentication/logout.js';
 
 class UserContainer extends React.Component{
   state={

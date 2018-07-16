@@ -1,5 +1,5 @@
 import React from 'react';
-import {Feed, Icon, Divider} from 'semantic-ui-react';
+import {Feed, Divider} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 
 class FeedEvent extends React.Component{

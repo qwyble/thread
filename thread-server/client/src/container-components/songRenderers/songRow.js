@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Button, Icon, Checkbox, Rating} from 'semantic-ui-react';
+import {Table, Icon, Checkbox, Rating} from 'semantic-ui-react';
 import axios from 'axios';
 
 

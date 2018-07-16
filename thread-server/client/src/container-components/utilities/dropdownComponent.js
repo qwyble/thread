@@ -34,7 +34,7 @@ class DropdownComponent extends React.Component{
         searchString: searchString
       }
     }).then(result => {
-    
+
       var users = [];
       users = result.data.map((user, i) => {
         return {
@@ -50,7 +50,6 @@ class DropdownComponent extends React.Component{
 
 
   onSearchChange = (e, d) => {
-    const name = d.name;
     const searchValue = e.target.value;
     const error = this.props.validate ? this.props.validate(searchValue) : false;
 

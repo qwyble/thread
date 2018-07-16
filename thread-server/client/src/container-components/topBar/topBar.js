@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UploadHandlers from '../uploadHandler/uploadHandlers.js';
 import SearchBar from '../search/searchBar.js';
-import { Sidebar, Segment, Menu, Icon} from 'semantic-ui-react';
+import { Menu, Icon} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 
 

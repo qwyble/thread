@@ -1,5 +1,5 @@
 import React from 'react';
-import {Segment, Container, Grid, Input, Form, Modal, Label, Button, Portal, Image} from 'semantic-ui-react';
+import {Segment, Container, Input, Form, Modal, Label, Button } from 'semantic-ui-react';
 
 
 

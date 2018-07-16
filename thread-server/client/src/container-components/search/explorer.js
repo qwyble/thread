@@ -1,11 +1,9 @@
 import React from 'react';
 import Users from '../../presentational-components/explorer/users.js'
 import Songs from '../../presentational-components/explorer/songs.js'
-import Genres from '../../presentational-components/explorer/genres.js'
 import Playlists from '../../presentational-components/explorer/playlists.js'
-import {Container, Grid, Segment, Loader, Search, Header, Input} from 'semantic-ui-react';
+import {Container, Grid, Header, Input} from 'semantic-ui-react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
 
 
 class Explorer extends React.Component{

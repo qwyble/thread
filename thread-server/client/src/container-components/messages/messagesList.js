@@ -1,7 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import {Segment, Table, Menu, Label, Icon, Checkbox} from 'semantic-ui-react';
-import {Link, Redirect} from 'react-router-dom';
+import { Table, Menu, Icon, Checkbox} from 'semantic-ui-react';
+import { Redirect} from 'react-router-dom';
 
 
 class MessagesList extends React.Component{

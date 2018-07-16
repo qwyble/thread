@@ -4,7 +4,7 @@ import FieldComponent from '../utilities/fieldComponent.js';
 import TextComponent from '../utilities/textComponent.js';
 import CategoryDropdownComponent from '../utilities/categoryDropdownComponent';
 import {Redirect} from 'react-router-dom';
-import {Container, Input, Dimmer, Form, Loader, Button, Dropdown, Icon} from 'semantic-ui-react';
+import {Container, Dimmer, Form, Loader, Button } from 'semantic-ui-react';
 
 
 class ThreadComposer extends React.Component{
@@ -52,7 +52,6 @@ class ThreadComposer extends React.Component{
 
 
   handleFormSubmit = (e) => {
-    const thread = this.state.thread;
     e.preventDefault();
 
     if(this.validate()) return;

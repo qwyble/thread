@@ -21,6 +21,9 @@ function findThreadIndex(threads, action){
     case 'DELETE_MESSAGE': {
       return threads.findIndex((t) => t.messages.find((m) => m.id === action.id));
     }
+    default : {
+      return
+    }
   }
 };
 

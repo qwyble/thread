@@ -1,7 +1,6 @@
 import React from 'react';
 import {Table, Loader, Icon} from 'semantic-ui-react';
 import PlaylistPortal from './playlistPortal.js';
-import {AppContext} from '../../appUtilities/context.js';
 import RenderClonePortal from '../../presentational-components/sidebarUtilities/renderClonePortal.js';
 import WrappedSongRows from '../../presentational-components/sidebarUtilities/wrappedSongRows.js';
 import RemoveSongFromPlaylist from '../../presentational-components/sidebarUtilities/removeSongFromPlaylist.js';
@@ -23,12 +22,12 @@ class SongSorter extends React.Component{
   handleSongSelect = (e) => {
     if(e.target.checked){
       this.setState({
-        selectedSongs: this.state.selectedSongs.concat(parseInt(e.target.id))
+        selectedSongs: this.state.selectedSongs.concat(parseInt(e.target.id, 10))
       }, () => this.handlePlaylistButtonToggle());
 
     }else{
       this.setState({
-        selectedSongs: this.state.selectedSongs.filter((id) => {return (id !== parseInt(e.target.id))})
+        selectedSongs: this.state.selectedSongs.filter((id) => {return (id !== parseInt(e.target.id, 10))})
       }, () => this.handlePlaylistButtonToggle());
     }
   }

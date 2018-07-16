@@ -1,7 +1,7 @@
 import React from 'react';
 import RenderAddCategory from '../../presentational-components/sidebarUtilities/renderAddCategory';
 import axios from 'axios';
-import {Loader, Button, Icon} from 'semantic-ui-react';
+import {Loader} from 'semantic-ui-react';
 
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import AddPlaylist from '../../presentational-components/sidebarUtilities/addPlaylist.js';
 import PlaylistList from '../../presentational-components/sidebarUtilities/playlistList.js';
 import EditCategories from './editCategories.js';
-import {Button, Icon, Menu, Loader} from 'semantic-ui-react';
+import {Button, Icon, Menu } from 'semantic-ui-react';
 import axios from 'axios';
 
 /* renders the playlists in a single category,

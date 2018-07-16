@@ -4,7 +4,7 @@ import SuccessPrompt from './successPrompt';
 import FieldComponent from '../utilities/fieldComponent.js';
 import TextComponent from '../utilities/textComponent.js';
 import DropdownComponent from '../utilities/dropdownComponent';
-import {Container, Input, Dimmer, Form, Loader, Button, Dropdown, Icon} from 'semantic-ui-react';
+import {Container, Dimmer, Form, Loader, Button, Icon} from 'semantic-ui-react';
 
 
 class Composer extends React.Component{
@@ -62,7 +62,6 @@ class Composer extends React.Component{
 
 
   handleFormSubmit = (e) => {
-    const message = this.state.message;
     e.preventDefault();
 
     if(this.validate()) return;
@@ -94,7 +93,7 @@ class Composer extends React.Component{
 
 
   render(){
-  
+
     return(
       <Container>
 

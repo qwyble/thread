@@ -20,7 +20,7 @@ class PlaylistController extends React.Component{
 
 
   componentDidUpdate(prevProps){
-    if(this.props.url != prevProps.url){
+    if(this.props.url !== prevProps.url){
       this.getSongs();
     }
   }
@@ -28,7 +28,7 @@ class PlaylistController extends React.Component{
 
   getUrl = () => {
     if (window.location.pathname.length < 2)
-      return 'http://localhost:8080'+'/stream';
+      return 'http://localhost:8080/stream';
     else
       return 'http://localhost:8080'+window.location.pathname;
   }
@@ -42,7 +42,7 @@ class PlaylistController extends React.Component{
     var _descending = descending ? 'ASC' : 'DESC';
 
     songsGet(url, _sortBy, _descending, _currentItem).then((result) => {
-      console.log(result.data)
+    
       this.setState({
         songs: result.data[0],
         _loading: false,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Progress, Grid, Container, Popup, Menu} from 'semantic-ui-react'
+import {Button, Icon, Grid, Popup, Menu} from 'semantic-ui-react'
 
 
 

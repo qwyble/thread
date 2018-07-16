@@ -1,7 +1,6 @@
 import React from 'react';
 import TextComponent from '../utilities/textComponent.js';
 import {Segment, Form, Button, Loader} from 'semantic-ui-react';
-import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 class NewComment extends React.Component{

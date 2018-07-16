@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Users from '../../presentational-components/explorer/users.js';
-import {Grid, Segment, Container} from 'semantic-ui-react';
+import {Grid } from 'semantic-ui-react';
 
 
 class Following extends React.Component{

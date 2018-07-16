@@ -1,5 +1,4 @@
 import React from 'react';
-import {Button, Icon, Progress, Grid, Container} from 'semantic-ui-react'
 import AudioPlayer from './audioPlayer.js';
 
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 import {Menu, Loader} from 'semantic-ui-react';
 import PlaylistTab from './playlistTab';
-import {TransitionGroup, Transition} from 'react-transition-group';
+import {Transition} from 'react-transition-group';
 
 
 class PlaylistList extends React.Component{

@@ -48,7 +48,6 @@ class CategoryDropdownComponent extends React.Component{
 
 
   onSearchChange = (e, d) => {
-    const name = d.name;
     const searchValue = e.target.value || '%';
     const error = this.props.validate ? this.props.validate(searchValue) : false;
 
