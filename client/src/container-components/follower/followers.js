@@ -17,7 +17,7 @@ class Followers extends React.Component{
   getFollowers = () => {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getFollowers',
+      url: 'https://dotwave.herokuapp.com/getFollowers',
       withCredentials: true
     }).then(result => {
       this.setState({users: result.data});

@@ -16,7 +16,7 @@ class SubscribeToThread extends React.Component{
 
 
   getSubscribed = () => {
-    axios.get('http://localhost:8080/getSubscribed/'+this.props.threadId,{
+    axios.get('https://dotwave.herokuapp.com/getSubscribed/'+this.props.threadId,{
       withCredentials: true,
     }).then(result => this.setState({subscribed: result.data.length}))
   }
@@ -33,7 +33,7 @@ class SubscribeToThread extends React.Component{
     }
     axios({
       method: 'post',
-      url: 'http://localhost:8080/subscribe/'+subbed,
+      url: 'https://dotwave.herokuapp.com/subscribe/'+subbed,
       data: {
         threadId: this.props.threadId
       },

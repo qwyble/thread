@@ -28,9 +28,9 @@ class PlaylistController extends React.Component{
 
   getUrl = () => {
     if (window.location.pathname.length < 2)
-      return 'http://localhost:8080/stream';
+      return 'https://dotwave.herokuapp.com/stream';
     else
-      return 'http://localhost:8080'+window.location.pathname;
+      return 'https://dotwave.herokuapp.com'+window.location.pathname;
   }
 
   getSongs = (sortBy, descending) => {

@@ -103,7 +103,7 @@ class ProfileEditor extends React.Component{
     data.append('file', this.state.imageFile)
     axios({
       method: 'post',
-      url: 'http://localhost:8080/uploadImage',
+      url: 'https://dotwave.herokuapp.com/uploadImage',
       data: data,
       withCredentials: true
     }).then(() => {

@@ -17,7 +17,7 @@ class Following extends React.Component{
   getFollowing = () => {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/getFollowing',
+      url: 'https://dotwave.herokuapp.com/getFollowing',
       withCredentials: true
     }).then(result => {
       this.setState({users: result.data});

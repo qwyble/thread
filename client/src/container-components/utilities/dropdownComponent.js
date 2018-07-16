@@ -29,7 +29,7 @@ class DropdownComponent extends React.Component{
   getUsers = (searchString) => {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/emailSearch',
+      url: 'https://dotwave.herokuapp.com/emailSearch',
       params: {
         searchString: searchString
       }

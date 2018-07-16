@@ -155,7 +155,7 @@ const messagePost = (subject, body, recipient) => {
   return(
     axios({
       method: 'post',
-      url: 'http://localhost:8080/sendMessage',
+      url: 'https://dotwave.herokuapp.com/sendMessage',
       data: {
         subject: subject,
         body: body,
