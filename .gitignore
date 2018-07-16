@@ -59,15 +59,3 @@ typings/
 
 # next.js build output
 .next
-
-# api
-thread-projectowner.json
-thread-b972ac4c7a7c.json
-
-#config
-config.json
-
-#DB SSL
-client-cert.pem
-client-key.pem
-server-ca.pem
