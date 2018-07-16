@@ -8,9 +8,13 @@ var session = require('express-session');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var env = require('dotenv').load();
+var helmet = require('helmet');
+var compression = require('compression');
 
 
 // set up express application
+app.use(helmet());
+app.use(compression());
 app.use(morgan('dev')); //log every request to the console
 app.use(bodyParser()); //get information from html forms
 app.use(bodyParser.json());
@@ -26,9 +30,8 @@ app.use(cors({
 app.use(session({secret: 'notaverysecretsecretbutworksanyway'})); //session secret
 
 //if production, serve static bundle
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-}
+
+app.use(express.static('client/build'));
 
 //launch
 app.listen(port);
