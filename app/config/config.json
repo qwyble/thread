@@ -8,7 +8,7 @@
 
         "database": "mydb",
 
-        "host": "127.0.0.1",
+        "host": "35.238.48.6",
 
         "dialect": "mysql"
 
