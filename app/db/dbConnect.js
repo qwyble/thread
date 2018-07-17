@@ -7,20 +7,23 @@ var sequelize =
     config.database,
     config.username,
     config.password,
+
     {
-    host: '35.238.48.6',
+    host: '127.0.0.1',
     dialect: 'mysql',
     dialectOptions: {
       ssl: {
         key: fs.readFileSync('./app/db/client-key.pem'),
         cert: fs.readFileSync('./app/db/client-cert.pem'),
         ca: fs.readFileSync('./app/db/server-ca.pem')
-      }
+      },
+      socketPath: '/cloudsql/thread-204819:us-central1:thread-db'
     },
     define: {
       timestamps: false
     }
     }
+
 );
 
 sequelize
