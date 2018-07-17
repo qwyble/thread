@@ -29,7 +29,7 @@ class CategoryDropdownComponent extends React.Component{
   getCategories = (searchString) => {
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getForumCategories',
+      url: 'https://thread-204819.appspot.com//getForumCategories',
       params: {
         searchString: searchString
       }

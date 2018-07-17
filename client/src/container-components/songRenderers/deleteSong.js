@@ -8,7 +8,7 @@ class DeleteSongs extends React.Component{
   handleDeleteSongs = () => {
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deleteSongs',
+      url: 'https://thread-204819.appspot.com//deleteSongs',
       data: {
         songIds: this.props.selectedSongs
       },

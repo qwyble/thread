@@ -19,7 +19,7 @@ class ProfileContainer extends React.Component{
   getUserInfo = () => {
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getUserInfo',
+      url: 'https://thread-204819.appspot.com//getUserInfo',
       withCredentials: true
     }).then(result =>  this.setState({user: result.data[0]}));
   }
@@ -29,7 +29,7 @@ class ProfileContainer extends React.Component{
   handleSubmit = (email, username, cb) => {
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/editUserInfo',
+      url: 'https://thread-204819.appspot.com//editUserInfo',
       data: {
         email: email,
         username: username

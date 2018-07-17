@@ -17,7 +17,7 @@ class AddCategory extends React.Component{
     this.setState({_loading: true, err: ''});
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/addCategory',
+      url: 'https://thread-204819.appspot.com//addCategory',
       data: { category: cat },
       withCredentials: true
     }).then((result) =>{

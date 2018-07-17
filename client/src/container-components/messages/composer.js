@@ -155,7 +155,7 @@ const messagePost = (subject, body, recipient) => {
   return(
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/sendMessage',
+      url: 'https://thread-204819.appspot.com//sendMessage',
       data: {
         subject: subject,
         body: body,

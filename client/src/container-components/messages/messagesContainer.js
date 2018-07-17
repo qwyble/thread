@@ -100,7 +100,7 @@ const messagesGet = () => {
   return(
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getMessages',
+      url: 'https://thread-204819.appspot.com//getMessages',
       withCredentials: true
     })
   )
@@ -111,7 +111,7 @@ const sentMessagesGet = () => {
   return(
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getSentMessages',
+      url: 'https://thread-204819.appspot.com//getSentMessages',
       withCredentials: true
     })
   )
@@ -121,7 +121,7 @@ const deletePost = (selectedMessages) => {
   return(
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deleteMessages',
+      url: 'https://thread-204819.appspot.com//deleteMessages',
       data: {
         messages: selectedMessages
       },

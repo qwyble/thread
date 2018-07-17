@@ -34,7 +34,7 @@ class ThreadViewContainer extends React.Component{
     this.setState({_loading: true})
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getThread',
+      url: 'https://thread-204819.appspot.com//getThread',
       params: {
         id: id,
       }
@@ -44,7 +44,7 @@ class ThreadViewContainer extends React.Component{
   handleDeleteThread = (id) => {
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deleteThread',
+      url: 'https://thread-204819.appspot.com//deleteThread',
       data: {
         id: id
       },

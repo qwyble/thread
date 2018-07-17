@@ -29,7 +29,7 @@ class DropdownComponent extends React.Component{
   getUsers = (searchString) => {
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/emailSearch',
+      url: 'https://thread-204819.appspot.com//emailSearch',
       params: {
         searchString: searchString
       }

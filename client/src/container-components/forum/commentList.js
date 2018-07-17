@@ -20,7 +20,7 @@ class CommentList extends React.Component{
 
   getComments = () => {
     this.setState({_loading: true})
-    axios.get('https://8080-dot-4114867-dot-devshell.appspot.com/getComments/'+this.props.threadId)
+    axios.get('https://thread-204819.appspot.com//getComments/'+this.props.threadId)
     .then((result) => this.setState({ comments: result.data, _loading: false }));
 
   }

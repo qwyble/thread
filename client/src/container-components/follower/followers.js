@@ -17,7 +17,7 @@ class Followers extends React.Component{
   getFollowers = () => {
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getFollowers',
+      url: 'https://thread-204819.appspot.com//getFollowers',
       withCredentials: true
     }).then(result => {
       this.setState({users: result.data});

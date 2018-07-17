@@ -15,7 +15,7 @@ class PlaylistPortal extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getPlaylists',
+      url: 'https://thread-204819.appspot.com//getPlaylists',
       withCredentials: true
     }).then((categories) => {
       var catpls = categories.data.cats;
@@ -36,7 +36,7 @@ class PlaylistPortal extends React.Component{
     this.setState({_portalOpen: false});
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/addSongsToPlaylist',
+      url: 'https://thread-204819.appspot.com//addSongsToPlaylist',
       data: {
         songs: this.props.selectedSongs,
         playlist: data.value

@@ -11,7 +11,7 @@ class EditCategories extends React.Component {
   handleCategoryDelete = (id) => {
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deleteCategory',
+      url: 'https://thread-204819.appspot.com//deleteCategory',
       data: { catid: id },
       withCredentials: true
     }).then(result => this.props.getCats());
@@ -39,7 +39,7 @@ class EditCategories extends React.Component {
 
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/renameCat',
+      url: 'https://thread-204819.appspot.com//renameCat',
       data: {
         catid: catid,
         name: newName

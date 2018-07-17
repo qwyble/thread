@@ -28,7 +28,7 @@ class NewComment extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/postComment',
+      url: 'https://thread-204819.appspot.com//postComment',
       data: {
         comment: this.state.comment,
         threadId: this.props.threadId,

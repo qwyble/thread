@@ -147,7 +147,7 @@ const threadPost = (subject, body, category) => {
   return(
     axios({
       method: 'post',
-      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/postThread',
+      url: 'https://thread-204819.appspot.com//postThread',
       data: {
         subject: subject,
         body: body,

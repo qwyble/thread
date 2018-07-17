@@ -30,8 +30,8 @@ class FetchCategories extends React.Component{
 
   // if the user is visiting a profile other than their own, set the query url to get another's playlists
   getUrl = () => {
-    if(this.props.profile){ return 'https://8080-dot-4114867-dot-devshell.appspot.com/getPlaylists/'+this.props.profile; }
-    else{ return 'https://8080-dot-4114867-dot-devshell.appspot.com/getPlaylists'; }
+    if(this.props.profile){ return 'https://thread-204819.appspot.com//getPlaylists/'+this.props.profile; }
+    else{ return 'https://thread-204819.appspot.com//getPlaylists'; }
   }
 
 
