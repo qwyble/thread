@@ -17,7 +17,7 @@ class UserContainer extends React.Component{
     this.setState({isLoading: true});
     axios({
       method: 'get',
-      url: 'https://thread-204819.appspot.com//auth',
+      url: 'https://thread-204819.appspot.com/auth',
       withCredentials: true
     }).then((result) => {
       if(result.data.idUsers){
@@ -35,7 +35,7 @@ class UserContainer extends React.Component{
   handleLogout = () => {
     axios({
       method: 'post',
-      url: 'https://thread-204819.appspot.com//logout',
+      url: 'https://thread-204819.appspot.com/logout',
       withCredentials: true
     }).then((result) => {
       this.setState({ user: {}, isLoggedIn: false });

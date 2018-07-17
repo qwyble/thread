@@ -35,7 +35,7 @@ class SongRow extends React.Component{
     this.setState({rating: d.rating}, () => {
       axios({
         method: 'post',
-        url: 'https://thread-204819.appspot.com//rateSong',
+        url: 'https://thread-204819.appspot.com/rateSong',
         data:{
           songId: this.props.song.idSongs,
           rating: this.state.rating

@@ -103,7 +103,7 @@ class ProfileEditor extends React.Component{
     data.append('file', this.state.imageFile)
     axios({
       method: 'post',
-      url: 'https://thread-204819.appspot.com//uploadImage',
+      url: 'https://thread-204819.appspot.com/uploadImage',
       data: data,
       withCredentials: true
     }).then(() => {

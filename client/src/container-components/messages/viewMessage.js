@@ -32,7 +32,7 @@ class ViewMessage extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'https://thread-204819.appspot.com//getMessage',
+      url: 'https://thread-204819.appspot.com/getMessage',
       params: {
         id: this.state.messageId
       },

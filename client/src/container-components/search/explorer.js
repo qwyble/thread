@@ -34,7 +34,7 @@ class Explorer extends React.Component{
   getSearch = () => {
     axios({
       method: 'get',
-      url: `https://thread-204819.appspot.com//getAllSearch/`+escape(this.state.searchString)
+      url: `https://thread-204819.appspot.com/getAllSearch/`+escape(this.state.searchString)
     }).then((result) => {
       this.setState({
         users: result.data.users,

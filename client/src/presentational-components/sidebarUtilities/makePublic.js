@@ -28,7 +28,7 @@ class MakePublic extends React.Component{
 
 
   getUrl = (pub) => {
-    return 'https://thread-204819.appspot.com//'+pub;
+    return 'https://thread-204819.appspot.com/'+pub;
   }
 
 

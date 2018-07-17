@@ -56,7 +56,7 @@ class ClonePortal extends React.Component{
 
   handleClonePlaylist = () => {
     this.setState({_loading: true});
-    axios.post('https://thread-204819.appspot.com//clonePlaylist',{
+    axios.post('https://thread-204819.appspot.com/clonePlaylist',{
       selectedCat: this.state.selectedCatId,
       plToClone: this.state.plToClone,
       plname: this.state.plname},
@@ -75,7 +75,7 @@ class ClonePortal extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'https://thread-204819.appspot.com//getCatsOnly',
+      url: 'https://thread-204819.appspot.com/getCatsOnly',
       withCredentials: true
     }).then(result => this.setState({categories: result.data, _loading:false}));
   }

@@ -54,7 +54,7 @@ class UploadHandlers extends React.Component{
     this.setState({isLoading: true});
     axios({
       method: 'post',
-      url: 'https://thread-204819.appspot.com//uploadSong',
+      url: 'https://thread-204819.appspot.com/uploadSong',
       data: data,
       withCredentials: true
     }).then((result) => {

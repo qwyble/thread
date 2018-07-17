@@ -15,7 +15,7 @@ class SongDetails extends React.Component{
   componentDidMount(){
     axios({
       method: 'get',
-      url: 'https://thread-204819.appspot.com//getSong',
+      url: 'https://thread-204819.appspot.com/getSong',
       params: {
         songId: this.props.match.params.song
       }

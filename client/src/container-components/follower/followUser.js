@@ -22,7 +22,7 @@ class FollowUser extends React.Component{
 
   getIsFollowing = (user, owner) => {
     this.setState({_loading: true});
-    axios.get('https://thread-204819.appspot.com//getIsFollowing', {
+    axios.get('https://thread-204819.appspot.com/getIsFollowing', {
       params: {
         user: user,
         owner: owner
@@ -42,7 +42,7 @@ class FollowUser extends React.Component{
       this.setState({isFollowing: true});
       axios({
         method: 'post',
-        url: 'https://thread-204819.appspot.com//follow',
+        url: 'https://thread-204819.appspot.com/follow',
         data: {
           owner: this.props.owner
         },
@@ -52,7 +52,7 @@ class FollowUser extends React.Component{
       this.setState({isFollowing: false});
       axios({
         method: 'post',
-        url: 'https://thread-204819.appspot.com//unfollow',
+        url: 'https://thread-204819.appspot.com/unfollow',
         data: {
           owner: this.props.owner
         },

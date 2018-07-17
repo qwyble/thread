@@ -17,7 +17,7 @@ class Following extends React.Component{
   getFollowing = () => {
     axios({
       method: 'get',
-      url: 'https://thread-204819.appspot.com//getFollowing',
+      url: 'https://thread-204819.appspot.com/getFollowing',
       withCredentials: true
     }).then(result => {
       this.setState({users: result.data});

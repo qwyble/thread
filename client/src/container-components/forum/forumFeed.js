@@ -18,7 +18,7 @@ class ForumFeed extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'https://thread-204819.appspot.com//getForumFeed',
+      url: 'https://thread-204819.appspot.com/getForumFeed',
       withCredentials: true
     }).then(result => {
       this.setState({feedEvents: result.data, _loading: false});

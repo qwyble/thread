@@ -45,7 +45,7 @@ class Playlists extends React.Component{
 
       axios({
         method: 'post',
-        url: 'https://thread-204819.appspot.com//addPlaylist',
+        url: 'https://thread-204819.appspot.com/addPlaylist',
         data: data,
         withCredentials: true
       }).then((result) => {
@@ -66,7 +66,7 @@ class Playlists extends React.Component{
 
     axios({
       method: 'post',
-      url: 'https://thread-204819.appspot.com//deletePlaylist',
+      url: 'https://thread-204819.appspot.com/deletePlaylist',
       data: data,
       withCredentials: true
     }).then((result) => {
