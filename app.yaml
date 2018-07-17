@@ -1,1 +1,3 @@
 runtime: nodejs8
+beta_settings:
+ cloud_sql_instances: thread-204819:us-central1:thread-db
