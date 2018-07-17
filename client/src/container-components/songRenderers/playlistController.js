@@ -28,9 +28,9 @@ class PlaylistController extends React.Component{
 
   getUrl = () => {
     if (window.location.pathname.length < 2)
-      return 'https://dotwave.herokuapp.com/stream';
+      return 'https://8080-dot-4114867-dot-devshell.appspot.com/stream';
     else
-      return 'https://dotwave.herokuapp.com'+window.location.pathname;
+      return 'https://8080-dot-4114867-dot-devshell.appspot.com'+window.location.pathname;
   }
 
   getSongs = (sortBy, descending) => {

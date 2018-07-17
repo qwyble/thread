@@ -19,7 +19,7 @@ class ProfileContainer extends React.Component{
   getUserInfo = () => {
     axios({
       method: 'get',
-      url: 'https://dotwave.herokuapp.com/getUserInfo',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getUserInfo',
       withCredentials: true
     }).then(result =>  this.setState({user: result.data[0]}));
   }
@@ -29,7 +29,7 @@ class ProfileContainer extends React.Component{
   handleSubmit = (email, username, cb) => {
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/editUserInfo',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/editUserInfo',
       data: {
         email: email,
         username: username

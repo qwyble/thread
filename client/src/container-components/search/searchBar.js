@@ -18,7 +18,7 @@ class SearchBar extends React.Component{
     this.setState({_loading: true, searchString: e.target.value}, () => {
       axios({
         method: 'get',
-        url: 'https://dotwave.herokuapp.com/getAllSearch/'+escape((this.state.searchString || '%'))
+        url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getAllSearch/'+escape((this.state.searchString || '%'))
       }).then((result) => {
         var users = result.data.users.slice(0, 4);
         var playlists = result.data.playlists.slice(0, 4);

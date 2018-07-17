@@ -147,7 +147,7 @@ const threadPost = (subject, body, category) => {
   return(
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/postThread',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/postThread',
       data: {
         subject: subject,
         body: body,

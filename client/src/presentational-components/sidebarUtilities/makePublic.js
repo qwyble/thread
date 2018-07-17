@@ -28,7 +28,7 @@ class MakePublic extends React.Component{
 
 
   getUrl = (pub) => {
-    return 'https://dotwave.herokuapp.com/'+pub;
+    return 'https://8080-dot-4114867-dot-devshell.appspot.com/'+pub;
   }
 
 

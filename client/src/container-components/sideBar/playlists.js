@@ -45,7 +45,7 @@ class Playlists extends React.Component{
 
       axios({
         method: 'post',
-        url: 'https://dotwave.herokuapp.com/addPlaylist',
+        url: 'https://8080-dot-4114867-dot-devshell.appspot.com/addPlaylist',
         data: data,
         withCredentials: true
       }).then((result) => {
@@ -66,7 +66,7 @@ class Playlists extends React.Component{
 
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/deletePlaylist',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deletePlaylist',
       data: data,
       withCredentials: true
     }).then((result) => {

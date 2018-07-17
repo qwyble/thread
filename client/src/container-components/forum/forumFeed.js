@@ -18,7 +18,7 @@ class ForumFeed extends React.Component{
     this.setState({_loading: true});
     axios({
       method: 'get',
-      url: 'https://dotwave.herokuapp.com/getForumFeed',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getForumFeed',
       withCredentials: true
     }).then(result => {
       this.setState({feedEvents: result.data, _loading: false});

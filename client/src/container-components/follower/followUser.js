@@ -22,7 +22,7 @@ class FollowUser extends React.Component{
 
   getIsFollowing = (user, owner) => {
     this.setState({_loading: true});
-    axios.get('https://dotwave.herokuapp.com/getIsFollowing', {
+    axios.get('https://8080-dot-4114867-dot-devshell.appspot.com/getIsFollowing', {
       params: {
         user: user,
         owner: owner
@@ -42,7 +42,7 @@ class FollowUser extends React.Component{
       this.setState({isFollowing: true});
       axios({
         method: 'post',
-        url: 'https://dotwave.herokuapp.com/follow',
+        url: 'https://8080-dot-4114867-dot-devshell.appspot.com/follow',
         data: {
           owner: this.props.owner
         },
@@ -52,7 +52,7 @@ class FollowUser extends React.Component{
       this.setState({isFollowing: false});
       axios({
         method: 'post',
-        url: 'https://dotwave.herokuapp.com/unfollow',
+        url: 'https://8080-dot-4114867-dot-devshell.appspot.com/unfollow',
         data: {
           owner: this.props.owner
         },

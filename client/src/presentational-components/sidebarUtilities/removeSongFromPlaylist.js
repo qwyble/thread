@@ -19,7 +19,7 @@ class RemoveSongFromPlaylist extends React.Component{
     if(this.props.selectedSongs && this.props.selectedPlaylist){
       axios({
         method: 'post',
-        url: 'https://dotwave.herokuapp.com/deleteFromPlaylist',
+        url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deleteFromPlaylist',
         data:{
           songs: this.props.selectedSongs,
           playlist: this.props.selectedPlaylist

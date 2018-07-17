@@ -17,7 +17,7 @@ class ForumCategories extends React.Component{
   getCategories = (searchString) => {
     axios({
       method: 'get',
-      url: 'https://dotwave.herokuapp.com/getForumCategories',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getForumCategories',
       params: {
         searchString: searchString
       }

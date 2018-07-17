@@ -17,7 +17,7 @@ class UserContainer extends React.Component{
     this.setState({isLoading: true});
     axios({
       method: 'get',
-      url: 'https://dotwave.herokuapp.com/auth',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/auth',
       withCredentials: true
     }).then((result) => {
       if(result.data.idUsers){
@@ -35,7 +35,7 @@ class UserContainer extends React.Component{
   handleLogout = () => {
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/logout',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/logout',
       withCredentials: true
     }).then((result) => {
       this.setState({ user: {}, isLoggedIn: false });

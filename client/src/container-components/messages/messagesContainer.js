@@ -100,7 +100,7 @@ const messagesGet = () => {
   return(
     axios({
       method: 'get',
-      url: 'https://dotwave.herokuapp.com/getMessages',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getMessages',
       withCredentials: true
     })
   )
@@ -111,7 +111,7 @@ const sentMessagesGet = () => {
   return(
     axios({
       method: 'get',
-      url: 'https://dotwave.herokuapp.com/getSentMessages',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/getSentMessages',
       withCredentials: true
     })
   )
@@ -121,7 +121,7 @@ const deletePost = (selectedMessages) => {
   return(
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/deleteMessages',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/deleteMessages',
       data: {
         messages: selectedMessages
       },

@@ -26,7 +26,7 @@ class LoginContainer extends React.Component{
   handleSignupSubmit = () => {
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/auth/signup',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/auth/signup',
       data: this.state,
       withCredentials: true
     }).then((result) => {
@@ -44,7 +44,7 @@ class LoginContainer extends React.Component{
   handleLoginSubmit = () => {
     axios({
       method: 'post',
-      url: 'https://dotwave.herokuapp.com/auth/login',
+      url: 'https://8080-dot-4114867-dot-devshell.appspot.com/auth/login',
       data: this.state,
       withCredentials: true
     }).then((result) => {
